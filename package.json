@@ -12,14 +12,34 @@
     "type": "git",
     "url": "git+https://github.com/circlefin/circle-nodejs-sdk.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "circle",
+    "circle.com"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/circlefin/circle-nodejs-sdk/issues"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "dependencies": {
+    "axios": "0.21.4"
+  },
   "homepage": "https://github.com/circlefin/circle-nodejs-sdk#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com"
+  },
   "devDependencies": {
-    "typescript": "^4.7.4"
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^14.14.14",
+    "chai": "^4.2.0",
+    "expect.js": "0.3.x",
+    "istanbul": "^0.4.5",
+    "jshint": "^2.11.0",
+    "mocha": "8.x",
+    "ts-node": "^9.1.1",
+    "typescript": "4.1.3"
   }
 }
