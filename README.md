@@ -14,7 +14,7 @@ Node 10 or higher.
 
 ## Installation
 
-Install the package with:
+Install the package with: (still not published)
 
 ```sh
 npm install circleapi --save
@@ -24,14 +24,14 @@ yarn add circleapi
 
 ## Development
 
-Run codegen:
+To run the codegen:
 
 ```sh
 openapi-generator-cli generate -g typescript-axios  \
 -i sdk-doc.json \
--o . \
+-o ./src/codegen/ \
 -p npmName=circle,supportsES6=true,modelPropertyNaming=original \
--t ./templates/typescript-axios --additional-properties=npmVersion=0.1.0-alpha.0,circleApiVersion=v1  
+-t ./templates/typescript-axios --additional-properties=npmVersion=0.1.0-alpha.0,circleApiVersion=v1 
 ```
 
 Run all tests:
