@@ -17,9 +17,9 @@ Node 10 or higher.
 Install the package with: (still not published)
 
 ```sh
-npm install circleapi --save
+npm install circle-sdk --save
 # or
-yarn add circleapi
+yarn add circle-sdk
 ```
 
 ## Development
