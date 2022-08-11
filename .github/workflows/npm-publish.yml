@@ -38,8 +38,8 @@ jobs:
         uses: abhilash1in/aws-secrets-manager-action@v2.1.0
         with:
           secrets: |
-            /prod/circle-nodejs-sdk/npm/npm-access-token
+            /prod/circle-nodejs-sdk/npm/automation-token
 
       - run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ env._PROD_CIRCLE_NODEJS_SDK_NPM_NPM_ACCESS_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ env._PROD_CIRCLE_NODEJS_SDK_NPM_AUTOMATION_TOKEN }}
