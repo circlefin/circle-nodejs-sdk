@@ -40,6 +40,6 @@ jobs:
           secrets: |
             /prod/circle-nodejs-sdk/npm/npm-access-token
 
-      - run: yarn publish --access public
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ env._PROD_CIRCLE_NODEJS_SDK_NPM_NPM_ACCESS_TOKEN }}
