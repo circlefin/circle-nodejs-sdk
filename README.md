@@ -6,7 +6,7 @@ applications written in server-side JavaScript.
 
 ## Documentation
 
-See the [`circle-nodejs-sdk` API docs](https://developers.circle.com/reference/ping?lang=node) for Node.js.
+See the [Circle API docs](https://developers.circle.com/reference/ping?lang=node) for Node.js.
 
 ## Requirements
 
@@ -14,12 +14,12 @@ Node 10 or higher.
 
 ## Installation
 
-Install the package with: (still not published)
+Install the package with:
 
 ```sh
-npm install circle-sdk --save
+npm install @circle-fin/circle-sdk --save
 # or
-yarn add circle-sdk
+yarn add @circle-fin/circle-sdk
 ```
 
 ## Development
