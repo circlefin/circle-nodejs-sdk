@@ -22,6 +22,58 @@ npm install @circle-fin/circle-sdk --save
 yarn add @circle-fin/circle-sdk
 ```
 
+## Usage
+
+In order to make API calls, you will need to have a Bearer Token. It is recommended that you don't directly paste the Bearer Token inside your code. You could store it as a variable in a `.env` file:
+
+```bash
+BEARER_TOKEN=<enter your token here>
+```
+
+and then access it later as shown in the below example:
+
+
+```Typescript
+import * as dotenv from 'dotenv';
+import { CardsApi, CardCreationRequest } from "circle-nodejs-sdk";
+
+dotenv.config();
+
+
+/* Initialize API driver */
+const baseUrl = 'http://api-sandbox.circle.com';
+
+const cardsApiDriver = new CardsApi(baseUrl);
+cardsApiDriver.accessToken = process.env.BEARER_TOKEN!;
+
+
+/* Send request */
+(async function main() {
+    const newCardReq: CardCreationRequest = {
+        idempotencyKey: "ba943ff1-ca16-49b2-ba55-1057e70ca5c2",
+        encryptedData: "LS0tLS1CRUdJ...",
+        expMonth: 7,
+        billingDetails: {
+            name: 'John Doe',
+            city: 'Chicago',
+            country: 'US',
+            line1: '123 MoneyStreet',
+            postalCode: '99999'
+        },
+        expYear: 2028,
+        metadata: {
+            email: "john@circle.com",
+            sessionId: "DE6FA86F60BB47B379307F851E238617",
+            ipAddress: "244.28.239.130",
+        },
+    };
+
+    const createResponse = await cardsApiDriver.createCard(newCardReq);
+    console.log(createResponse.body.data);
+})();
+```
+
+
 ## Development
 
 To run the codegen:
