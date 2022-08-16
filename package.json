@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -31,11 +32,14 @@
     "registry": "https://registry.npmjs.com"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@types/chai": "^4.2.14",
     "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.14",
     "chai": "^4.2.0",
     "expect.js": "0.3.x",
+    "husky": "^8.0.1",
     "istanbul": "^0.4.5",
     "jshint": "^2.11.0",
     "mocha": "8.x",
