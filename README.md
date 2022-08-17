@@ -36,14 +36,15 @@ const circle = new Circle(
     CircleEnvironments.sandbox      // API base url
 );
 
-(async function main() {
+async function createSubscription() {
     const subscribeReq: SubscriptionRequest = {
         endpoint: "https://742ef341af57c9.lhrtunnel.link"
     };
 
     const subscribeResp = await circle.subscriptions.subscribe(subscribeReq);
     console.log(subscribeResp.data);
-})();
+}
+createSubscription();
 ```
 
 
