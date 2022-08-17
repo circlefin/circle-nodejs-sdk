@@ -15,7 +15,10 @@
   },
   "keywords": [
     "circle",
-    "circle.com"
+    "circle.com",
+    "usdc",
+    "euroc",
+    "stablecoin"
   ],
   "license": "MIT",
   "bugs": {

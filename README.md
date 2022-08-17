@@ -22,6 +22,32 @@ npm install @circle-fin/circle-sdk --save
 yarn add @circle-fin/circle-sdk
 ```
 
+## Usage
+
+In order to make API calls, you will need an API key. Once you obtain one, you can use this SDK to make API calls as follows:
+
+
+```Typescript
+import { Circle, CircleEnvironments, SubscriptionRequest } from "@circle-fin/circle-sdk";
+
+// Initialize API driver
+const circle = new Circle(
+    '<your-api-key>',
+    CircleEnvironments.sandbox      // API base url
+);
+
+async function createSubscription() {
+    const subscribeReq: SubscriptionRequest = {
+        endpoint: "https://742ef341af57c9.lhrtunnel.link"
+    };
+
+    const subscribeResp = await circle.subscriptions.subscribe(subscribeReq);
+    console.log(subscribeResp.data);
+}
+createSubscription();
+```
+
+
 ## Development
 
 To run the codegen:
