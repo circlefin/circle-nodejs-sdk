@@ -24,56 +24,25 @@ yarn add @circle-fin/circle-sdk
 
 ## Usage
 
-In order to make API calls, you will need to have a Bearer Token. It is recommended that you don't directly paste the Bearer Token inside your code. You could store it as a variable in a `.env` file:
-
-```bash
-BEARER_TOKEN=<enter your token here>
-```
-
-and then access it later as shown in the below example:
+In order to make API calls, you will need an API key. Once you obtain one, you can use this SDK to make API calls as follows:
 
 
 ```Typescript
-import * as dotenv from 'dotenv';
-import { Circle, CardCreationRequest } from "@circle-fin/circle-sdk";
+import { Circle, CircleEnvironments, SubscriptionRequest } from "@circle-fin/circle-sdk";
 
-dotenv.config();
-
-
-/* Initialize API driver */
+// Initialize API driver
 const circle = new Circle(
-    process.env.BEARER_TOKEN!,          // API key bearer token
-    'https://api-sandbox.circle.com'    // API base url
+    '<your-api-key>',
+    CircleEnvironments.sandbox      // API base url
 );
 
-
 (async function main() {
-    /* Ping API  */
-    const pingResponse = await circle.health.rootPing();
-    console.log(pingResponse.data);
-
-    /* Create card example */
-    const newCardReq: CardCreationRequest = {
-        idempotencyKey: "ba943ff1-ca16-49b2-ba55-1057e70ca5c2",
-        encryptedData: "LS0tLS1...",
-        expMonth: 7,
-        billingDetails: {
-            name: 'John Doe',
-            city: 'Chicago',
-            country: 'US',
-            line1: '123 MoneyStreet',
-            postalCode: '99999'
-        },
-        expYear: 2028,
-        metadata: {
-            email: "john@circle.com",
-            sessionId: "DE6FA86F60BB47B379307F851E238617",
-            ipAddress: "244.28.239.130",
-        },
+    const subscribeReq: SubscriptionRequest = {
+        endpoint: "https://742ef341af57c9.lhrtunnel.link"
     };
 
-    const createResponse = await circle.cards.createCard(newCardReq);
-    console.log(createResponse.data);
+    const subscribeResp = await circle.subscriptions.subscribe(subscribeReq);
+    console.log(subscribeResp.data);
 })();
 ```
 
