@@ -35,23 +35,27 @@ and then access it later as shown in the below example:
 
 ```Typescript
 import * as dotenv from 'dotenv';
-import { CardsApi, CardCreationRequest } from "circle-nodejs-sdk";
+import { Circle, CardCreationRequest } from "@circle-fin/circle-sdk";
 
 dotenv.config();
 
 
 /* Initialize API driver */
-const baseUrl = 'http://api-sandbox.circle.com';
+const circle = new Circle(
+    process.env.BEARER_TOKEN!,          // API key bearer token
+    'https://api-sandbox.circle.com'    // API base url
+);
 
-const cardsApiDriver = new CardsApi(baseUrl);
-cardsApiDriver.accessToken = process.env.BEARER_TOKEN!;
 
-
-/* Send request */
 (async function main() {
+    /* Ping API  */
+    const pingResponse = await circle.health.rootPing();
+    console.log(pingResponse.data);
+
+    /* Create card example */
     const newCardReq: CardCreationRequest = {
         idempotencyKey: "ba943ff1-ca16-49b2-ba55-1057e70ca5c2",
-        encryptedData: "LS0tLS1CRUdJ...",
+        encryptedData: "LS0tLS1...",
         expMonth: 7,
         billingDetails: {
             name: 'John Doe',
@@ -68,8 +72,8 @@ cardsApiDriver.accessToken = process.env.BEARER_TOKEN!;
         },
     };
 
-    const createResponse = await cardsApiDriver.createCard(newCardReq);
-    console.log(createResponse.body.data);
+    const createResponse = await circle.cards.createCard(newCardReq);
+    console.log(createResponse.data);
 })();
 ```
 
