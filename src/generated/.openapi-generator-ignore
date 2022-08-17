@@ -5,3 +5,4 @@ git_push.sh
 package.json
 package-lock.json
 tsconfig.json
+index.ts

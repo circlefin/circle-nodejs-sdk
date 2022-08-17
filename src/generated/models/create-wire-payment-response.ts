@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Core Functionality
+ * Circle APIs
  * APIs for managing your account balance. These endpoints are available with all Circle APIs.
  *
  * The version of the OpenAPI document: ${version}
@@ -13,6 +13,19 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
+import { MockWirePaymentResponse } from './mock-wire-payment-response';
+
+/**
+ * 
+ * @export
+ * @interface CreateWirePaymentResponse
+ */
+export interface CreateWirePaymentResponse {
+    /**
+     * 
+     * @type {MockWirePaymentResponse}
+     * @memberof CreateWirePaymentResponse
+     */
+    'data'?: MockWirePaymentResponse;
+}
 
