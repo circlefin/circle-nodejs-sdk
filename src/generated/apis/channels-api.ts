@@ -21,21 +21,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { GetConfigResponse } from '../circle/models';
+import { ListChannelsResponse } from '../models';
+// @ts-ignore
+import { NotAuthorized } from '../models';
 /**
- * ManagementApi - axios parameter creator
+ * ChannelsApi - axios parameter creator
  * @export
  */
-export const ManagementApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ChannelsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Retrieves general configuration information.
-         * @summary Get configuration info
+         * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
+         * @summary List all channels
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getConfig: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/configuration`;
+        listChannels: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/channels`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -66,59 +68,59 @@ export const ManagementApiAxiosParamCreator = function (configuration?: Configur
 };
 
 /**
- * ManagementApi - functional programming interface
+ * ChannelsApi - functional programming interface
  * @export
  */
-export const ManagementApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ManagementApiAxiosParamCreator(configuration)
+export const ChannelsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ChannelsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Retrieves general configuration information.
-         * @summary Get configuration info
+         * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
+         * @summary List all channels
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getConfig(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetConfigResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getConfig(options);
+        async listChannels(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListChannelsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listChannels(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * ManagementApi - factory interface
+ * ChannelsApi - factory interface
  * @export
  */
-export const ManagementApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ManagementApiFp(configuration)
+export const ChannelsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ChannelsApiFp(configuration)
     return {
         /**
-         * Retrieves general configuration information.
-         * @summary Get configuration info
+         * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
+         * @summary List all channels
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getConfig(options?: any): AxiosPromise<GetConfigResponse> {
-            return localVarFp.getConfig(options).then((request) => request(axios, basePath));
+        listChannels(options?: any): AxiosPromise<ListChannelsResponse> {
+            return localVarFp.listChannels(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ManagementApi - object-oriented interface
+ * ChannelsApi - object-oriented interface
  * @export
- * @class ManagementApi
+ * @class ChannelsApi
  * @extends {BaseAPI}
  */
-export class ManagementApi extends BaseAPI {
+export class ChannelsApi extends BaseAPI {
     /**
-     * Retrieves general configuration information.
-     * @summary Get configuration info
+     * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
+     * @summary List all channels
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ManagementApi
+     * @memberof ChannelsApi
      */
-    public getConfig(options?: AxiosRequestConfig) {
-        return ManagementApiFp(this.configuration).getConfig(options).then((request) => request(this.axios, this.basePath));
+    public listChannels(options?: AxiosRequestConfig) {
+        return ChannelsApiFp(this.configuration).listChannels(options).then((request) => request(this.axios, this.basePath));
     }
 }

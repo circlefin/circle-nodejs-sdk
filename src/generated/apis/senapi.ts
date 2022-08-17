@@ -21,21 +21,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CreateBusinessAccountSenBankAccountResponse } from '../circle/models';
+import { CreateBusinessAccountSenBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountSenBankAccountResponse } from '../circle/models';
+import { GetBusinessAccountSenBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountSenBankAccountsResponse } from '../circle/models';
+import { GetBusinessAccountSenBankAccountsResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountSenInstructionsBankAccountResponse } from '../circle/models';
+import { GetBusinessAccountSenInstructionsBankAccountResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { SenFiatAccountCreationRequest } from '../circle/models';
+import { SenFiatAccountCreationRequest } from '../models';
 /**
  * SENApi - axios parameter creator
  * @export

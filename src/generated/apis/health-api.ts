@@ -21,23 +21,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { ListChannelsResponse } from '../circle/models';
-// @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { Ping } from '../models';
 /**
- * ChannelsApi - axios parameter creator
+ * HealthApi - axios parameter creator
  * @export
  */
-export const ChannelsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const HealthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
-         * @summary List all channels
+         * Checks that the service is running.
+         * @summary Ping
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listChannels: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/channels`;
+        rootPing: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/ping`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -48,10 +46,6 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     
@@ -68,59 +62,59 @@ export const ChannelsApiAxiosParamCreator = function (configuration?: Configurat
 };
 
 /**
- * ChannelsApi - functional programming interface
+ * HealthApi - functional programming interface
  * @export
  */
-export const ChannelsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ChannelsApiAxiosParamCreator(configuration)
+export const HealthApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HealthApiAxiosParamCreator(configuration)
     return {
         /**
-         * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
-         * @summary List all channels
+         * Checks that the service is running.
+         * @summary Ping
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listChannels(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListChannelsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listChannels(options);
+        async rootPing(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ping>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rootPing(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * ChannelsApi - factory interface
+ * HealthApi - factory interface
  * @export
  */
-export const ChannelsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ChannelsApiFp(configuration)
+export const HealthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HealthApiFp(configuration)
     return {
         /**
-         * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
-         * @summary List all channels
+         * Checks that the service is running.
+         * @summary Ping
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listChannels(options?: any): AxiosPromise<ListChannelsResponse> {
-            return localVarFp.listChannels(options).then((request) => request(axios, basePath));
+        rootPing(options?: any): AxiosPromise<Ping> {
+            return localVarFp.rootPing(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ChannelsApi - object-oriented interface
+ * HealthApi - object-oriented interface
  * @export
- * @class ChannelsApi
+ * @class HealthApi
  * @extends {BaseAPI}
  */
-export class ChannelsApi extends BaseAPI {
+export class HealthApi extends BaseAPI {
     /**
-     * Retrieve a list of channels with details (e.g. `cardDescriptor`, `achDescriptor`, etc.).
-     * @summary List all channels
+     * Checks that the service is running.
+     * @summary Ping
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChannelsApi
+     * @memberof HealthApi
      */
-    public listChannels(options?: AxiosRequestConfig) {
-        return ChannelsApiFp(this.configuration).listChannels(options).then((request) => request(this.axios, this.basePath));
+    public rootPing(options?: AxiosRequestConfig) {
+        return HealthApiFp(this.configuration).rootPing(options).then((request) => request(this.axios, this.basePath));
     }
 }

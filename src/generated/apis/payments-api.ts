@@ -21,37 +21,37 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CancelCreationRequest } from '../circle/models';
+import { CancelCreationRequest } from '../models';
 // @ts-ignore
-import { CancelPaymentResponse } from '../circle/models';
+import { CancelPaymentResponse } from '../models';
 // @ts-ignore
-import { CaptureCreationRequest } from '../circle/models';
+import { CaptureCreationRequest } from '../models';
 // @ts-ignore
-import { CreatePaymentResponse } from '../circle/models';
+import { CreatePaymentResponse } from '../models';
 // @ts-ignore
-import { CreateSepaPaymentResponse } from '../circle/models';
+import { CreateSepaPaymentResponse } from '../models';
 // @ts-ignore
-import { CreateWirePaymentResponse } from '../circle/models';
+import { CreateWirePaymentResponse } from '../models';
 // @ts-ignore
-import { GetPaymentResponse } from '../circle/models';
+import { GetPaymentResponse } from '../models';
 // @ts-ignore
-import { GetPaymentsResponse } from '../circle/models';
+import { GetPaymentsResponse } from '../models';
 // @ts-ignore
-import { MockSepaPaymentRequest } from '../circle/models';
+import { MockSepaPaymentRequest } from '../models';
 // @ts-ignore
-import { MockWirePaymentRequest } from '../circle/models';
+import { MockWirePaymentRequest } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { PaymentCreationRequest } from '../circle/models';
+import { PaymentCreationRequest } from '../models';
 // @ts-ignore
-import { RefundCreationRequest } from '../circle/models';
+import { RefundCreationRequest } from '../models';
 // @ts-ignore
-import { RefundPaymentResponse } from '../circle/models';
+import { RefundPaymentResponse } from '../models';
 /**
  * PaymentsApi - axios parameter creator
  * @export

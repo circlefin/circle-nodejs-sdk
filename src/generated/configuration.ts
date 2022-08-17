@@ -20,17 +20,6 @@ export interface ConfigurationParameters {
     formDataCtor?: new () => any;
 }
 
-// Edited by Circle, lines 16¬-25
-//interface CircleEnvironment {
-//    [env: string]: string;
-//}
-
-//export const CircleEnvironments: CircleEnvironment = {
-//    production: 'https://account.circle.com',
-//    sandbox: 'https://api-sandbox.circle.com',
-//    development: 'https://localhost:8080',
-//};
-
 export class Configuration {
     /**
      * parameter for apiKey security

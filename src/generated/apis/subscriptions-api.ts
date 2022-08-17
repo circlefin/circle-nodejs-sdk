@@ -21,21 +21,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { DeleteUnsubscribeResponse } from '../circle/models';
+import { DeleteUnsubscribeResponse } from '../models';
 // @ts-ignore
-import { GetListSubscriptionsResponse } from '../circle/models';
+import { GetListSubscriptionsResponse } from '../models';
 // @ts-ignore
-import { LimitExceeded } from '../circle/models';
+import { LimitExceeded } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { SubscribeResponse } from '../circle/models';
+import { SubscribeResponse } from '../models';
 // @ts-ignore
-import { SubscriptionRequest } from '../circle/models';
+import { SubscriptionRequest } from '../models';
 /**
  * SubscriptionsApi - axios parameter creator
  * @export

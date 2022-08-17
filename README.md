@@ -30,7 +30,7 @@ To run the codegen:
 openapi-generator-cli generate -g typescript-axios  \
 -i sdk.json \
 -o ./src/generated/ \
--p npmName=circle,supportsES6=true,modelPropertyNaming=original,apiPackage=circle,modelPackage=circle.models \
+-p npmName=circle,supportsES6=true,modelPropertyNaming=original,apiPackage=apis,modelPackage=models \
 -t ./templates/typescript-axios --additional-properties=npmVersion=0.1.0-alpha.0,circleApiVersion=v1,withSeparateModelsAndApi=true
 ```
 

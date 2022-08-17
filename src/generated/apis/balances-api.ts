@@ -21,11 +21,11 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { GetBalancesResponse } from '../circle/models';
+import { GetBalancesResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountBalancesResponse } from '../circle/models';
+import { GetBusinessAccountBalancesResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 /**
  * BalancesApi - axios parameter creator
  * @export

@@ -1,2 +1,2 @@
 export * from './circle'
-export * from './generated/circle/models'
+export * from './generated/models'

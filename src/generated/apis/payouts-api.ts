@@ -21,31 +21,31 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { BusinessAccountPayoutCreationRequest } from '../circle/models';
+import { BusinessAccountPayoutCreationRequest } from '../models';
 // @ts-ignore
-import { CreateBusinessAccountPayoutResponse } from '../circle/models';
+import { CreateBusinessAccountPayoutResponse } from '../models';
 // @ts-ignore
-import { CreatePayoutResponse } from '../circle/models';
+import { CreatePayoutResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountPayoutResponse } from '../circle/models';
+import { GetBusinessAccountPayoutResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountPayoutsResponse } from '../circle/models';
+import { GetBusinessAccountPayoutsResponse } from '../models';
 // @ts-ignore
-import { GetPayoutResponse } from '../circle/models';
+import { GetPayoutResponse } from '../models';
 // @ts-ignore
-import { GetPayoutsResponse } from '../circle/models';
+import { GetPayoutsResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { PayoutCreationRequest } from '../circle/models';
+import { PayoutCreationRequest } from '../models';
 // @ts-ignore
-import { PayoutDestinationType } from '../circle/models';
+import { PayoutDestinationType } from '../models';
 // @ts-ignore
-import { PayoutStatus } from '../circle/models';
+import { PayoutStatus } from '../models';
 /**
  * PayoutsApi - axios parameter creator
  * @export

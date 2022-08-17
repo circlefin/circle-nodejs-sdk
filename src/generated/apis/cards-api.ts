@@ -21,23 +21,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CardCreationRequest } from '../circle/models';
+import { CardCreationRequest } from '../models';
 // @ts-ignore
-import { CardUpdate } from '../circle/models';
+import { CardUpdate } from '../models';
 // @ts-ignore
-import { CreateCardResponse } from '../circle/models';
+import { CreateCardResponse } from '../models';
 // @ts-ignore
-import { GetCardResponse } from '../circle/models';
+import { GetCardResponse } from '../models';
 // @ts-ignore
-import { GetCardsResponse } from '../circle/models';
+import { GetCardsResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { UpdateCardResponse } from '../circle/models';
+import { UpdateCardResponse } from '../models';
 /**
  * CardsApi - axios parameter creator
  * @export

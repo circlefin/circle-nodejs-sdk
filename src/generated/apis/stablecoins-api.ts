@@ -21,21 +21,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { Ping } from '../circle/models';
+import { GetStablecoinsResponse } from '../models';
+// @ts-ignore
+import { LimitExceeded } from '../models';
 /**
- * HealthApi - axios parameter creator
+ * StablecoinsApi - axios parameter creator
  * @export
  */
-export const HealthApiAxiosParamCreator = function (configuration?: Configuration) {
+export const StablecoinsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Checks that the service is running.
-         * @summary Ping
+         * Retrieves total circulating supply for supported stablecoins across all chains. This endpoint is rate limited to one call per minute (based on IP).
+         * @summary List all stablecoins
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rootPing: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/ping`;
+        getStablecoins: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/stablecoins`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -62,59 +64,59 @@ export const HealthApiAxiosParamCreator = function (configuration?: Configuratio
 };
 
 /**
- * HealthApi - functional programming interface
+ * StablecoinsApi - functional programming interface
  * @export
  */
-export const HealthApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = HealthApiAxiosParamCreator(configuration)
+export const StablecoinsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StablecoinsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Checks that the service is running.
-         * @summary Ping
+         * Retrieves total circulating supply for supported stablecoins across all chains. This endpoint is rate limited to one call per minute (based on IP).
+         * @summary List all stablecoins
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rootPing(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ping>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.rootPing(options);
+        async getStablecoins(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetStablecoinsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStablecoins(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * HealthApi - factory interface
+ * StablecoinsApi - factory interface
  * @export
  */
-export const HealthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = HealthApiFp(configuration)
+export const StablecoinsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StablecoinsApiFp(configuration)
     return {
         /**
-         * Checks that the service is running.
-         * @summary Ping
+         * Retrieves total circulating supply for supported stablecoins across all chains. This endpoint is rate limited to one call per minute (based on IP).
+         * @summary List all stablecoins
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rootPing(options?: any): AxiosPromise<Ping> {
-            return localVarFp.rootPing(options).then((request) => request(axios, basePath));
+        getStablecoins(options?: any): AxiosPromise<GetStablecoinsResponse> {
+            return localVarFp.getStablecoins(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * HealthApi - object-oriented interface
+ * StablecoinsApi - object-oriented interface
  * @export
- * @class HealthApi
+ * @class StablecoinsApi
  * @extends {BaseAPI}
  */
-export class HealthApi extends BaseAPI {
+export class StablecoinsApi extends BaseAPI {
     /**
-     * Checks that the service is running.
-     * @summary Ping
+     * Retrieves total circulating supply for supported stablecoins across all chains. This endpoint is rate limited to one call per minute (based on IP).
+     * @summary List all stablecoins
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HealthApi
+     * @memberof StablecoinsApi
      */
-    public rootPing(options?: AxiosRequestConfig) {
-        return HealthApiFp(this.configuration).rootPing(options).then((request) => request(this.axios, this.basePath));
+    public getStablecoins(options?: AxiosRequestConfig) {
+        return StablecoinsApiFp(this.configuration).getStablecoins(options).then((request) => request(this.axios, this.basePath));
     }
 }

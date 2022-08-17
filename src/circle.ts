@@ -12,15 +12,10 @@ import {
 } from "./generated/api";
 
 
-interface CircleEnvironment {
-    [env: string]: string;
+export enum CircleEnvironments {
+    production = 'https://account.circle.com',
+    sandbox = 'https://api-sandbox.circle.com',
 }
-
-export const CircleEnvironments: CircleEnvironment = {
-    production: 'https://account.circle.com',
-    sandbox: 'https://api-sandbox.circle.com',
-    development: 'https://localhost:8080',
-};
 
 export class Circle {
 

@@ -21,27 +21,27 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CreateBusinessAccountWireBankAccountResponse } from '../circle/models';
+import { CreateBusinessAccountWireBankAccountResponse } from '../models';
 // @ts-ignore
-import { CreateWireBankAccountResponse } from '../circle/models';
+import { CreateWireBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountWireBankAccountResponse } from '../circle/models';
+import { GetBusinessAccountWireBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountWireBankAccountsResponse } from '../circle/models';
+import { GetBusinessAccountWireBankAccountsResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountWireInstructionsBankAccountResponse } from '../circle/models';
+import { GetBusinessAccountWireInstructionsBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetWireBankAccountResponse } from '../circle/models';
+import { GetWireBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetWireInstructionsBankAccountResponse } from '../circle/models';
+import { GetWireInstructionsBankAccountResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { WireCreationRequest } from '../circle/models';
+import { WireCreationRequest } from '../models';
 /**
  * WiresApi - axios parameter creator
  * @export

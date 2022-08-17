@@ -21,25 +21,25 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { Conflict } from '../circle/models';
+import { Conflict } from '../models';
 // @ts-ignore
-import { CreateWalletResponse } from '../circle/models';
+import { CreateWalletResponse } from '../models';
 // @ts-ignore
-import { GenerateAddressRequest } from '../circle/models';
+import { GenerateAddressRequest } from '../models';
 // @ts-ignore
-import { GenerateAddressResponse } from '../circle/models';
+import { GenerateAddressResponse } from '../models';
 // @ts-ignore
-import { GetAddressesResponse } from '../circle/models';
+import { GetAddressesResponse } from '../models';
 // @ts-ignore
-import { GetWalletResponse } from '../circle/models';
+import { GetWalletResponse } from '../models';
 // @ts-ignore
-import { GetWalletsResponse } from '../circle/models';
+import { GetWalletsResponse } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { WalletCreationRequest } from '../circle/models';
+import { WalletCreationRequest } from '../models';
 /**
  * WalletsApi - axios parameter creator
  * @export

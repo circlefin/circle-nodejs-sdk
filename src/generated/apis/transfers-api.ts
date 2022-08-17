@@ -21,23 +21,23 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BusinessAccountTransferCreationRequest } from '../circle/models';
+import { BusinessAccountTransferCreationRequest } from '../models';
 // @ts-ignore
-import { CreateBusinessAccountTransferResponse } from '../circle/models';
+import { CreateBusinessAccountTransferResponse } from '../models';
 // @ts-ignore
-import { CreateTransferResponse } from '../circle/models';
+import { CreateTransferResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountTransferResponse } from '../circle/models';
+import { GetBusinessAccountTransferResponse } from '../models';
 // @ts-ignore
-import { GetTransferResponse } from '../circle/models';
+import { GetTransferResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { SearchBusinessAccountTransfersResponse } from '../circle/models';
+import { SearchBusinessAccountTransfersResponse } from '../models';
 // @ts-ignore
-import { SearchTransfersResponse } from '../circle/models';
+import { SearchTransfersResponse } from '../models';
 // @ts-ignore
-import { TransferCreationRequest } from '../circle/models';
+import { TransferCreationRequest } from '../models';
 /**
  * TransfersApi - axios parameter creator
  * @export

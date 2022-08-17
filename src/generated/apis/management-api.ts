@@ -21,21 +21,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { GetPublicKeyResponse } from '../circle/models';
+import { GetConfigResponse } from '../models';
 /**
- * EncryptionApi - axios parameter creator
+ * ManagementApi - axios parameter creator
  * @export
  */
-export const EncryptionApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ManagementApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Retrieves an RSA public key to be used in encrypting data sent to the API. Your public keys change infrequently, so we encourage you to cache this response value locally for a duration of 24 hours or more.
-         * @summary Get public key
+         * Retrieves general configuration information.
+         * @summary Get configuration info
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPublicKey: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/encryption/public`;
+        getConfig: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/configuration`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -66,59 +66,59 @@ export const EncryptionApiAxiosParamCreator = function (configuration?: Configur
 };
 
 /**
- * EncryptionApi - functional programming interface
+ * ManagementApi - functional programming interface
  * @export
  */
-export const EncryptionApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = EncryptionApiAxiosParamCreator(configuration)
+export const ManagementApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ManagementApiAxiosParamCreator(configuration)
     return {
         /**
-         * Retrieves an RSA public key to be used in encrypting data sent to the API. Your public keys change infrequently, so we encourage you to cache this response value locally for a duration of 24 hours or more.
-         * @summary Get public key
+         * Retrieves general configuration information.
+         * @summary Get configuration info
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPublicKey(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetPublicKeyResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPublicKey(options);
+        async getConfig(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetConfigResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getConfig(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * EncryptionApi - factory interface
+ * ManagementApi - factory interface
  * @export
  */
-export const EncryptionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = EncryptionApiFp(configuration)
+export const ManagementApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ManagementApiFp(configuration)
     return {
         /**
-         * Retrieves an RSA public key to be used in encrypting data sent to the API. Your public keys change infrequently, so we encourage you to cache this response value locally for a duration of 24 hours or more.
-         * @summary Get public key
+         * Retrieves general configuration information.
+         * @summary Get configuration info
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPublicKey(options?: any): AxiosPromise<GetPublicKeyResponse> {
-            return localVarFp.getPublicKey(options).then((request) => request(axios, basePath));
+        getConfig(options?: any): AxiosPromise<GetConfigResponse> {
+            return localVarFp.getConfig(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * EncryptionApi - object-oriented interface
+ * ManagementApi - object-oriented interface
  * @export
- * @class EncryptionApi
+ * @class ManagementApi
  * @extends {BaseAPI}
  */
-export class EncryptionApi extends BaseAPI {
+export class ManagementApi extends BaseAPI {
     /**
-     * Retrieves an RSA public key to be used in encrypting data sent to the API. Your public keys change infrequently, so we encourage you to cache this response value locally for a duration of 24 hours or more.
-     * @summary Get public key
+     * Retrieves general configuration information.
+     * @summary Get configuration info
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof EncryptionApi
+     * @memberof ManagementApi
      */
-    public getPublicKey(options?: AxiosRequestConfig) {
-        return EncryptionApiFp(this.configuration).getPublicKey(options).then((request) => request(this.axios, this.basePath));
+    public getConfig(options?: AxiosRequestConfig) {
+        return ManagementApiFp(this.configuration).getConfig(options).then((request) => request(this.axios, this.basePath));
     }
 }

@@ -21,30 +21,36 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CreateSenPaymentResponse } from '../circle/models';
+import { Conflict } from '../models';
 // @ts-ignore
-import { MockSenPaymentRequest } from '../circle/models';
+import { CreateMockChargebackResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { GetChargebackResponse } from '../models';
 // @ts-ignore
-import { SearchBusinessAccountDepositsResponse } from '../circle/models';
+import { GetChargebacksResponse } from '../models';
+// @ts-ignore
+import { MockChargebackCreationRequest } from '../models';
+// @ts-ignore
+import { NotAuthorized } from '../models';
+// @ts-ignore
+import { NotFound } from '../models';
 /**
- * DepositsApi - axios parameter creator
+ * ChargebacksApi - axios parameter creator
  * @export
  */
-export const DepositsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ChargebacksApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-         * @summary Create a mock Silvergate SEN payment
-         * @param {MockSenPaymentRequest} [mockSenPaymentRequest] 
+         * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
+         * @summary Create a mock chargeback
+         * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createSenPayment: async (mockSenPaymentRequest?: MockSenPaymentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/mocks/payments/sen`;
+        createMockChargeback: async (mockChargebackCreationRequest?: MockChargebackCreationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/mocks/cards/chargebacks`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -67,7 +73,7 @@ export const DepositsApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mockSenPaymentRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(mockChargebackCreationRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -75,19 +81,17 @@ export const DepositsApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
-         * @summary List all deposits
-         * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
-         * @param {string} [from] Queries items created since the specified date-time (inclusive).
-         * @param {string} [to] Queries items created before the specified date-time (inclusive).
-         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
-         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore. 
-         * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself. 
+         * 
+         * @summary Get a chargeback
+         * @param {string} id Universally unique identifier (UUID v4) of a resource.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchBusinessAccountDeposits: async (type?: 'wire', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/businessAccount/deposits`;
+        getChargeback: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getChargeback', 'id', id)
+            const localVarPath = `/v1/chargebacks/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -103,8 +107,48 @@ export const DepositsApiAxiosParamCreator = function (configuration?: Configurat
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
+         * @summary List all chargebacks
+         * @param {string} [paymentId] The payment ID associated with the chargeback.
+         * @param {string} [from] Queries items created since the specified date-time (inclusive).
+         * @param {string} [to] Queries items created before the specified date-time (inclusive).
+         * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
+         * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore. 
+         * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself. 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChargebacks: async (paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/chargebacks`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (paymentId !== undefined) {
+                localVarQueryParameter['paymentId'] = paymentId;
             }
 
             if (from !== undefined) {
@@ -146,27 +190,38 @@ export const DepositsApiAxiosParamCreator = function (configuration?: Configurat
 };
 
 /**
- * DepositsApi - functional programming interface
+ * ChargebacksApi - functional programming interface
  * @export
  */
-export const DepositsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DepositsApiAxiosParamCreator(configuration)
+export const ChargebacksApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ChargebacksApiAxiosParamCreator(configuration)
     return {
         /**
-         * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-         * @summary Create a mock Silvergate SEN payment
-         * @param {MockSenPaymentRequest} [mockSenPaymentRequest] 
+         * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
+         * @summary Create a mock chargeback
+         * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createSenPayment(mockSenPaymentRequest?: MockSenPaymentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateSenPaymentResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createSenPayment(mockSenPaymentRequest, options);
+        async createMockChargeback(mockChargebackCreationRequest?: MockChargebackCreationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateMockChargebackResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createMockChargeback(mockChargebackCreationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
-         * @summary List all deposits
-         * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
+         * 
+         * @summary Get a chargeback
+         * @param {string} id Universally unique identifier (UUID v4) of a resource.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getChargeback(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChargebackResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChargeback(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
+         * @summary List all chargebacks
+         * @param {string} [paymentId] The payment ID associated with the chargeback.
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -175,34 +230,44 @@ export const DepositsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchBusinessAccountDeposits(type?: 'wire', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchBusinessAccountDepositsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchBusinessAccountDeposits(type, from, to, pageBefore, pageAfter, pageSize, options);
+        async getChargebacks(paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChargebacksResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getChargebacks(paymentId, from, to, pageBefore, pageAfter, pageSize, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * DepositsApi - factory interface
+ * ChargebacksApi - factory interface
  * @export
  */
-export const DepositsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DepositsApiFp(configuration)
+export const ChargebacksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ChargebacksApiFp(configuration)
     return {
         /**
-         * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-         * @summary Create a mock Silvergate SEN payment
-         * @param {MockSenPaymentRequest} [mockSenPaymentRequest] 
+         * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
+         * @summary Create a mock chargeback
+         * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createSenPayment(mockSenPaymentRequest?: MockSenPaymentRequest, options?: any): AxiosPromise<CreateSenPaymentResponse> {
-            return localVarFp.createSenPayment(mockSenPaymentRequest, options).then((request) => request(axios, basePath));
+        createMockChargeback(mockChargebackCreationRequest?: MockChargebackCreationRequest, options?: any): AxiosPromise<CreateMockChargebackResponse> {
+            return localVarFp.createMockChargeback(mockChargebackCreationRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
-         * @summary List all deposits
-         * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
+         * 
+         * @summary Get a chargeback
+         * @param {string} id Universally unique identifier (UUID v4) of a resource.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getChargeback(id: string, options?: any): AxiosPromise<GetChargebackResponse> {
+            return localVarFp.getChargeback(id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
+         * @summary List all chargebacks
+         * @param {string} [paymentId] The payment ID associated with the chargeback.
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -211,35 +276,47 @@ export const DepositsApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchBusinessAccountDeposits(type?: 'wire', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: any): AxiosPromise<SearchBusinessAccountDepositsResponse> {
-            return localVarFp.searchBusinessAccountDeposits(type, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(axios, basePath));
+        getChargebacks(paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: any): AxiosPromise<GetChargebacksResponse> {
+            return localVarFp.getChargebacks(paymentId, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * DepositsApi - object-oriented interface
+ * ChargebacksApi - object-oriented interface
  * @export
- * @class DepositsApi
+ * @class ChargebacksApi
  * @extends {BaseAPI}
  */
-export class DepositsApi extends BaseAPI {
+export class ChargebacksApi extends BaseAPI {
     /**
-     * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-     * @summary Create a mock Silvergate SEN payment
-     * @param {MockSenPaymentRequest} [mockSenPaymentRequest] 
+     * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
+     * @summary Create a mock chargeback
+     * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepositsApi
+     * @memberof ChargebacksApi
      */
-    public createSenPayment(mockSenPaymentRequest?: MockSenPaymentRequest, options?: AxiosRequestConfig) {
-        return DepositsApiFp(this.configuration).createSenPayment(mockSenPaymentRequest, options).then((request) => request(this.axios, this.basePath));
+    public createMockChargeback(mockChargebackCreationRequest?: MockChargebackCreationRequest, options?: AxiosRequestConfig) {
+        return ChargebacksApiFp(this.configuration).createMockChargeback(mockChargebackCreationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
-     * @summary List all deposits
-     * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
+     * 
+     * @summary Get a chargeback
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ChargebacksApi
+     */
+    public getChargeback(id: string, options?: AxiosRequestConfig) {
+        return ChargebacksApiFp(this.configuration).getChargeback(id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
+     * @summary List all chargebacks
+     * @param {string} [paymentId] The payment ID associated with the chargeback.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -247,9 +324,9 @@ export class DepositsApi extends BaseAPI {
      * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DepositsApi
+     * @memberof ChargebacksApi
      */
-    public searchBusinessAccountDeposits(type?: 'wire', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig) {
-        return DepositsApiFp(this.configuration).searchBusinessAccountDeposits(type, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(this.axios, this.basePath));
+    public getChargebacks(paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig) {
+        return ChargebacksApiFp(this.configuration).getChargebacks(paymentId, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }

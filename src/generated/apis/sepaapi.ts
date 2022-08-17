@@ -21,19 +21,19 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CreateSEPABankAccountResponse } from '../circle/models';
+import { CreateSEPABankAccountResponse } from '../models';
 // @ts-ignore
-import { GetSEPABankAccountResponse } from '../circle/models';
+import { GetSEPABankAccountResponse } from '../models';
 // @ts-ignore
-import { GetSEPAInstructionsBankAccountResponse } from '../circle/models';
+import { GetSEPAInstructionsBankAccountResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { SEPACreationRequest } from '../circle/models';
+import { SEPACreationRequest } from '../models';
 /**
  * SEPAApi - axios parameter creator
  * @export

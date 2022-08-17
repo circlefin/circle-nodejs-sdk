@@ -21,76 +21,30 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { GetSettlementResponse } from '../models';
 // @ts-ignore
-import { Conflict } from '../circle/models';
+import { GetSettlementsResponse } from '../models';
 // @ts-ignore
-import { CreateMockChargebackResponse } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { GetChargebackResponse } from '../circle/models';
-// @ts-ignore
-import { GetChargebacksResponse } from '../circle/models';
-// @ts-ignore
-import { MockChargebackCreationRequest } from '../circle/models';
-// @ts-ignore
-import { NotAuthorized } from '../circle/models';
-// @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 /**
- * ChargebacksApi - axios parameter creator
+ * SettlementsApi - axios parameter creator
  * @export
  */
-export const ChargebacksApiAxiosParamCreator = function (configuration?: Configuration) {
+export const SettlementsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
-         * @summary Create a mock chargeback
-         * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createMockChargeback: async (mockChargebackCreationRequest?: MockChargebackCreationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/mocks/cards/chargebacks`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(mockChargebackCreationRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * 
-         * @summary Get a chargeback
+         * @summary Get a settlement
          * @param {string} id Universally unique identifier (UUID v4) of a resource.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getChargeback: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSettlement: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
-            assertParamExists('getChargeback', 'id', id)
-            const localVarPath = `/v1/chargebacks/{id}`
+            assertParamExists('getSettlement', 'id', id)
+            const localVarPath = `/v1/settlements/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -119,9 +73,8 @@ export const ChargebacksApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
-         * @summary List all chargebacks
-         * @param {string} [paymentId] The payment ID associated with the chargeback.
+         * 
+         * @summary List all settlements
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -130,8 +83,8 @@ export const ChargebacksApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getChargebacks: async (paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/chargebacks`;
+        getSettlements: async (from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/settlements`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -146,10 +99,6 @@ export const ChargebacksApiAxiosParamCreator = function (configuration?: Configu
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (paymentId !== undefined) {
-                localVarQueryParameter['paymentId'] = paymentId;
-            }
 
             if (from !== undefined) {
                 localVarQueryParameter['from'] = (from as any instanceof Date) ?
@@ -190,38 +139,26 @@ export const ChargebacksApiAxiosParamCreator = function (configuration?: Configu
 };
 
 /**
- * ChargebacksApi - functional programming interface
+ * SettlementsApi - functional programming interface
  * @export
  */
-export const ChargebacksApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ChargebacksApiAxiosParamCreator(configuration)
+export const SettlementsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SettlementsApiAxiosParamCreator(configuration)
     return {
         /**
-         * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
-         * @summary Create a mock chargeback
-         * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createMockChargeback(mockChargebackCreationRequest?: MockChargebackCreationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateMockChargebackResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createMockChargeback(mockChargebackCreationRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * 
-         * @summary Get a chargeback
+         * @summary Get a settlement
          * @param {string} id Universally unique identifier (UUID v4) of a resource.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getChargeback(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChargebackResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getChargeback(id, options);
+        async getSettlement(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSettlementResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSettlement(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
-         * @summary List all chargebacks
-         * @param {string} [paymentId] The payment ID associated with the chargeback.
+         * 
+         * @summary List all settlements
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -230,44 +167,33 @@ export const ChargebacksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getChargebacks(paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetChargebacksResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getChargebacks(paymentId, from, to, pageBefore, pageAfter, pageSize, options);
+        async getSettlements(from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSettlementsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSettlements(from, to, pageBefore, pageAfter, pageSize, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * ChargebacksApi - factory interface
+ * SettlementsApi - factory interface
  * @export
  */
-export const ChargebacksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ChargebacksApiFp(configuration)
+export const SettlementsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SettlementsApiFp(configuration)
     return {
         /**
-         * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
-         * @summary Create a mock chargeback
-         * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createMockChargeback(mockChargebackCreationRequest?: MockChargebackCreationRequest, options?: any): AxiosPromise<CreateMockChargebackResponse> {
-            return localVarFp.createMockChargeback(mockChargebackCreationRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
          * 
-         * @summary Get a chargeback
+         * @summary Get a settlement
          * @param {string} id Universally unique identifier (UUID v4) of a resource.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getChargeback(id: string, options?: any): AxiosPromise<GetChargebackResponse> {
-            return localVarFp.getChargeback(id, options).then((request) => request(axios, basePath));
+        getSettlement(id: string, options?: any): AxiosPromise<GetSettlementResponse> {
+            return localVarFp.getSettlement(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
-         * @summary List all chargebacks
-         * @param {string} [paymentId] The payment ID associated with the chargeback.
+         * 
+         * @summary List all settlements
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -276,47 +202,34 @@ export const ChargebacksApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getChargebacks(paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: any): AxiosPromise<GetChargebacksResponse> {
-            return localVarFp.getChargebacks(paymentId, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(axios, basePath));
+        getSettlements(from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: any): AxiosPromise<GetSettlementsResponse> {
+            return localVarFp.getSettlements(from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ChargebacksApi - object-oriented interface
+ * SettlementsApi - object-oriented interface
  * @export
- * @class ChargebacksApi
+ * @class SettlementsApi
  * @extends {BaseAPI}
  */
-export class ChargebacksApi extends BaseAPI {
+export class SettlementsApi extends BaseAPI {
     /**
-     * In the sandbox environment, initiate a mock chargeback of a specified payment.  The entire payment will be charged back for its full value.  The payment must be in the `paid` state (otherwise the endpoint will return a `404`), and each payment can only be charged back once (otherwise the endpoint will return a `409`).  This endpoint is only available in the sandbox environment.
-     * @summary Create a mock chargeback
-     * @param {MockChargebackCreationRequest} [mockChargebackCreationRequest] 
+     * 
+     * @summary Get a settlement
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChargebacksApi
+     * @memberof SettlementsApi
      */
-    public createMockChargeback(mockChargebackCreationRequest?: MockChargebackCreationRequest, options?: AxiosRequestConfig) {
-        return ChargebacksApiFp(this.configuration).createMockChargeback(mockChargebackCreationRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSettlement(id: string, options?: AxiosRequestConfig) {
+        return SettlementsApiFp(this.configuration).getSettlement(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get a chargeback
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ChargebacksApi
-     */
-    public getChargeback(id: string, options?: AxiosRequestConfig) {
-        return ChargebacksApiFp(this.configuration).getChargeback(id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list. 
-     * @summary List all chargebacks
-     * @param {string} [paymentId] The payment ID associated with the chargeback.
+     * @summary List all settlements
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -324,9 +237,9 @@ export class ChargebacksApi extends BaseAPI {
      * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChargebacksApi
+     * @memberof SettlementsApi
      */
-    public getChargebacks(paymentId?: string, from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig) {
-        return ChargebacksApiFp(this.configuration).getChargebacks(paymentId, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(this.axios, this.basePath));
+    public getSettlements(from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig) {
+        return SettlementsApiFp(this.configuration).getSettlements(from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }

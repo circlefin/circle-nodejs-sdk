@@ -21,21 +21,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { ACHCreationRequest } from '../circle/models';
+import { ACHCreationRequest } from '../models';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CreateACHBankAccountResponse } from '../circle/models';
+import { CreateACHBankAccountResponse } from '../models';
 // @ts-ignore
-import { CreateAchAccountResponse } from '../circle/models';
+import { CreateAchAccountResponse } from '../models';
 // @ts-ignore
-import { GetACHBankAccountResponse } from '../circle/models';
+import { GetACHBankAccountResponse } from '../models';
 // @ts-ignore
-import { MockAchAccountCreationRequest } from '../circle/models';
+import { MockAchAccountCreationRequest } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 /**
  * ACHApi - axios parameter creator
  * @export

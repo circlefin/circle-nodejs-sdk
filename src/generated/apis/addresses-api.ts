@@ -21,21 +21,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { BusinessAccountGenerateAddressRequest } from '../circle/models';
+import { BusinessAccountGenerateAddressRequest } from '../models';
 // @ts-ignore
-import { BusinessAccountRecipientAddressCreationRequest } from '../circle/models';
+import { BusinessAccountRecipientAddressCreationRequest } from '../models';
 // @ts-ignore
-import { CreateBusinessAccountRecipientAddressResponse } from '../circle/models';
+import { CreateBusinessAccountRecipientAddressResponse } from '../models';
 // @ts-ignore
-import { GenerateBusinessAccountDepositAddressResponse } from '../circle/models';
+import { GenerateBusinessAccountDepositAddressResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountDepositAddressesResponse } from '../circle/models';
+import { GetBusinessAccountDepositAddressesResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountRecipientAddressesResponse } from '../circle/models';
+import { GetBusinessAccountRecipientAddressesResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 /**
  * AddressesApi - axios parameter creator
  * @export

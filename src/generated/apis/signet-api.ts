@@ -21,21 +21,21 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { CreateBusinessAccountSignetBankAccountResponse } from '../circle/models';
+import { CreateBusinessAccountSignetBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountSignetBankAccountResponse } from '../circle/models';
+import { GetBusinessAccountSignetBankAccountResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountSignetBankAccountsResponse } from '../circle/models';
+import { GetBusinessAccountSignetBankAccountsResponse } from '../models';
 // @ts-ignore
-import { GetBusinessAccountSignetInstructionsBankAccountResponse } from '../circle/models';
+import { GetBusinessAccountSignetInstructionsBankAccountResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 // @ts-ignore
-import { NotFound } from '../circle/models';
+import { NotFound } from '../models';
 // @ts-ignore
-import { SignetFiatAccountCreationRequest } from '../circle/models';
+import { SignetFiatAccountCreationRequest } from '../models';
 /**
  * SignetApi - axios parameter creator
  * @export

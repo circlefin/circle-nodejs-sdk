@@ -21,21 +21,20 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { BadRequest } from '../circle/models';
+import { BadRequest } from '../models';
 // @ts-ignore
-import { GetReversalsResponse } from '../circle/models';
+import { GetReturnsResponse } from '../models';
 // @ts-ignore
-import { NotAuthorized } from '../circle/models';
+import { NotAuthorized } from '../models';
 /**
- * ReversalsApi - axios parameter creator
+ * ReturnsApi - axios parameter creator
  * @export
  */
-export const ReversalsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ReturnsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Retrieve a list of ACH payment reversals. Results will be sorted by create date descending; more recent reversals will be at the beginning of the list
-         * @summary List all ACH payment reversals.
-         * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
+         * Retrieve a list of Wire and ACH payout returns. Results will be sorted by create date descending; more recent returns will be at the beginning of the list.
+         * @summary List all payout returns
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -44,8 +43,8 @@ export const ReversalsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getReversals: async (status?: 'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/reversals`;
+        getReturns: async (from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/returns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -60,10 +59,6 @@ export const ReversalsApiAxiosParamCreator = function (configuration?: Configura
             // authentication bearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (status !== undefined) {
-                localVarQueryParameter['status'] = status;
-            }
 
             if (from !== undefined) {
                 localVarQueryParameter['from'] = (from as any instanceof Date) ?
@@ -104,16 +99,15 @@ export const ReversalsApiAxiosParamCreator = function (configuration?: Configura
 };
 
 /**
- * ReversalsApi - functional programming interface
+ * ReturnsApi - functional programming interface
  * @export
  */
-export const ReversalsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = ReversalsApiAxiosParamCreator(configuration)
+export const ReturnsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ReturnsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Retrieve a list of ACH payment reversals. Results will be sorted by create date descending; more recent reversals will be at the beginning of the list
-         * @summary List all ACH payment reversals.
-         * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
+         * Retrieve a list of Wire and ACH payout returns. Results will be sorted by create date descending; more recent returns will be at the beginning of the list.
+         * @summary List all payout returns
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -122,24 +116,23 @@ export const ReversalsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getReversals(status?: 'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetReversalsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getReversals(status, from, to, pageBefore, pageAfter, pageSize, options);
+        async getReturns(from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetReturnsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getReturns(from, to, pageBefore, pageAfter, pageSize, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * ReversalsApi - factory interface
+ * ReturnsApi - factory interface
  * @export
  */
-export const ReversalsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = ReversalsApiFp(configuration)
+export const ReturnsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ReturnsApiFp(configuration)
     return {
         /**
-         * Retrieve a list of ACH payment reversals. Results will be sorted by create date descending; more recent reversals will be at the beginning of the list
-         * @summary List all ACH payment reversals.
-         * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
+         * Retrieve a list of Wire and ACH payout returns. Results will be sorted by create date descending; more recent returns will be at the beginning of the list.
+         * @summary List all payout returns
          * @param {string} [from] Queries items created since the specified date-time (inclusive).
          * @param {string} [to] Queries items created before the specified date-time (inclusive).
          * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -148,23 +141,22 @@ export const ReversalsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getReversals(status?: 'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: any): AxiosPromise<GetReversalsResponse> {
-            return localVarFp.getReversals(status, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(axios, basePath));
+        getReturns(from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: any): AxiosPromise<GetReturnsResponse> {
+            return localVarFp.getReturns(from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * ReversalsApi - object-oriented interface
+ * ReturnsApi - object-oriented interface
  * @export
- * @class ReversalsApi
+ * @class ReturnsApi
  * @extends {BaseAPI}
  */
-export class ReversalsApi extends BaseAPI {
+export class ReturnsApi extends BaseAPI {
     /**
-     * Retrieve a list of ACH payment reversals. Results will be sorted by create date descending; more recent reversals will be at the beginning of the list
-     * @summary List all ACH payment reversals.
-     * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
+     * Retrieve a list of Wire and ACH payout returns. Results will be sorted by create date descending; more recent returns will be at the beginning of the list.
+     * @summary List all payout returns
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter. 
@@ -172,9 +164,9 @@ export class ReversalsApi extends BaseAPI {
      * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself. 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ReversalsApi
+     * @memberof ReturnsApi
      */
-    public getReversals(status?: 'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required', from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig) {
-        return ReversalsApiFp(this.configuration).getReversals(status, from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(this.axios, this.basePath));
+    public getReturns(from?: string, to?: string, pageBefore?: string, pageAfter?: string, pageSize?: number, options?: AxiosRequestConfig) {
+        return ReturnsApiFp(this.configuration).getReturns(from, to, pageBefore, pageAfter, pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
