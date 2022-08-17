@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Core Functionality
+ * Circle APIs
  * APIs for managing your account balance. These endpoints are available with all Circle APIs.
  *
  * The version of the OpenAPI document: ${version}
@@ -18,7 +18,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export const BASE_PATH = "http://api-sandbox.circle.com".replace(/\/+$/, "");
+export const BASE_PATH = "https://api-sandbox.circle.com".replace(/\/+$/, "");
 
 /**
  *

@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Core Functionality
+ * Circle APIs
  * APIs for managing your account balance. These endpoints are available with all Circle APIs.
  *
  * The version of the OpenAPI document: ${version}
@@ -15,24 +15,10 @@
 
 export interface ConfigurationParameters {
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
-    username?: string;
-    password?: string;
-    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
     basePath?: string;
     baseOptions?: any;
     formDataCtor?: new () => any;
 }
-
-// Edited by Circle, lines 16¬-25
-interface CircleEnvironment {
-    [env: string]: string;
-}
-
-export const CircleEnvironments: CircleEnvironment = {
-    production: 'https://account.circle.com',
-    sandbox: 'https://api-sandbox.circle.com',
-    development: 'https://localhost:8080',
-};
 
 export class Configuration {
     /**
@@ -41,27 +27,6 @@ export class Configuration {
      * @memberof Configuration
      */
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
-    /**
-     * parameter for basic security
-     *
-     * @type {string}
-     * @memberof Configuration
-     */
-    username?: string;
-    /**
-     * parameter for basic security
-     *
-     * @type {string}
-     * @memberof Configuration
-     */
-    password?: string;
-    /**
-     * parameter for oauth2 security
-     * @param name security name
-     * @param scopes oauth2 scope
-     * @memberof Configuration
-     */
-    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
     /**
      * override base path
      *
@@ -87,9 +52,6 @@ export class Configuration {
 
     constructor(param: ConfigurationParameters = {}) {
         this.apiKey = param.apiKey;
-        this.username = param.username;
-        this.password = param.password;
-        this.accessToken = param.accessToken;
         this.basePath = param.basePath;
         this.baseOptions = param.baseOptions;
         this.formDataCtor = param.formDataCtor;

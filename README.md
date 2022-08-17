@@ -28,10 +28,10 @@ To run the codegen:
 
 ```sh
 openapi-generator-cli generate -g typescript-axios  \
--i sdk-doc.json \
--o ./src/codegen/ \
--p npmName=circle,supportsES6=true,modelPropertyNaming=original \
--t ./templates/typescript-axios --additional-properties=npmVersion=0.1.0-alpha.0,circleApiVersion=v1 
+-i sdk.json \
+-o ./src/generated/ \
+-p npmName=circle,supportsES6=true,modelPropertyNaming=original,apiPackage=apis,modelPackage=models \
+-t ./templates/typescript-axios --additional-properties=npmVersion=0.1.0-alpha.0,circleApiVersion=v1,withSeparateModelsAndApi=true
 ```
 
 Run all tests:
