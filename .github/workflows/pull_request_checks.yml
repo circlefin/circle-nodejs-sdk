@@ -6,7 +6,7 @@ on:
 
 jobs:
   lint:
-    name: "Pull Request Checks"
+    name: "Lint, Build and Test"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
