@@ -1,5 +1,4 @@
-import { Circle } from "../src";
-import { CircleEnvironments } from "../dist";
+import { Circle, CircleEnvironments } from "../src";
 
 describe("testing circle init", () => {
   it("should ping sandbox", async () => {
