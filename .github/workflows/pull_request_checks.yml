@@ -1,0 +1,23 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  lint:
+    name: "Pull Request Checks"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - name: Installing dependencies
+        run: npm install
+      - name: Prettier check
+        run: npm run format-check
+      - name: Lint check
+        run: npm run lint
+      - name: Build check
+        run: npm run build
+      - name: Running unit test's
+        run: npm test
