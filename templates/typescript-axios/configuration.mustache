@@ -50,7 +50,6 @@ export class Configuration {
         if (!this.baseOptions.headers) this.baseOptions.headers = {};
         this.baseOptions.headers = {
             ['User-Agent']: `CircleNodeJs/{{npmVersion}}`,
-            ['Circle-Version']: '{{{circleApiVersion}}}',
             ...this.baseOptions.headers,
         }
     }
