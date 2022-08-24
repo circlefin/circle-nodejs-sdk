@@ -1,6 +1,5 @@
 # Circle APIs Node.js Library
 
-
 The Circle Node library provides convenient access to the Circle API for
 applications written in server-side JavaScript.
 
@@ -26,7 +25,6 @@ yarn add @circle-fin/circle-sdk
 
 In order to make API calls, you will need an API key. Once you obtain one, you can use this SDK to make API calls as follows:
 
-
 ```Typescript
 import { Circle, CircleEnvironments, SubscriptionRequest } from "@circle-fin/circle-sdk";
 
@@ -46,7 +44,6 @@ async function createSubscription() {
 }
 createSubscription();
 ```
-
 
 ## Development
 

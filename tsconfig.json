@@ -4,13 +4,13 @@
     "target": "es6",
     "module": "commonjs",
 
-    "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */                             /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
-    "outDir": "dist",                                   /* Specify an output folder for all emitted files. */
-    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
-    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */ /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */,
+    "outDir": "dist" /* Specify an output folder for all emitted files. */,
+    "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
+    "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
 
-    "strict": true,                                      /* Enable all strict type-checking options. */
-    "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
+    "strict": true /* Enable all strict type-checking options. */,
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
 
     "inlineSourceMap": true,
     "inlineSources": true,
@@ -24,8 +24,7 @@
     "alwaysStrict": true,
     "strictNullChecks": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "dist/index.d.ts"],
-
+    "typeRoots": ["node_modules/@types", "dist/index.d.ts"]
   },
-  "exclude": ["test/*.ts","dist"]
+  "exclude": ["test/*.ts", "dist"]
 }
