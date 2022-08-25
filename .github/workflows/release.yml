@@ -14,7 +14,6 @@ jobs:
         with:
           release-type: node
           package-name: \@circle-fin/circle-sdk
-          # release-as: 0.1.0
 
   npm-publish:
     needs: release-please
