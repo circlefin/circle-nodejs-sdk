@@ -105,3 +105,6 @@ dist
 
 #openapi
 openapitools.json
+
+#test coverage
+/coverage/
