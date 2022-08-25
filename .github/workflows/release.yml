@@ -1,0 +1,23 @@
+on:
+  push:
+    branches: [master]
+
+name: release-please
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      did-create-release: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          package-name: \@circle-fin/circle-sdk
+          # release-as: 0.1.0
+
+  npm-publish:
+    needs: release-please
+    if: needs.release-please.outputs.did-create-release
+    uses: ./.github/workflows/npm-publish.yml
+    secrets: inherit
