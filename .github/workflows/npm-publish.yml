@@ -1,0 +1,45 @@
+# This workflow will run tests using node and then publish a package to npm
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Publish to npm
+
+on: [workflow_dispatch, workflow_call]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: yarn install --frozen-lockfile
+      - run: yarn run test
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: yarn install --frozen-lockfile
+      - run: yarn run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID_PAY }}:role/github-actions-service-role
+
+      - name: Read secrets from AWS Secrets Manager into environment variables
+        uses: abhilash1in/aws-secrets-manager-action@v2.1.0
+        with:
+          secrets: |
+            /prod/circle-nodejs-sdk/npm/automation-token
+
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ env._PROD_CIRCLE_NODEJS_SDK_NPM_AUTOMATION_TOKEN }}
