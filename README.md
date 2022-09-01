@@ -49,12 +49,17 @@ createSubscription();
 
 To run the codegen:
 
+<!--- 
+A workflow extracts and executes the command below during an auto-regenration workflow. 
+If you plan on adding anything in front of the 'openapi-generator-cli' generator command line,
+or end this section with anything other that '```', make sure to modify .github/workflows/openapi-regen.yml accordingly.
+-->
 ```sh
 openapi-generator-cli generate -g typescript-axios  \
 -i sdk.json \
 -o ./src/generated/ \
 -p npmName=circle,supportsES6=true,modelPropertyNaming=original,apiPackage=apis,modelPackage=models \
--t ./templates/typescript-axios --additional-properties=npmVersion=0.1.1-beta.0,withSeparateModelsAndApi=true
+-t ./templates/typescript-axios --additional-properties=npmVersion=${version},withSeparateModelsAndApi=true
 ```
 
 Run all tests:
