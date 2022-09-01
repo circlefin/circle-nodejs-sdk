@@ -91,6 +91,9 @@ jobs:
 
           echo "::set-output name=commit-pref::$COMMIT_PREF"
 
+      - name: Remove extra files
+        run: rm sdk.json
+
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
