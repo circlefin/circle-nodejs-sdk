@@ -29,7 +29,7 @@ jobs:
           echo "::set-output name=doc::$content"
 
       - name: Extract new version
-        id: extract-new-ver
+        id: get-new-openapi-ver
         run: echo "::set-output name=version::${{ fromJson(steps.read-openapi-doc.outputs.doc).info.version }}"      
 
 
@@ -60,7 +60,7 @@ jobs:
               ((i=i+1))
           done < $README_FILE
 
-          codegen_cmd=$(echo $codegen_cmd | sed 's/\${version}/${{ steps.extract-new-ver.outputs.version }}/g')
+          codegen_cmd=$(echo $codegen_cmd | sed 's/\${version}/${{ steps.get-new-openapi-ver.outputs.version }}/g')
           echo "::set-output name=cmd::$codegen_cmd"
 
       - name: Regenerate SDK code
@@ -68,10 +68,15 @@ jobs:
 
 
       # Create PR with updated code
-      - name: Get Conventional Commits format commit message prefix
+      - name: Clean and prepare PR files
+        run: |
+          rm sdk.json
+          echo "${{ steps.get-new-openapi-ver.outputs.version }}" > $OPENAPI_VER_FILE
+
+      - name: Get Conventional Commits prefix
         id: get-conven-commit-pref
         run: |
-          NEW_VERSION=${{ steps.extract-new-ver.outputs.version }}
+          NEW_VERSION=${{ steps.get-new-openapi-ver.outputs.version }}
           OLD_VERSION=$(cat $OPENAPI_VER_FILE)
 
           IFS='.' read -ra OLD_VER_PARTS <<< $OLD_VERSION
@@ -91,16 +96,13 @@ jobs:
 
           echo "::set-output name=commit-pref::$COMMIT_PREF"
 
-      - name: Remove extra files
-        run: rm sdk.json
-
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
           base: master
-          branch: openapi-update-regen-pr-v${{ steps.extract-new-ver.outputs.version }}
-          title: Regenerate code from OpenAPI document v${{ steps.extract-new-ver.outputs.version }}
-          commit-message: "${{ steps.get-conven-commit-pref.outputs.commit-pref }}: regen code openapi doc v${{ steps.extract-new-ver.outputs.version }}"
+          branch: openapi-update-regen-pr-v${{ steps.get-new-openapi-ver.outputs.version }}
+          title: Regenerate code from OpenAPI document v${{ steps.get-new-openapi-ver.outputs.version }}
+          commit-message: "${{ steps.get-conven-commit-pref.outputs.commit-pref }}: regen code openapi doc v${{ steps.get-new-openapi-ver.outputs.version }}"
           body: |
             Automated pull request by GitHub action following Circle OpenAPI document update. 
             SDK Code generated using [OpenAPI generator](https://openapi-generator.tech/) 
