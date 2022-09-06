@@ -14,9 +14,19 @@ jobs:
   regenerate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout PR base branch
+        uses: actions/checkout@v3
         with:
           ref: master
+
+      - uses: actions/checkout@v3
+        with:
+          path: temp-trigger-repo
+
+      - name: Transfer sdk.json file
+        run: |
+          mv temp-trigger-repo/sdk.json .
+          rm -rf temp-trigger-repo
 
       - uses: actions/setup-node@v3
       - run: yarn install --frozen-lockfile
