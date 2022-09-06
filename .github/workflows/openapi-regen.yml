@@ -70,11 +70,6 @@ jobs:
 
 
       # Create PR with updated code
-      - name: Clean and prepare PR files
-        run: |
-          rm sdk.json
-          echo "${{ steps.get-new-openapi-ver.outputs.version }}" > $OPENAPI_VER_FILE
-
       - name: Get Conventional Commits prefix
         id: get-conven-commit-pref
         run: |
@@ -97,6 +92,11 @@ jobs:
           done
 
           echo "::set-output name=commit-pref::$COMMIT_PREF"
+
+      - name: Clean and prepare PR files
+        run: |
+          rm sdk.json
+          echo "${{ steps.get-new-openapi-ver.outputs.version }}" > $OPENAPI_VER_FILE
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
