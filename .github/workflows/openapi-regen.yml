@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   push:
-    branches: [openapi-doc-update-regen]
+    branches: [openapi-regen-triggerer]
 
 env:
   README_FILE: README.md    # Needed to extract codegen command
@@ -102,7 +102,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           base: master
-          branch: openapi-update-regen-pr-v${{ steps.get-new-openapi-ver.outputs.version }}
+          branch: bot-openapi-regen-pr-v${{ steps.get-new-openapi-ver.outputs.version }}
           title: Regenerate code from OpenAPI document v${{ steps.get-new-openapi-ver.outputs.version }}
           commit-message: "${{ steps.get-conven-commit-pref.outputs.commit-pref }}: regen code openapi doc v${{ steps.get-new-openapi-ver.outputs.version }}"
           body: |
