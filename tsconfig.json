@@ -26,5 +26,5 @@
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types", "dist/index.d.ts"]
   },
-  "exclude": ["test/*.ts", "dist"]
+  "exclude": ["tests/*.ts", "dist"]
 }
