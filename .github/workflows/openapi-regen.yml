@@ -105,7 +105,6 @@ jobs:
 
       - name: Clean and prepare PR files
         run: |
-          rm sdk.json
           echo "${{ steps.get-new-openapi-ver.outputs.version }}" > $OPENAPI_VER_FILE
 
       - name: Create pull request
