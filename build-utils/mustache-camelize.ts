@@ -1,26 +1,26 @@
 import Mustache from "mustache";
-import * as fs from 'fs';
+import * as fs from "fs";
 
-const customTags: Mustache.OpeningAndClosingTags = [ '<%', '%>' ];
+const customTags: Mustache.OpeningAndClosingTags = ["<%", "%>"];
 
-const template = fs.readFileSync(process.argv[2], 'utf8');
+const template = fs.readFileSync(process.argv[2], "utf8");
 
 function camelize(text: string): string {
-    if (text.length == 0) return text;
+  if (text.length == 0) return text;
 
-    const isAllCaps = text.toUpperCase() == text;
-    if (isAllCaps) {
-        return text.toLowerCase();
-    } else {
-        return text[0].toLowerCase() + text.substring(1);
-    }
+  const isAllCaps = text.toUpperCase() == text;
+  if (isAllCaps) {
+    return text.toLowerCase();
+  } else {
+    return text[0].toLowerCase() + text.substring(1);
+  }
 }
 const view = {
   camelize: function () {
     //@ts-ignore
-    return function(text, render) {
-        return camelize(render(text));
-    }
+    return function (text, render) {
+      return camelize(render(text));
+    };
   }
 };
 
