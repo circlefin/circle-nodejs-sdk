@@ -6,9 +6,9 @@ const customTags: Mustache.OpeningAndClosingTags = ["<%", "%>"];
 const template = fs.readFileSync(process.argv[2], "utf8");
 
 function camelize(text: string): string {
-  if (text.length == 0) return text;
+  if (text.length === 0) return text;
 
-  const isAllCaps = text.toUpperCase() == text;
+  const isAllCaps = text.toUpperCase() === text;
   if (isAllCaps) {
     return text.toLowerCase();
   } else {
@@ -17,7 +17,6 @@ function camelize(text: string): string {
 }
 const view = {
   camelize: function () {
-    //@ts-ignore
     return function (text, render) {
       return camelize(render(text));
     };
