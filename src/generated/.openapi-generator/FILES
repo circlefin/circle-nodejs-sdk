@@ -25,7 +25,6 @@ apis/wires-api.ts
 base.ts
 common.ts
 configuration.ts
-models/account-configuration.ts
 models/ach-verification-error-codes.ts
 models/ach.ts
 models/achbilling-details.ts
@@ -61,6 +60,8 @@ models/card.ts
 models/chain.ts
 models/channel-response.ts
 models/chargeback-categories.ts
+models/configuration-payments.ts
+models/configuration.ts
 models/conflict.ts
 models/create-ach-account-response.ts
 models/create-achbank-account-response.ts
@@ -93,7 +94,6 @@ models/eci.ts
 models/external-fiat-account-status.ts
 models/fiat-money-usd.ts
 models/fiat-money.ts
-models/final-adjustments.ts
 models/generate-address-request.ts
 models/generate-address-response.ts
 models/generate-business-account-deposit-address-response.ts
@@ -106,14 +106,14 @@ models/get-business-account-payout-response.ts
 models/get-business-account-payouts-response.ts
 models/get-business-account-recipient-addresses-response.ts
 models/get-business-account-sen-bank-account-response.ts
-models/get-business-account-sen-bank-accounts-response.ts
+models/get-business-account-sen-bank-accounts200-response.ts
 models/get-business-account-sen-instructions-bank-account-response.ts
 models/get-business-account-signet-bank-account-response.ts
 models/get-business-account-signet-bank-accounts-response.ts
 models/get-business-account-signet-instructions-bank-account-response.ts
 models/get-business-account-transfer-response.ts
 models/get-business-account-wire-bank-account-response.ts
-models/get-business-account-wire-bank-accounts-response.ts
+models/get-business-account-wire-bank-accounts200-response.ts
 models/get-business-account-wire-instructions-bank-account-response.ts
 models/get-card-response.ts
 models/get-cards-response.ts
@@ -159,6 +159,7 @@ models/mock-sepa-payment-response.ts
 models/mock-wire-payment-beneficiary-bank-instruction.ts
 models/mock-wire-payment-request.ts
 models/mock-wire-payment-response.ts
+models/model3ds-results.ts
 models/money.ts
 models/not-authorized.ts
 models/not-found.ts
@@ -168,6 +169,7 @@ models/payment-info-cancel.ts
 models/payment-info-payment-and-refund.ts
 models/payment-status.ts
 models/payment-verification-response.ts
+models/payout-business-account-adjustments.ts
 models/payout-business-account.ts
 models/payout-creation-request.ts
 models/payout-destination-type.ts
@@ -206,7 +208,6 @@ models/subscribe-response.ts
 models/subscription-detail.ts
 models/subscription-request.ts
 models/subscription-response.ts
-models/three-dsresult.ts
 models/token-amount.ts
 models/transfer-creation-request-destination.ts
 models/transfer-creation-request.ts
@@ -225,7 +226,6 @@ models/transfer.ts
 models/unwithdrawal-object.ts
 models/update-card-response.ts
 models/verification-error-code.ts
-models/wallet-config.ts
 models/wallet-creation-request.ts
 models/wallet-location.ts
 models/wallet.ts
