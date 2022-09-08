@@ -17,8 +17,8 @@ function camelize(text: string): string {
 }
 const view = {
   camelize: function () {
-    return function (text, render) {
-      return camelize(render(text));
+    return function (text: string, render: any): string {
+      return camelize(text);
     };
   }
 };
