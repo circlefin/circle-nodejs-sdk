@@ -50,11 +50,7 @@ createSubscription();
 To run the codegen:
 
 ```sh
-openapi-generator-cli generate -g typescript-axios  \
--i sdk.json \
--o ./src/generated/ \
--p npmName=circle,supportsES6=true,modelPropertyNaming=original,apiPackage=apis,modelPackage=models \
--t ./templates/typescript-axios --additional-properties=npmVersion=0.1.1-beta.0,withSeparateModelsAndApi=true
+yarn gen-sdk <sdk-version>      # e.g. yarn gen-sdk 0.1.1-beta.0
 ```
 
 Run all tests:

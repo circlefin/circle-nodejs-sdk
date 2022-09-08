@@ -11,7 +11,8 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
-    "format-check": "prettier --check src/"
+    "format-check": "prettier --check src/",
+    "gen-sdk": "source build-utils/gen-sdk.sh"
   },
   "keywords": [
     "circle",
@@ -37,6 +38,7 @@
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
     "@types/jest": "^28.1.7",
+    "@types/mustache": "^4.2.1",
     "@types/node": "^14.14.14",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "eslint": "^8.0.1",
@@ -47,6 +49,7 @@
     "husky": "^8.0.1",
     "jest": "^28.1.3",
     "jshint": "^2.11.0",
+    "mustache": "^4.2.0",
     "prettier": "^2.7.1",
     "ts-jest": "^28.0.8",
     "ts-node": "10.9.1",

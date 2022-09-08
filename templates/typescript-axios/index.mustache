@@ -2,5 +2,27 @@
 /* eslint-disable */
 {{>licenseInfo}}
 
+import {
+    {{#apiInfo}}
+    {{#apis}}
+    {{#operations}}{{classname}},{{/operations}}
+    {{/apis}}
+    {{/apiInfo}}
+} from './api'
 
-{{#withSeparateModelsAndApi}}export * from "./{{tsModelPackage}}";{{/withSeparateModelsAndApi}}
+import { Configuration } from "./configuration";
+export * from "./{{tsModelPackage}}";
+
+
+export class Circle {
+    {{#apiInfo}}{{#apis}}public <%#camelize%>{{baseName}}<%/camelize%>: {{classname}};
+    {{/apis}}{{/apiInfo}}
+    constructor(apiKey: string, baseUrl: string) {
+        const configuration = new Configuration({ basePath: baseUrl, apiKey });
+        {{#apiInfo}}
+        {{#apis}}
+        {{#operations}}this.<%#camelize%>{{baseName}}<%/camelize%> = new {{classname}}(configuration);{{/operations}}
+        {{/apis}}
+        {{/apiInfo}}
+    }
+}
