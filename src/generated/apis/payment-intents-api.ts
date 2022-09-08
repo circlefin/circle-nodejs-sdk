@@ -40,35 +40,39 @@ import {
 // @ts-ignore
 import { BadRequest } from "../models";
 // @ts-ignore
-import { CreateWalletResponse } from "../models";
+import { CreatePaymentIntentResponse } from "../models";
 // @ts-ignore
-import { GetWalletResponse } from "../models";
+import { ExpirePaymentIntentResponse } from "../models";
 // @ts-ignore
-import { GetWalletsResponse } from "../models";
+import { GetPaymentIntentResponse } from "../models";
+// @ts-ignore
+import { GetPaymentIntentsResponse } from "../models";
+// @ts-ignore
+import { NotAuthorized } from "../models";
 // @ts-ignore
 import { NotFound } from "../models";
 // @ts-ignore
-import { WalletCreationRequest } from "../models";
+import { PaymentIntent } from "../models";
 /**
- * WalletsApi - axios parameter creator
+ * PaymentIntentsApi - axios parameter creator
  * @export
  */
-export const WalletsApiAxiosParamCreator = function (
+export const PaymentIntentsApiAxiosParamCreator = function (
   configuration?: Configuration
 ) {
   return {
     /**
-     * Creates an end user wallet.
-     * @summary Create a wallet
-     * @param {WalletCreationRequest} [walletCreationRequest]
+     *
+     * @summary Create a payment intent
+     * @param {PaymentIntent} [paymentIntent]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createWallet: async (
-      walletCreationRequest?: WalletCreationRequest,
+    createPaymentIntent: async (
+      paymentIntent?: PaymentIntent,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/wallets`;
+      const localVarPath = `/v1/paymentIntents`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -99,7 +103,7 @@ export const WalletsApiAxiosParamCreator = function (
         ...options.headers
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        walletCreationRequest,
+        paymentIntent,
         localVarRequestOptions,
         configuration
       );
@@ -111,20 +115,79 @@ export const WalletsApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary Get a wallet
-     * @param {string} walletId Identifier for the wallet.
+     * @summary Expire a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {object} [body]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWallet: async (
-      walletId: string,
+    expirePaymentIntent: async (
+      id: string,
+      body?: object,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      // verify required parameter 'walletId' is not null or undefined
-      assertParamExists("getWallet", "walletId", walletId);
-      const localVarPath = `/v1/wallets/{walletId}`.replace(
-        `{${"walletId"}}`,
-        encodeURIComponent(String(walletId))
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("expirePaymentIntent", "id", id);
+      const localVarPath = `/v1/paymentIntents/{id}/expire`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        body,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     *
+     * @summary Get a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPaymentIntent: async (
+      id: string,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("getPaymentIntent", "id", id);
+      const localVarPath = `/v1/paymentIntents/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id))
       );
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -160,8 +223,10 @@ export const WalletsApiAxiosParamCreator = function (
       };
     },
     /**
-     * Retrieves a list of a user\'s wallets.
-     * @summary List all wallets
+     *
+     * @summary List all payment intents
+     * @param {'created' | 'pending' | 'complete' | 'expired' | 'failed'} [status] Filters by the most recent &#x60;timeline.status&#x60; within the payment intent.
+     * @param {'underpaid' | 'paid' | 'overpaid'} [context] Filters by the most recent &#x60;timeline.context&#x60; within the payment intent.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -170,7 +235,9 @@ export const WalletsApiAxiosParamCreator = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWallets: async (
+    getPaymentIntents: async (
+      status?: "created" | "pending" | "complete" | "expired" | "failed",
+      context?: "underpaid" | "paid" | "overpaid",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -178,7 +245,7 @@ export const WalletsApiAxiosParamCreator = function (
       pageSize?: number,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/wallets`;
+      const localVarPath = `/v1/paymentIntents`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -197,6 +264,14 @@ export const WalletsApiAxiosParamCreator = function (
       // authentication bearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (status !== undefined) {
+        localVarQueryParameter["status"] = status;
+      }
+
+      if (context !== undefined) {
+        localVarQueryParameter["context"] = context;
+      }
 
       if (from !== undefined) {
         localVarQueryParameter["from"] =
@@ -238,32 +313,34 @@ export const WalletsApiAxiosParamCreator = function (
 };
 
 /**
- * WalletsApi - functional programming interface
+ * PaymentIntentsApi - functional programming interface
  * @export
  */
-export const WalletsApiFp = function (configuration?: Configuration) {
-  const localVarAxiosParamCreator = WalletsApiAxiosParamCreator(configuration);
+export const PaymentIntentsApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    PaymentIntentsApiAxiosParamCreator(configuration);
   return {
     /**
-     * Creates an end user wallet.
-     * @summary Create a wallet
-     * @param {WalletCreationRequest} [walletCreationRequest]
+     *
+     * @summary Create a payment intent
+     * @param {PaymentIntent} [paymentIntent]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async createWallet(
-      walletCreationRequest?: WalletCreationRequest,
+    async createPaymentIntent(
+      paymentIntent?: PaymentIntent,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<CreateWalletResponse>
+      ) => AxiosPromise<CreatePaymentIntentResponse>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createWallet(
-        walletCreationRequest,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.createPaymentIntent(
+          paymentIntent,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -273,24 +350,24 @@ export const WalletsApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary Get a wallet
-     * @param {string} walletId Identifier for the wallet.
+     * @summary Expire a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {object} [body]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getWallet(
-      walletId: string,
+    async expirePaymentIntent(
+      id: string,
+      body?: object,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<GetWalletResponse>
+      ) => AxiosPromise<ExpirePaymentIntentResponse>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getWallet(
-        walletId,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.expirePaymentIntent(id, body, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -299,8 +376,35 @@ export const WalletsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Retrieves a list of a user\'s wallets.
-     * @summary List all wallets
+     *
+     * @summary Get a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getPaymentIntent(
+      id: string,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<GetPaymentIntentResponse>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getPaymentIntent(id, options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @summary List all payment intents
+     * @param {'created' | 'pending' | 'complete' | 'expired' | 'failed'} [status] Filters by the most recent &#x60;timeline.status&#x60; within the payment intent.
+     * @param {'underpaid' | 'paid' | 'overpaid'} [context] Filters by the most recent &#x60;timeline.context&#x60; within the payment intent.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -309,7 +413,9 @@ export const WalletsApiFp = function (configuration?: Configuration) {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getWallets(
+    async getPaymentIntents(
+      status?: "created" | "pending" | "complete" | "expired" | "failed",
+      context?: "underpaid" | "paid" | "overpaid",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -320,16 +426,19 @@ export const WalletsApiFp = function (configuration?: Configuration) {
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<GetWalletsResponse>
+      ) => AxiosPromise<GetPaymentIntentsResponse>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getWallets(
-        from,
-        to,
-        pageBefore,
-        pageAfter,
-        pageSize,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getPaymentIntents(
+          status,
+          context,
+          from,
+          to,
+          pageBefore,
+          pageAfter,
+          pageSize,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -341,49 +450,68 @@ export const WalletsApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * WalletsApi - factory interface
+ * PaymentIntentsApi - factory interface
  * @export
  */
-export const WalletsApiFactory = function (
+export const PaymentIntentsApiFactory = function (
   configuration?: Configuration,
   basePath?: string,
   axios?: AxiosInstance
 ) {
-  const localVarFp = WalletsApiFp(configuration);
+  const localVarFp = PaymentIntentsApiFp(configuration);
   return {
     /**
-     * Creates an end user wallet.
-     * @summary Create a wallet
-     * @param {WalletCreationRequest} [walletCreationRequest]
+     *
+     * @summary Create a payment intent
+     * @param {PaymentIntent} [paymentIntent]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createWallet(
-      walletCreationRequest?: WalletCreationRequest,
+    createPaymentIntent(
+      paymentIntent?: PaymentIntent,
       options?: any
-    ): AxiosPromise<CreateWalletResponse> {
+    ): AxiosPromise<CreatePaymentIntentResponse> {
       return localVarFp
-        .createWallet(walletCreationRequest, options)
+        .createPaymentIntent(paymentIntent, options)
         .then((request) => request(axios, basePath));
     },
     /**
      *
-     * @summary Get a wallet
-     * @param {string} walletId Identifier for the wallet.
+     * @summary Expire a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {object} [body]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWallet(
-      walletId: string,
+    expirePaymentIntent(
+      id: string,
+      body?: object,
       options?: any
-    ): AxiosPromise<GetWalletResponse> {
+    ): AxiosPromise<ExpirePaymentIntentResponse> {
       return localVarFp
-        .getWallet(walletId, options)
+        .expirePaymentIntent(id, body, options)
         .then((request) => request(axios, basePath));
     },
     /**
-     * Retrieves a list of a user\'s wallets.
-     * @summary List all wallets
+     *
+     * @summary Get a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getPaymentIntent(
+      id: string,
+      options?: any
+    ): AxiosPromise<GetPaymentIntentResponse> {
+      return localVarFp
+        .getPaymentIntent(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary List all payment intents
+     * @param {'created' | 'pending' | 'complete' | 'expired' | 'failed'} [status] Filters by the most recent &#x60;timeline.status&#x60; within the payment intent.
+     * @param {'underpaid' | 'paid' | 'overpaid'} [context] Filters by the most recent &#x60;timeline.context&#x60; within the payment intent.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -392,62 +520,94 @@ export const WalletsApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getWallets(
+    getPaymentIntents(
+      status?: "created" | "pending" | "complete" | "expired" | "failed",
+      context?: "underpaid" | "paid" | "overpaid",
       from?: string,
       to?: string,
       pageBefore?: string,
       pageAfter?: string,
       pageSize?: number,
       options?: any
-    ): AxiosPromise<GetWalletsResponse> {
+    ): AxiosPromise<GetPaymentIntentsResponse> {
       return localVarFp
-        .getWallets(from, to, pageBefore, pageAfter, pageSize, options)
+        .getPaymentIntents(
+          status,
+          context,
+          from,
+          to,
+          pageBefore,
+          pageAfter,
+          pageSize,
+          options
+        )
         .then((request) => request(axios, basePath));
     }
   };
 };
 
 /**
- * WalletsApi - object-oriented interface
+ * PaymentIntentsApi - object-oriented interface
  * @export
- * @class WalletsApi
+ * @class PaymentIntentsApi
  * @extends {BaseAPI}
  */
-export class WalletsApi extends BaseAPI {
+export class PaymentIntentsApi extends BaseAPI {
   /**
-   * Creates an end user wallet.
-   * @summary Create a wallet
-   * @param {WalletCreationRequest} [walletCreationRequest]
+   *
+   * @summary Create a payment intent
+   * @param {PaymentIntent} [paymentIntent]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof WalletsApi
+   * @memberof PaymentIntentsApi
    */
-  public createWallet(
-    walletCreationRequest?: WalletCreationRequest,
+  public createPaymentIntent(
+    paymentIntent?: PaymentIntent,
     options?: AxiosRequestConfig
   ) {
-    return WalletsApiFp(this.configuration)
-      .createWallet(walletCreationRequest, options)
+    return PaymentIntentsApiFp(this.configuration)
+      .createPaymentIntent(paymentIntent, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    *
-   * @summary Get a wallet
-   * @param {string} walletId Identifier for the wallet.
+   * @summary Expire a payment intent
+   * @param {string} id Universally unique identifier (UUID v4) of a resource.
+   * @param {object} [body]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof WalletsApi
+   * @memberof PaymentIntentsApi
    */
-  public getWallet(walletId: string, options?: AxiosRequestConfig) {
-    return WalletsApiFp(this.configuration)
-      .getWallet(walletId, options)
+  public expirePaymentIntent(
+    id: string,
+    body?: object,
+    options?: AxiosRequestConfig
+  ) {
+    return PaymentIntentsApiFp(this.configuration)
+      .expirePaymentIntent(id, body, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
-   * Retrieves a list of a user\'s wallets.
-   * @summary List all wallets
+   *
+   * @summary Get a payment intent
+   * @param {string} id Universally unique identifier (UUID v4) of a resource.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PaymentIntentsApi
+   */
+  public getPaymentIntent(id: string, options?: AxiosRequestConfig) {
+    return PaymentIntentsApiFp(this.configuration)
+      .getPaymentIntent(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary List all payment intents
+   * @param {'created' | 'pending' | 'complete' | 'expired' | 'failed'} [status] Filters by the most recent &#x60;timeline.status&#x60; within the payment intent.
+   * @param {'underpaid' | 'paid' | 'overpaid'} [context] Filters by the most recent &#x60;timeline.context&#x60; within the payment intent.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -455,9 +615,11 @@ export class WalletsApi extends BaseAPI {
    * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof WalletsApi
+   * @memberof PaymentIntentsApi
    */
-  public getWallets(
+  public getPaymentIntents(
+    status?: "created" | "pending" | "complete" | "expired" | "failed",
+    context?: "underpaid" | "paid" | "overpaid",
     from?: string,
     to?: string,
     pageBefore?: string,
@@ -465,8 +627,17 @@ export class WalletsApi extends BaseAPI {
     pageSize?: number,
     options?: AxiosRequestConfig
   ) {
-    return WalletsApiFp(this.configuration)
-      .getWallets(from, to, pageBefore, pageAfter, pageSize, options)
+    return PaymentIntentsApiFp(this.configuration)
+      .getPaymentIntents(
+        status,
+        context,
+        from,
+        to,
+        pageBefore,
+        pageAfter,
+        pageSize,
+        options
+      )
       .then((request) => request(this.axios, this.basePath));
   }
 }
