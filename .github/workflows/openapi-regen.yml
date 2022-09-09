@@ -9,7 +9,7 @@ env:
   OPENAPI_VER_FILE: OPENAPI_VERSION
   OPENAPI_FILE: sdk.json
 
-name: Create Release
+name: Regenerate SDK
 
 jobs:
   regenerate:
