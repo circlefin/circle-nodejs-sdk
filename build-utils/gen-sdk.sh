@@ -8,3 +8,5 @@ npx ts-node build-utils/mustache-camelize.ts src/generated/index.ts > src/genera
 
 mv src/generated/index-temp.ts src/generated/index.ts
 
+yarn lint-fix
+yarn format

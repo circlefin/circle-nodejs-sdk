@@ -12,7 +12,7 @@
     "lint-fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
     "format-check": "prettier --check src/",
-    "gen-sdk": "source build-utils/gen-sdk.sh && yarn lint-fix && yarn format"
+    "gen-sdk": "bash build-utils/gen-sdk.sh"
   },
   "keywords": [
     "circle",
