@@ -44,10 +44,8 @@ jobs:
         id: get-new-openapi-ver
         run: echo "::set-output name=version::${{ fromJson(steps.read-openapi-doc.outputs.doc).info.version }}"      
 
-
       - name: Regenerate SDK code
         run: yarn gen-sdk ${{ steps.get-new-openapi-ver.outputs.version }}
-
 
       - name: Get Conventional Commits prefix
         id: get-conven-commit-pref
