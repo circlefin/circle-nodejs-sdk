@@ -2,6 +2,8 @@ on:
   workflow_dispatch:
   push:
     branches: [openapi-regen-triggerer]
+    paths:
+      - sdk.json
 
 env:
   README_FILE: README.md    # Needed to extract codegen command
