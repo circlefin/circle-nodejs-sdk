@@ -83,6 +83,7 @@ jobs:
           branch: bot-openapi-regen-pr-v${{ steps.get-new-openapi-ver.outputs.version }}
           title: Regenerate code from OpenAPI document v${{ steps.get-new-openapi-ver.outputs.version }}
           commit-message: "${{ steps.get-conven-commit-pref.outputs.commit-pref }}: regen code openapi doc v${{ steps.get-new-openapi-ver.outputs.version }}"
+          add-paths: src/generated
           body: |
             Automated pull request by GitHub action following Circle OpenAPI document update. 
             SDK Code generated using [OpenAPI generator](https://openapi-generator.tech/) 
