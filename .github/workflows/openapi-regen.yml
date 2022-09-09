@@ -45,41 +45,10 @@ jobs:
         run: echo "::set-output name=version::${{ fromJson(steps.read-openapi-doc.outputs.doc).info.version }}"      
 
 
-      # Regenerate SDK code
-      - name: Extract codegen command from README.md
-        id: extract-codegen-cmd
-        run: |
-          i=0
-          cmd_start_ln=-1
-          codegen_cmd=""
-
-          while read p; do
-              if [[ $p == openapi-generator-cli* ]]
-              then
-                  cmd_start_ln=$i
-                  codegen_cmd=$p
-                  continue
-              fi
-
-              if [[ $cmd_start_ln -gt -1 ]]
-              then
-                  if [[ $p == "\`\`\`" ]]
-                  then
-                      break
-                  fi
-                  codegen_cmd="$codegen_cmd\n$p"
-              fi
-              ((i=i+1))
-          done < $README_FILE
-
-          codegen_cmd=$(echo $codegen_cmd | sed 's/\${version}/${{ steps.get-new-openapi-ver.outputs.version }}/g')
-          echo "::set-output name=cmd::$codegen_cmd"
-
       - name: Regenerate SDK code
-        run: npx ${{ steps.extract-codegen-cmd.outputs.cmd }}
+        run: yarn gen-sdk ${{ steps.get-new-openapi-ver.outputs.version }}
 
 
-      # Create PR with updated code
       - name: Get Conventional Commits prefix
         id: get-conven-commit-pref
         run: |

@@ -12,18 +12,16 @@
  * Do not edit the class manually.
  */
 
-import { GetPaymentsResponseDataInner } from "./get-payments-response-data-inner";
-
 /**
- *
+ * Type of bank account ( Retail Bank or Business Bank)
  * @export
- * @interface GetPaymentsResponse
+ * @enum {string}
  */
-export interface GetPaymentsResponse {
-  /**
-   *
-   * @type {Array<GetPaymentsResponseDataInner>}
-   * @memberof GetPaymentsResponse
-   */
-  data?: Array<GetPaymentsResponseDataInner>;
-}
+
+export const ACHBankAccountType = {
+  Retail: "retail",
+  Business: "business"
+} as const;
+
+export type ACHBankAccountType =
+  typeof ACHBankAccountType[keyof typeof ACHBankAccountType];

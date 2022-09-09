@@ -406,6 +406,7 @@ export const PaymentsApiAxiosParamCreator = function (
      * @summary List all payments
      * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
      * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
+     * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
      * @param {Array<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
      * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
@@ -419,6 +420,7 @@ export const PaymentsApiAxiosParamCreator = function (
     getPayments: async (
       source?: string,
       settlementId?: string,
+      paymentIntentId?: string,
       type?: Array<"card" | "wire" | "ach" | "sepa">,
       status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
       from?: string,
@@ -454,6 +456,10 @@ export const PaymentsApiAxiosParamCreator = function (
 
       if (settlementId !== undefined) {
         localVarQueryParameter["settlementId"] = settlementId;
+      }
+
+      if (paymentIntentId !== undefined) {
+        localVarQueryParameter["paymentIntentId"] = paymentIntentId;
       }
 
       if (type) {
@@ -741,6 +747,7 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
      * @summary List all payments
      * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
      * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
+     * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
      * @param {Array<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
      * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
@@ -754,6 +761,7 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
     async getPayments(
       source?: string,
       settlementId?: string,
+      paymentIntentId?: string,
       type?: Array<"card" | "wire" | "ach" | "sepa">,
       status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
       from?: string,
@@ -771,6 +779,7 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
       const localVarAxiosArgs = await localVarAxiosParamCreator.getPayments(
         source,
         settlementId,
+        paymentIntentId,
         type,
         status,
         from,
@@ -927,6 +936,7 @@ export const PaymentsApiFactory = function (
      * @summary List all payments
      * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
      * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
+     * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
      * @param {Array<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
      * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
@@ -940,6 +950,7 @@ export const PaymentsApiFactory = function (
     getPayments(
       source?: string,
       settlementId?: string,
+      paymentIntentId?: string,
       type?: Array<"card" | "wire" | "ach" | "sepa">,
       status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
       from?: string,
@@ -953,6 +964,7 @@ export const PaymentsApiFactory = function (
         .getPayments(
           source,
           settlementId,
+          paymentIntentId,
           type,
           status,
           from,
@@ -1099,6 +1111,7 @@ export class PaymentsApi extends BaseAPI {
    * @summary List all payments
    * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
    * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
+   * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
    * @param {Array<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
    * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
@@ -1113,6 +1126,7 @@ export class PaymentsApi extends BaseAPI {
   public getPayments(
     source?: string,
     settlementId?: string,
+    paymentIntentId?: string,
     type?: Array<"card" | "wire" | "ach" | "sepa">,
     status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
     from?: string,
@@ -1126,6 +1140,7 @@ export class PaymentsApi extends BaseAPI {
       .getPayments(
         source,
         settlementId,
+        paymentIntentId,
         type,
         status,
         from,

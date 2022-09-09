@@ -22,6 +22,8 @@ export * from "./apis/deposits-api";
 export * from "./apis/encryption-api";
 export * from "./apis/health-api";
 export * from "./apis/management-api";
+export * from "./apis/on-chain-payments-api";
+export * from "./apis/payment-intents-api";
 export * from "./apis/payments-api";
 export * from "./apis/payouts-api";
 export * from "./apis/returns-api";
