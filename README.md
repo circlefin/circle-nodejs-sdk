@@ -46,15 +46,19 @@ createSubscription();
 ```
 
 ## Development
-
-To run the codegen:
+Clone this repo and install dependencies using 
 ```sh
-yarn gen-sdk <sdk-version>      # e.g. yarn gen-sdk 0.1.1-beta.0
+yarn install
 ```
 
-Run all tests:
+1. Run the codegen:
 
-```bash
-$ yarn install
-$ yarn test
-```
+    ```sh
+    yarn gen-sdk <sdk-version>      # e.g. yarn gen-sdk 0.1.1-beta.0
+    ```
+
+2. Run all tests:
+
+    ```bash
+    yarn test
+    ```
