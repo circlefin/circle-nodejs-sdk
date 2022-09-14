@@ -12,18 +12,18 @@
  * Do not edit the class manually.
  */
 
-import { GetPaymentsResponseDataInner } from "./get-payments-response-data-inner";
+import { PaymentIntent } from "./payment-intent";
 
 /**
  *
  * @export
- * @interface GetPaymentsResponse
+ * @interface GetPaymentIntentsResponse
  */
-export interface GetPaymentsResponse {
+export interface GetPaymentIntentsResponse {
   /**
    *
-   * @type {Array<GetPaymentsResponseDataInner>}
-   * @memberof GetPaymentsResponse
+   * @type {Array<PaymentIntent>}
+   * @memberof GetPaymentIntentsResponse
    */
-  data?: Array<GetPaymentsResponseDataInner>;
+  data?: Array<PaymentIntent>;
 }

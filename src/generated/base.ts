@@ -21,7 +21,7 @@ import globalAxios, {
   AxiosRequestConfig
 } from "axios";
 
-export const BASE_PATH = "https://api-sandbox.circle.com".replace(/\/+$/, "");
+export const BASE_PATH = "http://api-sandbox.circle.com".replace(/\/+$/, "");
 
 /**
  *

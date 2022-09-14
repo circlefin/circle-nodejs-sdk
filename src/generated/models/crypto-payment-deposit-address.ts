@@ -12,18 +12,24 @@
  * Do not edit the class manually.
  */
 
-import { GetPaymentsResponseDataInner } from "./get-payments-response-data-inner";
+import { Chain } from "./chain";
 
 /**
  *
  * @export
- * @interface GetPaymentsResponse
+ * @interface CryptoPaymentDepositAddress
  */
-export interface GetPaymentsResponse {
+export interface CryptoPaymentDepositAddress {
   /**
    *
-   * @type {Array<GetPaymentsResponseDataInner>}
-   * @memberof GetPaymentsResponse
+   * @type {Chain}
+   * @memberof CryptoPaymentDepositAddress
    */
-  data?: Array<GetPaymentsResponseDataInner>;
+  chain?: Chain;
+  /**
+   *
+   * @type {string}
+   * @memberof CryptoPaymentDepositAddress
+   */
+  address?: string;
 }

@@ -13,7 +13,7 @@ jobs:
         id: release
         with:
           release-type: node
-          package-name: \@circle-fin/circle-sdk
+          package-name: "@circle-fin/circle-sdk"
 
   npm-publish:
     needs: release-please

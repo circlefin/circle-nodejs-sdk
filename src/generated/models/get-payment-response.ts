@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { DetailedPaymentPolymorphic } from "./detailed-payment-polymorphic";
+import { GetPaymentResponseData } from "./get-payment-response-data";
 
 /**
  *
@@ -22,8 +22,8 @@ import { DetailedPaymentPolymorphic } from "./detailed-payment-polymorphic";
 export interface GetPaymentResponse {
   /**
    *
-   * @type {DetailedPaymentPolymorphic}
+   * @type {GetPaymentResponseData}
    * @memberof GetPaymentResponse
    */
-  data?: DetailedPaymentPolymorphic;
+  data?: GetPaymentResponseData;
 }
