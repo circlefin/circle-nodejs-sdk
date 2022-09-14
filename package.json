@@ -13,6 +13,10 @@
     "format": "prettier --write .",
     "format-check": "prettier --check src/"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/circlefin/circle-nodejs-sdk.git"
+  },
   "keywords": [
     "circle",
     "circle.com",
@@ -30,6 +34,7 @@
   "dependencies": {
     "axios": "0.21.4"
   },
+  "homepage": "https://github.com/circlefin/circle-nodejs-sdk#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.com"
   },
