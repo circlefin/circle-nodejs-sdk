@@ -12,10 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { BasicCancel } from "./basic-cancel";
-import { BasicPayment } from "./basic-payment";
 import { CancelRefundReversalStatus } from "./cancel-refund-reversal-status";
+import { FiatCancel } from "./fiat-cancel";
 import { FiatMoneyUsd } from "./fiat-money-usd";
+import { FiatPayment } from "./fiat-payment";
 import { MetadataPhoneEmail } from "./metadata-phone-email";
 import { PaymentErrorCode } from "./payment-error-code";
 import { RiskEvaluation } from "./risk-evaluation";
@@ -77,16 +77,16 @@ export interface DetailedRefund {
   status: CancelRefundReversalStatus;
   /**
    *
-   * @type {BasicPayment}
+   * @type {FiatPayment}
    * @memberof DetailedRefund
    */
-  originalPayment?: BasicPayment;
+  originalPayment?: FiatPayment;
   /**
    *
-   * @type {BasicCancel}
+   * @type {FiatCancel}
    * @memberof DetailedRefund
    */
-  cancel?: BasicCancel | null;
+  cancel?: FiatCancel | null;
   /**
    *
    * @type {FiatMoneyUsd}

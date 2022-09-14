@@ -12,172 +12,138 @@
  * Do not edit the class manually.
  */
 
-import { FiatCancel } from "./fiat-cancel";
 import { FiatMoneyUsd } from "./fiat-money-usd";
-import { FiatRefund } from "./fiat-refund";
-import { MetadataPhoneEmail } from "./metadata-phone-email";
-import { PaymentErrorCode } from "./payment-error-code";
+import { PaymentInfoCancel } from "./payment-info-cancel";
+import { PaymentInfoPaymentAndRefund } from "./payment-info-payment-and-refund";
 import { PaymentStatus } from "./payment-status";
-import { PaymentVerificationResponse } from "./payment-verification-response";
 import { RequiredAction } from "./required-action";
-import { RiskEvaluation } from "./risk-evaluation";
 import { SourceResponse } from "./source-response";
 
 /**
- *
+ * Status information of the related payment. This property is only present on refund or cancel items.
  * @export
- * @interface DetailedPayment
+ * @interface FiatPayment
  */
-export interface DetailedPayment {
+export interface FiatPayment {
   /**
    * Unique system generated identifier for the entity.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   id: string;
   /**
    * Type of the payment object.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
-  type: DetailedPaymentTypeEnum;
+  type: FiatPaymentTypeEnum;
   /**
    * Unique system generated identifier for the merchant.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   merchantId: string;
   /**
    * Unique system generated identifier for the wallet of the merchant.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   merchantWalletId?: string;
   /**
    *
    * @type {FiatMoneyUsd}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   amount: FiatMoneyUsd;
   /**
    *
    * @type {SourceResponse}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   source: SourceResponse;
   /**
    * Enumerated description of the payment.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
-  description?: DetailedPaymentDescriptionEnum;
+  description?: FiatPaymentDescriptionEnum;
   /**
    *
    * @type {PaymentStatus}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   status: PaymentStatus;
   /**
    * Determines if a payment has successfully been captured. This property is only present for payments that did not use auto capture.
    * @type {boolean}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   captured?: boolean;
   /**
    *
    * @type {FiatMoneyUsd}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   captureAmount?: FiatMoneyUsd;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   captureDate?: string;
   /**
    *
    * @type {RequiredAction}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   requiredAction?: RequiredAction;
   /**
    *
-   * @type {PaymentVerificationResponse}
-   * @memberof DetailedPayment
+   * @type {PaymentInfoCancel}
+   * @memberof FiatPayment
    */
-  verification?: PaymentVerificationResponse;
+  cancel?: PaymentInfoCancel | null;
   /**
    *
-   * @type {FiatCancel}
-   * @memberof DetailedPayment
+   * @type {Array<PaymentInfoPaymentAndRefund>}
+   * @memberof FiatPayment
    */
-  cancel?: FiatCancel | null;
-  /**
-   *
-   * @type {Array<FiatRefund>}
-   * @memberof DetailedPayment
-   */
-  refunds?: Array<FiatRefund>;
+  refunds?: Array<PaymentInfoPaymentAndRefund>;
   /**
    *
    * @type {FiatMoneyUsd}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   fees?: FiatMoneyUsd;
   /**
-   * Payment tracking reference. Will be present once known.
-   * @type {string}
-   * @memberof DetailedPayment
-   */
-  trackingRef?: string | null;
-  /**
-   *
-   * @type {PaymentErrorCode}
-   * @memberof DetailedPayment
-   */
-  errorCode?: PaymentErrorCode | null;
-  /**
-   *
-   * @type {MetadataPhoneEmail}
-   * @memberof DetailedPayment
-   */
-  metadata?: MetadataPhoneEmail;
-  /**
-   *
-   * @type {RiskEvaluation}
-   * @memberof DetailedPayment
-   */
-  riskEvaluation?: RiskEvaluation | null;
-  /**
    * The channel identifier that can be set for the payment. When not provided, the default channel is used.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   channel?: string;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   createDate?: string;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPayment
    */
   updateDate?: string;
 }
 
-export const DetailedPaymentTypeEnum = {
+export const FiatPaymentTypeEnum = {
   Payment: "payment"
 } as const;
 
-export type DetailedPaymentTypeEnum =
-  typeof DetailedPaymentTypeEnum[keyof typeof DetailedPaymentTypeEnum];
-export const DetailedPaymentDescriptionEnum = {
+export type FiatPaymentTypeEnum =
+  typeof FiatPaymentTypeEnum[keyof typeof FiatPaymentTypeEnum];
+export const FiatPaymentDescriptionEnum = {
   Payment: "Payment"
 } as const;
 
-export type DetailedPaymentDescriptionEnum =
-  typeof DetailedPaymentDescriptionEnum[keyof typeof DetailedPaymentDescriptionEnum];
+export type FiatPaymentDescriptionEnum =
+  typeof FiatPaymentDescriptionEnum[keyof typeof FiatPaymentDescriptionEnum];

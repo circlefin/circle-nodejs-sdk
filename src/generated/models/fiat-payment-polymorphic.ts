@@ -14,6 +14,7 @@
 
 import { FiatCancel } from "./fiat-cancel";
 import { FiatMoneyUsd } from "./fiat-money-usd";
+import { FiatPayment } from "./fiat-payment";
 import { FiatRefund } from "./fiat-refund";
 import { MetadataPhoneEmail } from "./metadata-phone-email";
 import { PaymentErrorCode } from "./payment-error-code";
@@ -26,158 +27,154 @@ import { SourceResponse } from "./source-response";
 /**
  *
  * @export
- * @interface DetailedPayment
+ * @interface FiatPaymentPolymorphic
  */
-export interface DetailedPayment {
+export interface FiatPaymentPolymorphic {
   /**
    * Unique system generated identifier for the entity.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   id: string;
   /**
    * Type of the payment object.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
-  type: DetailedPaymentTypeEnum;
+  type: FiatPaymentPolymorphicTypeEnum;
   /**
    * Unique system generated identifier for the merchant.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   merchantId: string;
   /**
    * Unique system generated identifier for the wallet of the merchant.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   merchantWalletId?: string;
   /**
    *
    * @type {FiatMoneyUsd}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   amount: FiatMoneyUsd;
   /**
    *
    * @type {SourceResponse}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   source: SourceResponse;
   /**
    * Enumerated description of the payment.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
-  description?: DetailedPaymentDescriptionEnum;
+  description?: FiatPaymentPolymorphicDescriptionEnum;
   /**
    *
    * @type {PaymentStatus}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   status: PaymentStatus;
   /**
-   * Determines if a payment has successfully been captured. This property is only present for payments that did not use auto capture.
-   * @type {boolean}
-   * @memberof DetailedPayment
-   */
-  captured?: boolean;
-  /**
-   *
-   * @type {FiatMoneyUsd}
-   * @memberof DetailedPayment
-   */
-  captureAmount?: FiatMoneyUsd;
-  /**
-   * ISO-8601 UTC date/time format.
-   * @type {string}
-   * @memberof DetailedPayment
-   */
-  captureDate?: string;
-  /**
    *
    * @type {RequiredAction}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   requiredAction?: RequiredAction;
   /**
    *
    * @type {PaymentVerificationResponse}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   verification?: PaymentVerificationResponse;
   /**
    *
+   * @type {FiatPayment}
+   * @memberof FiatPaymentPolymorphic
+   */
+  originalPayment?: FiatPayment;
+  /**
+   *
    * @type {FiatCancel}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   cancel?: FiatCancel | null;
   /**
    *
    * @type {Array<FiatRefund>}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
-  refunds?: Array<FiatRefund>;
+  refunds?: Array<FiatRefund> | null;
   /**
    *
    * @type {FiatMoneyUsd}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   fees?: FiatMoneyUsd;
   /**
    * Payment tracking reference. Will be present once known.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   trackingRef?: string | null;
   /**
+   * External network identifier which will be present once provided from the applicable network.   Examples: * **Input/Output Message Accountability Data (IMAD/OMAD)**: unique number given to each FedWire payment when using the Federal Reserve Bank Service which can be used to investigate and track wire transfers.
+   * @type {string}
+   * @memberof FiatPaymentPolymorphic
+   */
+  externalRef?: string;
+  /**
    *
    * @type {PaymentErrorCode}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   errorCode?: PaymentErrorCode | null;
   /**
    *
    * @type {MetadataPhoneEmail}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   metadata?: MetadataPhoneEmail;
   /**
-   *
-   * @type {RiskEvaluation}
-   * @memberof DetailedPayment
-   */
-  riskEvaluation?: RiskEvaluation | null;
-  /**
    * The channel identifier that can be set for the payment. When not provided, the default channel is used.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   channel?: string;
   /**
+   *
+   * @type {RiskEvaluation}
+   * @memberof FiatPaymentPolymorphic
+   */
+  riskEvaluation?: RiskEvaluation | null;
+  /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   createDate?: string;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof DetailedPayment
+   * @memberof FiatPaymentPolymorphic
    */
   updateDate?: string;
 }
 
-export const DetailedPaymentTypeEnum = {
-  Payment: "payment"
+export const FiatPaymentPolymorphicTypeEnum = {
+  Payment: "payment",
+  Refund: "refund",
+  Cancel: "cancel"
 } as const;
 
-export type DetailedPaymentTypeEnum =
-  typeof DetailedPaymentTypeEnum[keyof typeof DetailedPaymentTypeEnum];
-export const DetailedPaymentDescriptionEnum = {
+export type FiatPaymentPolymorphicTypeEnum =
+  typeof FiatPaymentPolymorphicTypeEnum[keyof typeof FiatPaymentPolymorphicTypeEnum];
+export const FiatPaymentPolymorphicDescriptionEnum = {
   Payment: "Payment"
 } as const;
 
-export type DetailedPaymentDescriptionEnum =
-  typeof DetailedPaymentDescriptionEnum[keyof typeof DetailedPaymentDescriptionEnum];
+export type FiatPaymentPolymorphicDescriptionEnum =
+  typeof FiatPaymentPolymorphicDescriptionEnum[keyof typeof FiatPaymentPolymorphicDescriptionEnum];
