@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { ACHBankAccountType } from "./achbank-account-type";
 import { ACHBillingDetails } from "./achbilling-details";
 import { AchVerificationErrorCodes } from "./ach-verification-error-codes";
 import { BankAddress } from "./bank-address";
@@ -55,6 +56,12 @@ export interface ACH {
    * @memberof ACH
    */
   billingDetails: ACHBillingDetails;
+  /**
+   *
+   * @type {ACHBankAccountType}
+   * @memberof ACH
+   */
+  bankAccountType?: ACHBankAccountType | null;
   /**
    *
    * @type {BankAddress}

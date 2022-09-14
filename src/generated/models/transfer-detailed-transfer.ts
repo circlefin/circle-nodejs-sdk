@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { Fee } from "./fee";
 import { Money } from "./money";
 import { RiskEvaluation } from "./risk-evaluation";
 import { TransferDestinationLocation } from "./transfer-destination-location";
@@ -48,6 +49,12 @@ export interface TransferDetailedTransfer {
    * @memberof TransferDetailedTransfer
    */
   amount: Money;
+  /**
+   * An array of fees applied to a transaction. This is only available when there is at least one non-zero fee.
+   * @type {Array<Fee>}
+   * @memberof TransferDetailedTransfer
+   */
+  fees?: Array<Fee>;
   /**
    * A hash that uniquely identifies the onchain transaction. This is only available where either source or destination are of type blockchain.
    * @type {string}

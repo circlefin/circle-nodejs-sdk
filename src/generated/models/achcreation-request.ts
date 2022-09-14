@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { ACHBankAccountType } from "./achbank-account-type";
 import { ACHBillingDetails } from "./achbilling-details";
 import { MetadataCardAndAch } from "./metadata-card-and-ach";
 
@@ -39,6 +40,12 @@ export interface ACHCreationRequest {
    * @memberof ACHCreationRequest
    */
   billingDetails: ACHBillingDetails;
+  /**
+   *
+   * @type {ACHBankAccountType}
+   * @memberof ACHCreationRequest
+   */
+  bankAccountType?: ACHBankAccountType | null;
   /**
    *
    * @type {MetadataCardAndAch}
