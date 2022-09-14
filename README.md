@@ -62,3 +62,10 @@ yarn install
     ```bash
     yarn test
     ```
+
+
+## Contributions
+
+Please follow the [Conventional Commits][convencomms] format for all commits when creating a contributing pull request for this repo. 
+
+[convencomms]: https://www.conventionalcommits.org/en/v1.0.0/
