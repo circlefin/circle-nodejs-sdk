@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "${version}",
+    "version": "1.0.2",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, and Accounts APIs bundled into one OpenAPI Specification."
   },
