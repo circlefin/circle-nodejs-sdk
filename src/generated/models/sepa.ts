@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { BillingDetails } from "./billing-details";
-// May contain unused imports in some cases
-// @ts-ignore
 import { ExternalFiatAccountStatus } from "./external-fiat-account-status";
-// May contain unused imports in some cases
-// @ts-ignore
 import { RiskEvaluation } from "./risk-evaluation";
 
 /**

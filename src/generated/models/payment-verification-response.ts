@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { CvvResults } from "./cvv-results";
-// May contain unused imports in some cases
-// @ts-ignore
 import { Eci } from "./eci";
-// May contain unused imports in some cases
-// @ts-ignore
 import { ThreeDSResult } from "./three-dsresult";
 
 /**

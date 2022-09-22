@@ -12,11 +12,7 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { WireInstructionBeneficiary } from "./wire-instruction-beneficiary";
-// May contain unused imports in some cases
-// @ts-ignore
 import { WireInstructionBeneficiaryBank } from "./wire-instruction-beneficiary-bank";
 
 /**

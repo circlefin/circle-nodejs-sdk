@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
-// May contain unused imports in some cases
-// @ts-ignore
 import { PaymentStatus } from "./payment-status";
-// May contain unused imports in some cases
-// @ts-ignore
 import { RequiredAction } from "./required-action";
 
 /**

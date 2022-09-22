@@ -12,20 +12,10 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { CryptoPaymentsMoney } from "./crypto-payments-money";
-// May contain unused imports in some cases
-// @ts-ignore
 import { PaymentIntentAmountPaid } from "./payment-intent-amount-paid";
-// May contain unused imports in some cases
-// @ts-ignore
 import { PaymentIntentFees } from "./payment-intent-fees";
-// May contain unused imports in some cases
-// @ts-ignore
 import { PaymentMethodBlockchain } from "./payment-method-blockchain";
-// May contain unused imports in some cases
-// @ts-ignore
 import { Timeline } from "./timeline";
 
 /**

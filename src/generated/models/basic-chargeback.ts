@@ -12,11 +12,7 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { BasicChargebackHistory } from "./basic-chargeback-history";
-// May contain unused imports in some cases
-// @ts-ignore
 import { ChargebackCategories } from "./chargeback-categories";
 
 /**

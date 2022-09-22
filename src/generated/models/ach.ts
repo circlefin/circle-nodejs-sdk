@@ -12,26 +12,12 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { ACHBankAccountType } from "./achbank-account-type";
-// May contain unused imports in some cases
-// @ts-ignore
 import { ACHBillingDetails } from "./achbilling-details";
-// May contain unused imports in some cases
-// @ts-ignore
 import { AchVerificationErrorCodes } from "./ach-verification-error-codes";
-// May contain unused imports in some cases
-// @ts-ignore
 import { BankAddress } from "./bank-address";
-// May contain unused imports in some cases
-// @ts-ignore
 import { ExternalFiatAccountStatus } from "./external-fiat-account-status";
-// May contain unused imports in some cases
-// @ts-ignore
 import { MetadataPhoneEmail } from "./metadata-phone-email";
-// May contain unused imports in some cases
-// @ts-ignore
 import { RiskEvaluation } from "./risk-evaluation";
 
 /**

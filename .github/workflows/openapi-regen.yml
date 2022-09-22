@@ -43,7 +43,7 @@ jobs:
 
       - name: Extract new version
         id: get-new-openapi-ver
-        run: echo "::set-output name=version::${{ fromJson(steps.read-openapi-doc.outputs.doc).info.version }}"      
+        run: echo "::set-output name=version::${{ fromJson(steps.read-openapi-doc.outputs.doc).info.version }}"
 
       - name: Regenerate SDK code
         run: yarn gen-sdk ${{ steps.get-new-openapi-ver.outputs.version }}
@@ -88,4 +88,4 @@ jobs:
             ${{ env.OPENAPI_FILE }}
           body: |
             Automated pull request by GitHub action following Circle OpenAPI document update. 
-            SDK Code generated using [OpenAPI generator](https://openapi-generator.tech/) 
+            SDK Code generated using [OpenAPI generator](https://openapi-generator.tech/)

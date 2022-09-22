@@ -12,11 +12,7 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { BankAddress } from "./bank-address";
-// May contain unused imports in some cases
-// @ts-ignore
 import { BillingDetails } from "./billing-details";
 
 /**

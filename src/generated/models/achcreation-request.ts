@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
 import { ACHBankAccountType } from "./achbank-account-type";
-// May contain unused imports in some cases
-// @ts-ignore
 import { ACHBillingDetails } from "./achbilling-details";
-// May contain unused imports in some cases
-// @ts-ignore
 import { MetadataCardAndAch } from "./metadata-card-and-ach";
 
 /**

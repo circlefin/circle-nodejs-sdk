@@ -46,26 +46,27 @@ createSubscription();
 ```
 
 ## Development
-Clone this repo and install dependencies using 
+
+Clone this repo and install dependencies using
+
 ```sh
 yarn install
 ```
 
 1. Run the codegen:
 
-    ```sh
-    yarn gen-sdk <sdk-version>      # e.g. yarn gen-sdk 0.1.1-beta.0
-    ```
+   ```sh
+   yarn gen-sdk <sdk-version>      # e.g. yarn gen-sdk 0.1.1-beta.0
+   ```
 
 2. Run all tests:
 
-    ```bash
-    yarn test
-    ```
-
+   ```bash
+   yarn test
+   ```
 
 ## Contributions
 
-Please follow the [Conventional Commits][convencomms] format for all commits when creating a contributing pull request for this repo. 
+Please follow the [Conventional Commits][convencomms] format for all commits when creating a contributing pull request for this repo.
 
 [convencomms]: https://www.conventionalcommits.org/en/v1.0.0/
