@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.1.1-beta.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v0.1.0-beta.0...v0.1.1-beta.0) (2022-09-26)
+## [1.0.0] (2022-09-26)
 
 
 ### Bug Fixes
