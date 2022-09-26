@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, and Accounts APIs bundled into one OpenAPI Specification."
   },
@@ -89,7 +89,7 @@
       "get": {
         "summary": "Ping",
         "description": "Checks that the service is running.",
-        "operationId": "rootPing",
+        "operationId": "ping",
         "tags": [
           "Health"
         ],
@@ -229,7 +229,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetListSubscriptionsResponse",
+                  "title": "ListSubscriptionsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -273,7 +273,7 @@
         ],
         "summary": "Create a notification subscription",
         "description": "Subscribe to receiving notifications at a given endpoint. The endpoint should be able to handle AWS SNS subscription requests. For more details see https://docs.aws.amazon.com/mobile/sdkforxamarin/developerguide/sns-send-http.html. Note, the sandbox environment allows a maximum of 3 active subscriptions; otherwise, this is limited to 1 active subscription and subsequent create requests will be rejected with a Limit Exceeded error.\n",
-        "operationId": "subscribe",
+        "operationId": "createSubscribtion",
         "tags": [
           "Subscriptions"
         ],
@@ -292,7 +292,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SubscribeResponse",
+                  "title": "CreateSubscribtionResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SubscriptionResponse"
@@ -344,7 +344,7 @@
         ],
         "summary": "Remove a notification subscription",
         "description": "To remove a subscription, all its subscription requests' statuses must be either 'confirmed', 'deleted' or a combination of those. A subscription with at least one 'pending' subscription request cannot be removed.",
-        "operationId": "unsubscribe",
+        "operationId": "deleteSubscribtion",
         "tags": [
           "Subscriptions"
         ],
@@ -359,7 +359,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "DeleteUnsubscribeResponse",
+                  "title": "DeleteSubscribtionResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/UnsubscribeResponse"
@@ -445,7 +445,7 @@
       "get": {
         "summary": "List all stablecoins",
         "description": "Retrieves total circulating supply for supported stablecoins across all chains. This endpoint is rate limited to one call per minute (based on IP).",
-        "operationId": "getStablecoins",
+        "operationId": "listStablecoins",
         "tags": [
           "Stablecoins"
         ],
@@ -455,7 +455,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetStablecoinsResponse",
+                  "title": "ListStablecoinsResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Stablecoins"
@@ -499,7 +499,7 @@
         ],
         "summary": "List all balances",
         "description": "Retrieves the balance of funds that are available for use.",
-        "operationId": "getBusinessAccountBalances",
+        "operationId": "listBusinessBalances",
         "tags": [
           "Balances"
         ],
@@ -514,7 +514,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountBalancesResponse",
+                  "title": "ListBusinessBalancesResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Balances"
@@ -559,7 +559,7 @@
         ],
         "summary": "List all balances",
         "description": "Retrieves the balance of merchant funds that have settled and also of funds that have been sent for processing but have not yet settled.",
-        "operationId": "getBalances",
+        "operationId": "listBalances",
         "tags": [
           "Balances"
         ],
@@ -574,7 +574,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBalancesResponse",
+                  "title": "ListBalancesResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Balances"
@@ -709,7 +709,7 @@
           }
         ],
         "summary": "List all cards",
-        "operationId": "getCards",
+        "operationId": "listCards",
         "tags": [
           "Cards"
         ],
@@ -735,7 +735,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetCardsResponse",
+                  "title": "ListCardsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -973,7 +973,7 @@
           }
         ],
         "summary": "Create a Wire bank account",
-        "operationId": "createBusinessAccountWireBankAccount",
+        "operationId": "createBusinessWireAccount",
         "tags": [
           "Wires"
         ],
@@ -997,7 +997,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateBusinessAccountWireBankAccountResponse",
+                  "title": "CreateBusinessWireAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Wire"
@@ -1054,7 +1054,7 @@
           }
         ],
         "summary": "List all Wire bank accounts",
-        "operationId": "getBusinessAccountWireBankAccounts",
+        "operationId": "listBusinessWireAccounts",
         "tags": [
           "Wires"
         ],
@@ -1069,7 +1069,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountWireBankAccountsResponse",
+                  "title": "ListBusinessWireAccountsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -1135,7 +1135,7 @@
           }
         ],
         "summary": "Get a Wire bank account",
-        "operationId": "getBusinessAccountWireBankAccount",
+        "operationId": "getBusinessWireAccount",
         "tags": [
           "Wires"
         ],
@@ -1150,7 +1150,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountWireBankAccountResponse",
+                  "title": "GetBusinessWireAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Wire"
@@ -1218,7 +1218,7 @@
         ],
         "summary": "Get Wire instructions",
         "description": "Get the wire transfer instructions into the Circle bank account given your bank account id.",
-        "operationId": "getBusinessAccountWireInstructionsBankAccount",
+        "operationId": "getBusinessWireAccountInstructions",
         "tags": [
           "Wires"
         ],
@@ -1233,7 +1233,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountWireInstructionsBankAccountResponse",
+                  "title": "GetBusinessWireAccountInstructionsResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/WireInstruction"
@@ -1285,7 +1285,7 @@
           }
         ],
         "summary": "Create a Wire bank account",
-        "operationId": "createWireBankAccount",
+        "operationId": "createWireAccount",
         "tags": [
           "Wires"
         ],
@@ -1309,7 +1309,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateWireBankAccountResponse",
+                  "title": "CreateWireAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Wire"
@@ -1373,7 +1373,7 @@
           }
         ],
         "summary": "Get a Wire bank account",
-        "operationId": "getWireBankAccount",
+        "operationId": "getWireAccount",
         "tags": [
           "Wires"
         ],
@@ -1388,7 +1388,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetWireBankAccountResponse",
+                  "title": "GetWireAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Wire"
@@ -1453,7 +1453,7 @@
         ],
         "summary": "Get Wire instructions",
         "description": "Get the wire transfer instructions into the Circle bank account given your bank account id",
-        "operationId": "getWireInstructionsBankAccount",
+        "operationId": "getWireAccountInstructions",
         "tags": [
           "Wires"
         ],
@@ -1468,7 +1468,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetWireInstructionsBankAccountResponse",
+                  "title": "GetWireAccountInstructionsResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/WireInstruction"
@@ -1520,7 +1520,7 @@
           }
         ],
         "summary": "Create a Silvergate SEN bank account (BETA)",
-        "operationId": "createBusinessAccountSenBankAccount",
+        "operationId": "createBusinessSenAccount",
         "tags": [
           "SEN"
         ],
@@ -1544,7 +1544,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateBusinessAccountSenBankAccountResponse",
+                  "title": "CreateBusinessSenAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SenFiatAccountResponse"
@@ -1584,7 +1584,7 @@
           }
         ],
         "summary": "List all Silvergate SEN bank accounts (BETA).",
-        "operationId": "getBusinessAccountSenBankAccounts",
+        "operationId": "listBusinessSenAccounts",
         "tags": [
           "SEN"
         ],
@@ -1599,7 +1599,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountSenBankAccountsResponse",
+                  "title": "ListBusinessSenAccountsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -1648,7 +1648,7 @@
           }
         ],
         "summary": "Get a Silvergate SEN bank account (BETA)",
-        "operationId": "getBusinessAccountSenBankAccount",
+        "operationId": "getBusinessSenAccount",
         "tags": [
           "SEN"
         ],
@@ -1663,7 +1663,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountSenBankAccountResponse",
+                  "title": "GetBusinessSenAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SenFiatAccountResponse"
@@ -1711,7 +1711,7 @@
         ],
         "summary": "Get Silvergate SEN instructions (BETA)",
         "description": "Get the Silvergate SEN transfer instructions into the Circle bank account given your bank account id (BETA).",
-        "operationId": "getBusinessAccountSenInstructionsBankAccount",
+        "operationId": "getBusinessSenAccountInstructions",
         "tags": [
           "SEN"
         ],
@@ -1726,7 +1726,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountSenInstructionsBankAccountResponse",
+                  "title": "GetBusinessSenAccountInstructionsResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SenInstruction"
@@ -1764,7 +1764,7 @@
           }
         ],
         "summary": "Create a ACH bank account",
-        "operationId": "createACHBankAccount",
+        "operationId": "createAchAccount",
         "tags": [
           "ACH"
         ],
@@ -1772,7 +1772,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ACHCreationRequest"
+                "$ref": "#/components/schemas/AchCreationRequest"
               }
             }
           }
@@ -1788,10 +1788,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateACHBankAccountResponse",
+                  "title": "CreateAchAccountResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ACH"
+                      "$ref": "#/components/schemas/Ach"
                     }
                   }
                 },
@@ -1862,7 +1862,7 @@
           }
         ],
         "summary": "Get a ACH bank account",
-        "operationId": "getACHBankAccount",
+        "operationId": "getAchAccount",
         "tags": [
           "ACH"
         ],
@@ -1877,10 +1877,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetACHBankAccountResponse",
+                  "title": "GetAchAccountResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/ACH"
+                      "$ref": "#/components/schemas/Ach"
                     }
                   }
                 },
@@ -1946,7 +1946,7 @@
           }
         ],
         "summary": "Create a SEPA bank account (BETA)",
-        "operationId": "createSEPABankAccount",
+        "operationId": "createSepaAccount",
         "tags": [
           "SEPA"
         ],
@@ -1954,7 +1954,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SEPACreationRequest"
+                "$ref": "#/components/schemas/SepaCreationRequest"
               }
             }
           }
@@ -1970,10 +1970,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateSEPABankAccountResponse",
+                  "title": "CreateSepaAccountResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/SEPA"
+                      "$ref": "#/components/schemas/Sepa"
                     }
                   }
                 },
@@ -2030,7 +2030,7 @@
           }
         ],
         "summary": "Get a SEPA bank account (BETA)",
-        "operationId": "getSEPABankAccount",
+        "operationId": "getSepaAccount",
         "tags": [
           "SEPA"
         ],
@@ -2045,10 +2045,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetSEPABankAccountResponse",
+                  "title": "GetSepaAccountResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/SEPA"
+                      "$ref": "#/components/schemas/Sepa"
                     }
                   }
                 },
@@ -2106,7 +2106,7 @@
         ],
         "summary": "Get SEPA instructions (BETA)",
         "description": "Get the SEPA transfer instructions into the Circle bank account given your bank account id (BETA).",
-        "operationId": "getSEPAInstructionsBankAccount",
+        "operationId": "getSepaAccountInstructions",
         "tags": [
           "SEPA"
         ],
@@ -2121,10 +2121,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetSEPAInstructionsBankAccountResponse",
+                  "title": "GetSepaAccountInstructionsResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/SEPAInstruction"
+                      "$ref": "#/components/schemas/SepaInstruction"
                     }
                   }
                 },
@@ -2171,7 +2171,7 @@
           }
         ],
         "summary": "Create a Signet bank account (Production Only)",
-        "operationId": "createBusinessAccountSignetBankAccount",
+        "operationId": "createBusinessSignetAccount",
         "tags": [
           "Signet"
         ],
@@ -2195,7 +2195,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateBusinessAccountSignetBankAccountResponse",
+                  "title": "CreateBusinessSignetAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SignetFiatAccountResponse"
@@ -2234,7 +2234,7 @@
           }
         ],
         "summary": "List all Signet bank accounts (Production Only).",
-        "operationId": "getBusinessAccountSignetBankAccounts",
+        "operationId": "listBusinessSignetAccounts",
         "tags": [
           "Signet"
         ],
@@ -2249,7 +2249,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountSignetBankAccountsResponse",
+                  "title": "ListBusinessSignetAccountsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -2297,7 +2297,7 @@
           }
         ],
         "summary": "Get a Signet bank account (Production Only)",
-        "operationId": "getBusinessAccountSignetBankAccount",
+        "operationId": "getBusinessSignetAccount",
         "tags": [
           "Signet"
         ],
@@ -2312,7 +2312,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountSignetBankAccountResponse",
+                  "title": "GetBusinessSignetAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SignetFiatAccountResponse"
@@ -2359,7 +2359,7 @@
         ],
         "summary": "Get Signet instructions (Production Only)",
         "description": "Get the Signet transfer instructions into the Circle bank account given your bank account id (only available on Production now).",
-        "operationId": "getBusinessAccountSignetInstructionsBankAccount",
+        "operationId": "getBusinessSignetAccountInstructions",
         "tags": [
           "Signet"
         ],
@@ -2374,7 +2374,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountSignetInstructionsBankAccountResponse",
+                  "title": "ListBusinessSignetAccountInstructionsResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/SignetInstruction"
@@ -2412,7 +2412,7 @@
         ],
         "summary": "Create a deposit address",
         "description": "Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you're requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.\n",
-        "operationId": "generateBusinessAccountDepositAddress",
+        "operationId": "createBusinessDepositAddress",
         "tags": [
           "Addresses"
         ],
@@ -2420,7 +2420,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BusinessAccountGenerateAddressRequest"
+                "$ref": "#/components/schemas/BusinessGenerateAddressRequest"
               }
             }
           }
@@ -2436,7 +2436,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GenerateBusinessAccountDepositAddressResponse",
+                  "title": "CreateBusinessDepositAddressResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/AddressObject"
@@ -2473,7 +2473,7 @@
           }
         ],
         "summary": "List all deposit addresses",
-        "operationId": "getBusinessAccountDepositAddresses",
+        "operationId": "getBusinessDepositAddress",
         "tags": [
           "Addresses"
         ],
@@ -2488,7 +2488,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountDepositAddressesResponse",
+                  "title": "GetBusinessDepositAddressResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -2530,7 +2530,7 @@
         ],
         "summary": "Create a recipient address",
         "description": "Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.\n",
-        "operationId": "createBusinessAccountRecipientAddress",
+        "operationId": "createBusinessRecipientAddress",
         "tags": [
           "Addresses"
         ],
@@ -2538,7 +2538,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BusinessAccountRecipientAddressCreationRequest"
+                "$ref": "#/components/schemas/BusinessRecipientAddressCreationRequest"
               }
             }
           }
@@ -2554,10 +2554,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateBusinessAccountRecipientAddressResponse",
+                  "title": "CreateBusinessRecipientAddressResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/BusinessAccountRecipientAddressObject"
+                      "$ref": "#/components/schemas/BusinessRecipientAddressObject"
                     }
                   }
                 },
@@ -2611,7 +2611,7 @@
         ],
         "summary": "List all recipient addresses",
         "description": "Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending verification are not included in the response.\n",
-        "operationId": "getBusinessAccountRecipientAddresses",
+        "operationId": "listBusinessRecipientAddresses",
         "tags": [
           "Addresses"
         ],
@@ -2626,12 +2626,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountRecipientAddressesResponse",
+                  "title": "listBusinessRecipientAddressesResponse",
                   "properties": {
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/BusinessAccountRecipientAddressObject"
+                        "$ref": "#/components/schemas/BusinessRecipientAddressObject"
                       }
                     }
                   }
@@ -2698,7 +2698,7 @@
         ],
         "summary": "List all deposits",
         "description": "Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.",
-        "operationId": "searchBusinessAccountDeposits",
+        "operationId": "listBusinessDeposits",
         "tags": [
           "Deposits"
         ],
@@ -2713,12 +2713,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SearchBusinessAccountDepositsResponse",
+                  "title": "ListBusinessDepositsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/BusinessAccountDeposit"
+                        "$ref": "#/components/schemas/BusinessDeposit"
                       }
                     }
                   }
@@ -2856,7 +2856,7 @@
           }
         ],
         "summary": "List all payment intents",
-        "operationId": "getPaymentIntents",
+        "operationId": "listPaymentIntents",
         "tags": [
           "Payment Intents"
         ],
@@ -2918,7 +2918,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetPaymentIntentsResponse",
+                  "title": "ListPaymentIntentsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -3203,7 +3203,7 @@
           }
         ],
         "summary": "List all payments",
-        "operationId": "getPayments",
+        "operationId": "listPayments",
         "tags": [
           "Payments"
         ],
@@ -3218,7 +3218,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetPaymentsResponse",
+                  "title": "ListPaymentsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -4339,7 +4339,7 @@
         ],
         "parameters": [
           {
-            "$ref": "#/components/parameters/destination"
+            "$ref": "#/components/parameters/Destination"
           },
           {
             "name": "type",
@@ -4382,7 +4382,7 @@
           }
         ],
         "summary": "List all payouts",
-        "operationId": "getBusinessAccountPayouts",
+        "operationId": "listBusinessPayouts",
         "tags": [
           "Payouts"
         ],
@@ -4397,12 +4397,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountPayoutsResponse",
+                  "title": "ListBusinessPayoutsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/PayoutBusinessAccount"
+                        "$ref": "#/components/schemas/BusinessPayout"
                       }
                     }
                   }
@@ -4482,7 +4482,7 @@
           }
         ],
         "summary": "Create a payout",
-        "operationId": "createBusinessAccountPayout",
+        "operationId": "createBusinessPayout",
         "tags": [
           "Payouts"
         ],
@@ -4490,7 +4490,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BusinessAccountPayoutCreationRequest"
+                "$ref": "#/components/schemas/BusinessPayoutCreationRequest"
               }
             }
           }
@@ -4506,10 +4506,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateBusinessAccountPayoutResponse",
+                  "title": "CreateBusinessPayoutResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/PayoutBusinessAccount"
+                      "$ref": "#/components/schemas/BusinessPayout"
                     }
                   }
                 },
@@ -4596,7 +4596,7 @@
           }
         ],
         "summary": "Get a payout",
-        "operationId": "getBusinessAccountPayout",
+        "operationId": "getBusinessPayout",
         "tags": [
           "Payouts"
         ],
@@ -4611,10 +4611,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountPayoutResponse",
+                  "title": "GetBusinessPayoutResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/PayoutBusinessAccount"
+                      "$ref": "#/components/schemas/BusinessPayout"
                     }
                   }
                 },
@@ -4732,7 +4732,7 @@
             }
           },
           {
-            "$ref": "#/components/parameters/destination"
+            "$ref": "#/components/parameters/Destination"
           },
           {
             "$ref": "#/components/parameters/From"
@@ -4751,7 +4751,7 @@
           }
         ],
         "summary": "List all payouts",
-        "operationId": "getPayouts",
+        "operationId": "listPayouts",
         "tags": [
           "Payouts"
         ],
@@ -4766,7 +4766,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetPayoutsResponse",
+                  "title": "ListPayoutsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -5084,7 +5084,7 @@
         ],
         "summary": "List all payout returns",
         "description": "Retrieve a list of Wire and ACH payout returns. Results will be sorted by create date descending; more recent returns will be at the beginning of the list.",
-        "operationId": "getReturns",
+        "operationId": "listReturns",
         "tags": [
           "Returns"
         ],
@@ -5099,7 +5099,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetReturnsResponse",
+                  "title": "ListReturnsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -5170,7 +5170,7 @@
           }
         ],
         "summary": "List all settlements",
-        "operationId": "getSettlements",
+        "operationId": "listSettlements",
         "tags": [
           "Settlements"
         ],
@@ -5340,7 +5340,7 @@
         ],
         "summary": "List all chargebacks",
         "description": "Retrieve list of chargebacks. Results will be sorted by create date descending: more recent chargebacks will be at the beginning of the list.\n",
-        "operationId": "getChargebacks",
+        "operationId": "listChargebacks",
         "tags": [
           "Chargebacks"
         ],
@@ -5355,7 +5355,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetChargebacksResponse",
+                  "title": "ListChargebacksResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -5513,7 +5513,7 @@
         ],
         "summary": "List all ACH payment reversals.",
         "description": "Retrieve a list of ACH payment reversals. Results will be sorted by create date descending; more recent reversals will be at the beginning of the list",
-        "operationId": "getReversals",
+        "operationId": "listReversals",
         "tags": [
           "Reversals"
         ],
@@ -5528,7 +5528,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetReversalsResponse",
+                  "title": "ListReversalsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -5663,7 +5663,7 @@
         ],
         "summary": "List all wallets",
         "description": "Retrieves a list of a user's wallets.",
-        "operationId": "getWallets",
+        "operationId": "listWallets",
         "tags": [
           "Wallets"
         ],
@@ -5678,7 +5678,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetWalletsResponse",
+                  "title": "ListWalletsResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -5878,7 +5878,7 @@
         ],
         "summary": "List all addresses",
         "description": "Retrieves a list of addresses associated with a wallet.",
-        "operationId": "getAddresses",
+        "operationId": "listAddresses",
         "tags": [
           "Wallets"
         ],
@@ -5893,7 +5893,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetAddressesResponse",
+                  "title": "ListAddressesResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -5938,7 +5938,7 @@
         ],
         "summary": "Create a transfer",
         "description": "A transfer can be made from an existing business account to a blockchain location.",
-        "operationId": "createBusinessAccountTransfer",
+        "operationId": "createBusinessTransfer",
         "tags": [
           "Transfers"
         ],
@@ -5946,7 +5946,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BusinessAccountTransferCreationRequest"
+                "$ref": "#/components/schemas/BusinessTransferCreationRequest"
               }
             }
           }
@@ -5962,7 +5962,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateBusinessAccountTransferResponse",
+                  "title": "CreateBusinessTransferResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Transfer"
@@ -6049,7 +6049,7 @@
         ],
         "summary": "List all transfers",
         "description": "Searches for transfers from your business account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.",
-        "operationId": "searchBusinessAccountTransfers",
+        "operationId": "listBusinessTransfers",
         "tags": [
           "Transfers"
         ],
@@ -6064,7 +6064,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SearchBusinessAccountTransfersResponse",
+                  "title": "ListBusinessTransfersResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -6148,7 +6148,7 @@
           }
         ],
         "summary": "Get a transfer",
-        "operationId": "getBusinessAccountTransfer",
+        "operationId": "getBusinessTransfer",
         "tags": [
           "Transfers"
         ],
@@ -6163,7 +6163,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "GetBusinessAccountTransferResponse",
+                  "title": "GetBusinessTransferResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/Transfer"
@@ -6447,7 +6447,7 @@
         ],
         "summary": "List all transfers",
         "description": "Searches for transfers involving the provided wallets. If no wallet ids are provided, searches all wallets associated with your Circle API account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.",
-        "operationId": "searchTransfers",
+        "operationId": "listTransfers",
         "tags": [
           "Transfers"
         ],
@@ -6462,7 +6462,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "SearchTransfersResponse",
+                  "title": "ListTransfersResponse",
                   "properties": {
                     "data": {
                       "type": "array",
@@ -6802,7 +6802,7 @@
         ],
         "summary": "Create a mock ACH bank account",
         "description": "In the sandbox environment, create a mock ACH account and retrieve a processor token that can be used to link an ACH account.",
-        "operationId": "createMockACHBankAccount",
+        "operationId": "createMockAchAccount",
         "tags": [
           "ACH"
         ],
@@ -7360,7 +7360,7 @@
           }
         }
       },
-      "UTCTimestamp": {
+      "UtcTimestamp": {
         "type": "string",
         "description": "ISO-8601 UTC date/time format.",
         "example": "2020-04-10T02:13:30.000Z"
@@ -7429,10 +7429,10 @@
             "$ref": "#/components/schemas/RiskEvaluation"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -7714,10 +7714,10 @@
             "$ref": "#/components/schemas/MetadataPhoneEmail"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -7831,14 +7831,14 @@
             "$ref": "#/components/schemas/BankAddress"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
-      "WireCreationRequestUS": {
+      "WireCreationRequestUs": {
         "type": "object",
         "title": "US Bank Account",
         "description": "Relevant fields for U.S. bank accounts.",
@@ -8033,7 +8033,7 @@
         "description": "Request object used to create a bank account (wires). Different fields are required depending on the bank country, see the guide documentation for the list of supported bank countries along with which ones support IBAN.",
         "oneOf": [
           {
-            "$ref": "#/components/schemas/WireCreationRequestUS"
+            "$ref": "#/components/schemas/WireCreationRequestUs"
           },
           {
             "$ref": "#/components/schemas/WireCreationRequestIban"
@@ -8157,10 +8157,10 @@
             "example": "CIR13FB14A"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "currency": {
             "type": "string",
@@ -8211,7 +8211,7 @@
           }
         }
       },
-      "ACHBillingDetails": {
+      "AchBillingDetails": {
         "type": "object",
         "description": "Billing details of the account holder.",
         "required": [
@@ -8262,7 +8262,7 @@
           }
         }
       },
-      "ACHBankAccountType": {
+      "AchAccountType": {
         "type": "string",
         "description": "Retail account (individual consumer account) or Business account (e.g. sole prop, LLC, corporation).",
         "nullable": true,
@@ -8271,7 +8271,7 @@
           "business"
         ]
       },
-      "ACHCreationRequest": {
+      "AchCreationRequest": {
         "type": "object",
         "required": [
           "idempotencyKey",
@@ -8289,10 +8289,10 @@
             "example": "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621"
           },
           "billingDetails": {
-            "$ref": "#/components/schemas/ACHBillingDetails"
+            "$ref": "#/components/schemas/AchBillingDetails"
           },
           "bankAccountType": {
-            "$ref": "#/components/schemas/ACHBankAccountType"
+            "$ref": "#/components/schemas/AchAccountType"
           },
           "metadata": {
             "$ref": "#/components/schemas/MetadataCardAndAch"
@@ -8323,7 +8323,7 @@
           "verification_failed"
         ]
       },
-      "ACH": {
+      "Ach": {
         "type": "object",
         "required": [
           "id",
@@ -8351,10 +8351,10 @@
             "$ref": "#/components/schemas/RoutingNumber"
           },
           "billingDetails": {
-            "$ref": "#/components/schemas/ACHBillingDetails"
+            "$ref": "#/components/schemas/AchBillingDetails"
           },
           "bankAccountType": {
-            "$ref": "#/components/schemas/ACHBankAccountType"
+            "$ref": "#/components/schemas/AchAccountType"
           },
           "bankAddress": {
             "$ref": "#/components/schemas/BankAddress"
@@ -8369,17 +8369,17 @@
             "$ref": "#/components/schemas/RiskEvaluation"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "metadata": {
             "$ref": "#/components/schemas/MetadataPhoneEmail"
           }
         }
       },
-      "SEPACreationRequest": {
+      "SepaCreationRequest": {
         "type": "object",
         "required": [
           "idempotencyKey",
@@ -8401,7 +8401,7 @@
           }
         }
       },
-      "SEPA": {
+      "Sepa": {
         "type": "object",
         "required": [
           "id",
@@ -8440,14 +8440,14 @@
             "$ref": "#/components/schemas/BillingDetails"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
-      "SEPAInstructionBeneficiary": {
+      "SepaInstructionBeneficiary": {
         "type": "object",
         "properties": {
           "name": {
@@ -8467,7 +8467,7 @@
           }
         }
       },
-      "SEPAInstructionBeneficiaryBank": {
+      "SepaInstructionBeneficiaryBank": {
         "type": "object",
         "properties": {
           "name": {
@@ -8507,7 +8507,7 @@
           }
         }
       },
-      "SEPAInstruction": {
+      "SepaInstruction": {
         "type": "object",
         "properties": {
           "trackingRef": {
@@ -8516,10 +8516,10 @@
             "example": "CIR13FB13A"
           },
           "beneficiary": {
-            "$ref": "#/components/schemas/SEPAInstructionBeneficiary"
+            "$ref": "#/components/schemas/SepaInstructionBeneficiary"
           },
           "beneficiaryBank": {
-            "$ref": "#/components/schemas/SEPAInstructionBeneficiaryBank"
+            "$ref": "#/components/schemas/SepaInstructionBeneficiaryBank"
           }
         }
       },
@@ -8551,10 +8551,10 @@
             "example": "0xcac04f0069e4ac9314ac4e608e99278a3bebabcd"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -8629,7 +8629,7 @@
           }
         }
       },
-      "BusinessAccountGenerateAddressRequest": {
+      "BusinessGenerateAddressRequest": {
         "type": "object",
         "required": [
           "idempotencyKey",
@@ -8648,12 +8648,12 @@
           }
         }
       },
-      "BusinessAccountDescription": {
+      "AddressDescription": {
         "type": "string",
         "description": "An identifier or sentence that describes the recipient.",
         "example": "My USDC address at a cryptocurrency exchange"
       },
-      "BusinessAccountRecipientAddressObject": {
+      "BusinessRecipientAddressObject": {
         "type": "object",
         "properties": {
           "id": {
@@ -8672,11 +8672,11 @@
             "$ref": "#/components/schemas/Currency"
           },
           "description": {
-            "$ref": "#/components/schemas/BusinessAccountDescription"
+            "$ref": "#/components/schemas/AddressDescription"
           }
         }
       },
-      "BusinessAccountRecipientAddressCreationRequest": {
+      "BusinessRecipientAddressCreationRequest": {
         "type": "object",
         "description": "Adds a recipient address. The currency parameter will default to USD for all chains except for BTC where it defaults to BTC.",
         "required": [
@@ -8702,7 +8702,7 @@
             "$ref": "#/components/schemas/Currency"
           },
           "description": {
-            "$ref": "#/components/schemas/BusinessAccountDescription"
+            "$ref": "#/components/schemas/AddressDescription"
           }
         }
       },
@@ -8769,7 +8769,7 @@
           }
         }
       },
-      "BusinessAccountDeposit": {
+      "BusinessDeposit": {
         "type": "object",
         "description": "A deposit",
         "required": [
@@ -8811,10 +8811,10 @@
             "$ref": "#/components/schemas/RiskEvaluation"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -8927,7 +8927,7 @@
           }
         }
       },
-      "UTCTimestampReadOnly": {
+      "UtcTimestampReadOnly": {
         "type": "string",
         "readOnly": true,
         "description": "ISO-8601 UTC date/time format.",
@@ -9019,13 +9019,13 @@
             }
           },
           "expiresOn": {
-            "$ref": "#/components/schemas/UTCTimestampReadOnly"
+            "$ref": "#/components/schemas/UtcTimestampReadOnly"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestampReadOnly"
+            "$ref": "#/components/schemas/UtcTimestampReadOnly"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestampReadOnly"
+            "$ref": "#/components/schemas/UtcTimestampReadOnly"
           }
         }
       },
@@ -9124,7 +9124,7 @@
             "$ref": "#/components/schemas/CancelRefundReversalStatus"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9164,7 +9164,7 @@
             "$ref": "#/components/schemas/FiatMoneyUsd"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9226,7 +9226,7 @@
             "$ref": "#/components/schemas/FiatMoneyUsd"
           },
           "captureDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "requiredAction": {
             "$ref": "#/components/schemas/RequiredAction"
@@ -9247,10 +9247,10 @@
             "$ref": "#/components/schemas/Channel"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9316,10 +9316,10 @@
             "example": "0x7351585460bd657f320b9afa02a52c26d89272d0d10cc29913eb8b28e64fd906"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9378,10 +9378,10 @@
             "$ref": "#/components/schemas/Channel"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9441,10 +9441,10 @@
             "$ref": "#/components/schemas/Channel"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9554,7 +9554,7 @@
           }
         }
       },
-      "ThreeDSResult": {
+      "ThreeDsResult": {
         "type": "string",
         "description": "Enumerated status of the check. `pass` indicates successful 3DS authentication. `fail` indicates failed 3DS authentication.",
         "enum": [
@@ -9589,7 +9589,7 @@
             "$ref": "#/components/schemas/CvvResults"
           },
           "threeDSecure": {
-            "$ref": "#/components/schemas/ThreeDSResult"
+            "$ref": "#/components/schemas/ThreeDsResult"
           },
           "eci": {
             "$ref": "#/components/schemas/Eci"
@@ -9691,7 +9691,7 @@
             "$ref": "#/components/schemas/FiatMoneyUsd"
           },
           "captureDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "requiredAction": {
             "$ref": "#/components/schemas/RequiredAction"
@@ -9731,10 +9731,10 @@
             "$ref": "#/components/schemas/Channel"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9832,10 +9832,10 @@
             "$ref": "#/components/schemas/RiskEvaluation"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9955,10 +9955,10 @@
             "default": false
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -10048,10 +10048,10 @@
             "$ref": "#/components/schemas/RiskEvaluation"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -10163,14 +10163,14 @@
             ]
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
-      "PayoutBusinessAccount": {
+      "BusinessPayout": {
         "type": "object",
         "properties": {
           "id": {
@@ -10211,14 +10211,14 @@
             "$ref": "#/components/schemas/UnwithdrawalObject"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
-      "BusinessAccountDestinationRequest": {
+      "BusinessDestinationRequest": {
         "type": "object",
         "description": "The destination bank account.",
         "required": [
@@ -10238,7 +10238,7 @@
           }
         }
       },
-      "BusinessAccountPayoutCreationRequest": {
+      "BusinessPayoutCreationRequest": {
         "type": "object",
         "required": [
           "idempotencyKey",
@@ -10250,7 +10250,7 @@
             "$ref": "#/components/schemas/IdempotencyKey"
           },
           "destination": {
-            "$ref": "#/components/schemas/BusinessAccountDestinationRequest"
+            "$ref": "#/components/schemas/BusinessDestinationRequest"
           },
           "amount": {
             "$ref": "#/components/schemas/FiatMoney"
@@ -10298,10 +10298,10 @@
             "$ref": "#/components/schemas/UnwithdrawalObject"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -10393,10 +10393,10 @@
             "$ref": "#/components/schemas/UnwithdrawalObject"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -10427,10 +10427,10 @@
             "$ref": "#/components/schemas/FiatMoneyUsd"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -10493,7 +10493,7 @@
             "$ref": "#/components/schemas/IdSettlement"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -10572,10 +10572,10 @@
             "$ref": "#/components/schemas/FiatMoneyUsd"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -10980,7 +10980,7 @@
           }
         }
       },
-      "BusinessAccountTransferCreationRequest": {
+      "BusinessTransferCreationRequest": {
         "type": "object",
         "required": [
           "idempotencyKey",
@@ -11134,7 +11134,7 @@
             "$ref": "#/components/schemas/RiskEvaluation"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UTCTimestamp"
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -11735,7 +11735,7 @@
           ]
         }
       },
-      "destination": {
+      "Destination": {
         "name": "destination",
         "description": "Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.",
         "in": "query",

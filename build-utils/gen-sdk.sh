@@ -1,3 +1,5 @@
+find src/generated -name '*.ts' -delete
+
 npx openapi-generator-cli generate -g typescript-axios  \
 -i sdk.json \
 -o ./src/generated/ \

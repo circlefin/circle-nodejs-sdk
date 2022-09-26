@@ -9,7 +9,6 @@ apis/deposits-api.ts
 apis/encryption-api.ts
 apis/health-api.ts
 apis/management-api.ts
-apis/on-chain-payments-api.ts
 apis/payment-intents-api.ts
 apis/payments-api.ts
 apis/payouts-api.ts
@@ -79,6 +78,7 @@ models/create-payout-response.ts
 models/create-sen-payment-response.ts
 models/create-sepa-payment-response.ts
 models/create-sepabank-account-response.ts
+models/create-transfer-response.ts
 models/create-wallet-response.ts
 models/create-wire-bank-account-response.ts
 models/create-wire-payment-response.ts
@@ -226,11 +226,15 @@ models/subscription-response.ts
 models/three-dsresult.ts
 models/timeline.ts
 models/token-amount.ts
+models/transfer-creation-request-destination.ts
+models/transfer-creation-request.ts
 models/transfer-destination-blockchain-location.ts
 models/transfer-destination-location.ts
 models/transfer-destination-wallet-location.ts
 models/transfer-detailed-transfer.ts
 models/transfer-error-code.ts
+models/transfer-request-blockchain-location.ts
+models/transfer-request-source-wallet-location.ts
 models/transfer-request-verified-blockchain-location.ts
 models/transfer-source-blockchain-location.ts
 models/transfer-source-location.ts
