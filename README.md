@@ -39,7 +39,7 @@ async function createSubscription() {
         endpoint: "https://742ef341af57c9.lhrtunnel.link"
     };
 
-    const subscribeResp = await circle.subscriptions.subscribe(subscribeReq);
+    const subscribeResp = await circle.subscriptions.createSubscribtion(subscribeReq);
     console.log(subscribeResp.data);
 }
 createSubscription();
