@@ -1,11 +1,7 @@
 # Circle APIs Node.js Library
 
 The Circle Node library provides convenient access to the Circle API for
-applications written in server-side JavaScript.
-
-## Documentation
-
-See the [Circle API docs](https://developers.circle.com/reference/ping?lang=node) for Node.js.
+applications written in server-side JavaScript. For the API reference, see the [Circle API docs](https://developers.circle.com/reference).
 
 ## Requirements
 
