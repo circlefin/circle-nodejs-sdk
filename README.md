@@ -5,7 +5,7 @@ applications written in server-side JavaScript.
 
 ## Documentation
 
-See the [Circle API docs](https://developers.circle.com/reference/ping?lang=node) for Node.js.
+See the [Circle API docs](https://developers.circle.com/reference) for Node.js.
 
 ## Requirements
 
