@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/circlefin/circle-nodejs-sdk#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.com"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
