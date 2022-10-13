@@ -108,3 +108,7 @@ openapitools.json
 
 #test coverage
 /coverage/
+
+# IntelliJ
+.idea
+.idea/*
