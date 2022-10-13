@@ -5,6 +5,10 @@ name: Publish to npm
 
 on: [workflow_dispatch, workflow_call]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
