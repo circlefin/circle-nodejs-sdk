@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/circlefin/circle-nodejs-sdk/compare/v1.0.1...v1.0.2) (2022-10-21)
+
+
+### Bug Fixes
+
+* change base url production env ([#32](https://github.com/circlefin/circle-nodejs-sdk/issues/32)) ([0655cd0](https://github.com/circlefin/circle-nodejs-sdk/commit/0655cd023162822f4cd0386f7c70160e17fe1651))
+
 ## [1.0.1] (2022-09-27)
 
 
