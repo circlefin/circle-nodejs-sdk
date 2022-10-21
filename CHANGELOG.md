@@ -5,7 +5,6 @@
 
 ### Bug Fixes
 
-* allow OIDC token in publish pipeline ([#25](https://github.com/circlefin/circle-nodejs-sdk/issues/25)) ([ffcaf51](https://github.com/circlefin/circle-nodejs-sdk/commit/ffcaf5123b4c6819faa0e3a4ca1e440bfead4161))
 * change base url production env ([#32](https://github.com/circlefin/circle-nodejs-sdk/issues/32)) ([0655cd0](https://github.com/circlefin/circle-nodejs-sdk/commit/0655cd023162822f4cd0386f7c70160e17fe1651))
 
 ## [1.0.1] (2022-09-27)
