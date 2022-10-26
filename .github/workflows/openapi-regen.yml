@@ -49,21 +49,21 @@ jobs:
           secrets: |
             /ops/utilities/github-actions-bot-key
 
-      - name: Read openapi document
-        id: read-openapi-doc
-        run: |
-          content=`cat $OPENAPI_FILE`
-          content="${content//'%'/'%25'}"
-          content="${content//$'\n'/'%0A'}"
-          content="${content//$'\r'/'%0D'}"
-          echo "::set-output name=doc::$content"
+      # - name: Read openapi document
+      #   id: read-openapi-doc
+      #   run: |
+      #     content=`cat $OPENAPI_FILE`
+      #     content="${content//'%'/'%25'}"
+      #     content="${content//$'\n'/'%0A'}"
+      #     content="${content//$'\r'/'%0D'}"
+      #     echo "::set-output name=doc::$content"
 
       - name: Extract new version
         id: get-new-openapi-ver
-        run: echo "::set-output name=version::${{ fromJson(steps.read-openapi-doc.outputs.doc).info.version }}"      
+        run: echo "::set-output name=version::1.0.5"      
 
-      - name: Regenerate SDK code
-        run: yarn gen-sdk ${{ steps.get-new-openapi-ver.outputs.version }}
+      # - name: Regenerate SDK code
+      #   run: yarn gen-sdk ${{ steps.get-new-openapi-ver.outputs.version }}
 
       - name: Get Conventional Commits prefix
         id: get-conven-commit-pref
