@@ -2,11 +2,11 @@
   "openapi": "3.0.2",
   "servers": [
     {
-      "url": "api-sandbox.circle.com"
+      "url": "https://api-sandbox.circle.com"
     }
   ],
   "info": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, and Accounts APIs bundled into one OpenAPI Specification."
   },
