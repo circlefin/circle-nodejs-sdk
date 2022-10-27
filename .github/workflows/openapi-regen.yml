@@ -50,6 +50,12 @@ jobs:
             /ops/utilities/github-actions-bot/gpg-priv-key
             /ops/utilities/github-actions-bot/api-token
 
+      - name: Checkout PR base branch
+        uses: actions/checkout@v3
+        with:
+          token: ${{ env._OPS_UTILITIES_GITHUB_ACTIONS_BOT_API_TOKEN }}
+          ref: master
+
       # - name: Read openapi document
       #   id: read-openapi-doc
       #   run: |
@@ -109,7 +115,7 @@ jobs:
           base: master
           branch: bot-openapi-regen-pr-v${{ steps.get-new-openapi-ver.outputs.version }}
           
-          author: circle-github-action-bot <circle-github-actions@circle.com>
+          author: Ashutosh Ukey <ashutosh.ukey@circle.com>
           committer: circle-github-action-bot <circle-github-actions@circle.com>
           
           title: Regenerate code from OpenAPI document v${{ steps.get-new-openapi-ver.outputs.version }}
