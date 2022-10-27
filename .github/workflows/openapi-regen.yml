@@ -28,13 +28,13 @@ jobs:
         with:
           path: temp-trigger-repo
 
-      - name: Transfer sdk.json file
-        run: |
-          mv temp-trigger-repo/sdk.json .
-          rm -rf temp-trigger-repo
+      # - name: Transfer sdk.json file
+      #   run: |
+      #     mv temp-trigger-repo/sdk.json .
+      #     rm -rf temp-trigger-repo
 
-      - uses: actions/setup-node@v3
-      - run: yarn install --frozen-lockfile
+      # - uses: actions/setup-node@v3
+      # - run: yarn install --frozen-lockfile
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
