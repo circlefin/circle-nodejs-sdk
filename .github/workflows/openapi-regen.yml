@@ -111,11 +111,11 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v4
         with:
-          # token: ${{ env._OPS_UTILITIES_GITHUB_ACTIONS_BOT_API_TOKEN }}
+          token: ${{ env._OPS_UTILITIES_GITHUB_ACTIONS_BOT_API_TOKEN }}
           base: master
           branch: bot-openapi-regen-pr-v${{ steps.get-new-openapi-ver.outputs.version }}
           
-          author: Ashutosh Ukey <ashutosh.ukey@circle.com>
+          author: circle-github-action-bot <circle-github-actions@circle.com>
           committer: circle-github-action-bot <circle-github-actions@circle.com>
           
           title: Regenerate code from OpenAPI document v${{ steps.get-new-openapi-ver.outputs.version }}
