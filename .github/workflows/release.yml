@@ -8,17 +8,16 @@ permissions:
 
 name: release-please
 jobs:
-  fetch-bot-secrets:
+  release-please:
     runs-on: ubuntu-latest
     outputs:
-      pat: ${{ env._OPS_UTILITIES_GITHUB_ACTIONS_BOT_API_TOKEN }}
+      did-create-release: ${{ steps.release.outputs.release_created }}
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID_PAY }}:role/github-actions-service-role
-          default-branch: openapi-regen-triggerer
 
       - name: Read secrets from AWS Secrets Manager into environment variables
         uses: abhilash1in/aws-secrets-manager-action@v2.1.0
@@ -26,18 +25,13 @@ jobs:
           secrets: |
             /ops/utilities/github-actions-bot/api-token
 
-  release-please:
-    runs-on: ubuntu-latest
-    needs: fetch-bot-secrets
-    outputs:
-      did-create-release: ${{ steps.release.outputs.release_created }}
-    steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
-          token: ${{ needs.fetch-bot-secrets.outputs.pat }}
+          token: ${{ env._OPS_UTILITIES_GITHUB_ACTIONS_BOT_API_TOKEN }}
           release-type: node
           package-name: "@circle-fin/circle-sdk"
+          default-branch: openapi-regen-triggerer
 
   npm-publish:
     needs: release-please
