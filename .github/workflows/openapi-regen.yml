@@ -115,8 +115,8 @@ jobs:
           base: master
           branch: bot-openapi-regen-pr-v${{ steps.get-new-openapi-ver.outputs.version }}
           
-          author: circle-github-action-bot <circle-github-actions@circle.com>
-          committer: circle-github-action-bot <circle-github-actions@circle.com>
+          author: ${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>
+          committer: ${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>
           
           title: Regenerate code from OpenAPI document v${{ steps.get-new-openapi-ver.outputs.version }}
           commit-message: "${{ steps.get-conven-commit-pref.outputs.commit-pref }}: regen code openapi doc v${{ steps.get-new-openapi-ver.outputs.version }}"
