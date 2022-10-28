@@ -45,7 +45,6 @@ jobs:
       - name: Read secrets from AWS Secrets Manager into environment variables
         uses: abhilash1in/aws-secrets-manager-action@v2.1.0
         with:
-          parse-json: true
           secrets: |
             /ops/utilities/github-actions-bot/gpg-priv-key
             /ops/utilities/github-actions-bot/api-token
