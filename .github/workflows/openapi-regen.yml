@@ -28,6 +28,7 @@ jobs:
         with:
           path: temp-trigger-repo
 
+      # Foo
       # - name: Transfer sdk.json file
       #   run: |
       #     mv temp-trigger-repo/sdk.json .
