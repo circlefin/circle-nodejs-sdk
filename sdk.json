@@ -2,86 +2,122 @@
   "openapi": "3.0.2",
   "servers": [
     {
-      "url": "api-sandbox.circle.com"
+      "url": "https://api-sandbox.circle.com"
     }
   ],
   "info": {
-    "version": "1.0.3",
+    "version": "1.1.0",
     "title": "All Circle APIs",
-    "description": "Circle's General, Core Functionality, Payments, Payouts, and Accounts APIs bundled into one OpenAPI Specification."
+    "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
   "tags": [
     {
-      "name": "Health"
+      "name": "ACH",
+      "description": "Link and get information on bank account for ACH payments."
     },
     {
-      "name": "Management"
+      "name": "Addresses",
+      "description": "Generate and get information on blockchain addresses."
     },
     {
-      "name": "Encryption"
+      "name": "Crypto Address Book",
+      "description": "Manage blockchain addresses with metadata."
     },
     {
-      "name": "Subscriptions"
+      "name": "Balances",
+      "description": "Get information on settled and unsettled balances."
     },
     {
-      "name": "Stablecoins"
+      "name": "Cards",
+      "description": "Link, update, and get information on debit/credit cards."
     },
     {
-      "name": "Channels"
+      "name": "Payment Tokens",
+      "description": "Create Apple Pay and Google Pay payment tokens."
     },
     {
-      "name": "Balances"
+      "name": "Channels",
+      "description": "View a list of channels."
     },
     {
-      "name": "Addresses"
+      "name": "Chargebacks",
+      "description": "Get information on card chargebacks."
     },
     {
-      "name": "Cards"
+      "name": "Crypto Payment Intents",
+      "description": "Create and track intent for end user to pay via crypto."
     },
     {
-      "name": "Wires"
+      "name": "Deposits",
+      "description": "Get information on 1st party deposits."
     },
     {
-      "name": "SEN"
+      "name": "Encryption",
+      "description": "Encrypt sensitive data."
     },
     {
-      "name": "SEPA"
+      "name": "Crypto Exchange Rates",
+      "description": "Pull estimated exchange rate for crypto currencies."
     },
     {
-      "name": "ACH"
+      "name": "Health",
+      "description": "Inspect the health of the API."
     },
     {
-      "name": "Signet"
+      "name": "Management",
+      "description": "General account and management information."
     },
     {
-      "name": "Deposits"
+      "name": "Payments",
+      "description": "Get updates on whether user's crypto payment was received."
     },
     {
-      "name": "Payment Intents"
+      "name": "Payouts",
+      "description": "Create and get information on wire, ACH, SEPA and address book payouts."
     },
     {
-      "name": "Payments"
+      "name": "Returns",
+      "description": "Get information on returned payouts."
     },
     {
-      "name": "Settlements"
+      "name": "Reversals",
+      "description": "Get information on ACH reversals."
     },
     {
-      "name": "Chargebacks"
+      "name": "SEN",
+      "description": "Create and get information on SEN accounts."
     },
     {
-      "name": "Reversals"
+      "name": "SEPA",
+      "description": "Create and get information on SEPA accounts."
     },
     {
-      "name": "Payouts"
+      "name": "Settlements",
+      "description": "Get information on settlement batches."
     },
     {
-      "name": "Returns"
+      "name": "Signet",
+      "description": "Create and get information on Signet accounts."
     },
     {
-      "name": "Wallets"
+      "name": "Stablecoins",
+      "description": "Retrieve stablecoins and their respective names, symbols, circulating total and per-chain amounts."
     },
     {
-      "name": "Transfers"
+      "name": "Subscriptions",
+      "description": "Manage subscriptions to notifications."
+    },
+    {
+      "name": "Transfers",
+      "description": "Create transfers to another wallet or blockchain address, and get information on those transfers."
+    },
+    {
+      "name": "Wallets",
+      "description": "Create digital wallets and get information on their activity."
+    },
+    {
+      "name": "Wires",
+      "description": "Create, get instructions, and get information on bank accounts for wire transfers."
     }
   ],
   "paths": {
@@ -204,6 +240,68 @@
       }
     },
     "/v1/notifications/subscriptions": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a notification subscription",
+        "description": "Subscribe to receiving notifications at a given endpoint. The endpoint should be able to handle AWS SNS subscription requests. For more details see https://docs.aws.amazon.com/mobile/sdkforxamarin/developerguide/sns-send-http.html. Note, the sandbox environment allows a maximum of 3 active subscriptions; otherwise, this is limited to 1 active subscription and subsequent create requests will be rejected with a Limit Exceeded error.\n",
+        "operationId": "createSubscription",
+        "tags": ["Subscriptions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created a notification subscription.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateSubscriptionResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SubscriptionResponse"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "endpoint": "https://example.org/handler/for/notifications",
+                        "subscriptionDetails": [
+                          {
+                            "url": "arn:aws:sns:us-east-1:<...>:fcb4a2c9-9c4f-4706-b312-6b22650f5d17",
+                            "status": "confirmed"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/LimitExceeded"
+          }
+        }
+      },
       "get": {
         "security": [
           {
@@ -256,68 +354,6 @@
             "$ref": "#/components/responses/NotAuthorized"
           }
         }
-      },
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a notification subscription",
-        "description": "Subscribe to receiving notifications at a given endpoint. The endpoint should be able to handle AWS SNS subscription requests. For more details see https://docs.aws.amazon.com/mobile/sdkforxamarin/developerguide/sns-send-http.html. Note, the sandbox environment allows a maximum of 3 active subscriptions; otherwise, this is limited to 1 active subscription and subsequent create requests will be rejected with a Limit Exceeded error.\n",
-        "operationId": "createSubscribtion",
-        "tags": ["Subscriptions"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SubscriptionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully created a notification subscription.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateSubscribtionResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SubscriptionResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "endpoint": "https://example.org/handler/for/notifications",
-                        "subscriptionDetails": [
-                          {
-                            "url": "arn:aws:sns:us-east-1:<...>:fcb4a2c9-9c4f-4706-b312-6b22650f5d17",
-                            "status": "confirmed"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "429": {
-            "$ref": "#/components/responses/LimitExceeded"
-          }
-        }
       }
     },
     "/v1/notifications/subscriptions/{id}": {
@@ -334,7 +370,7 @@
         ],
         "summary": "Remove a notification subscription",
         "description": "To remove a subscription, all its subscription requests' statuses must be either 'confirmed', 'deleted' or a combination of those. A subscription with at least one 'pending' subscription request cannot be removed.",
-        "operationId": "deleteSubscribtion",
+        "operationId": "deleteSubscription",
         "tags": ["Subscriptions"],
         "responses": {
           "200": {
@@ -347,7 +383,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "DeleteSubscribtionResponse",
+                  "title": "DeleteSubscriptionResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/UnsubscribeResponse"
@@ -737,6 +773,7 @@
                           "network": "VISA",
                           "bin": "401230",
                           "issuerCountry": "US",
+                          "fundingType": "credit",
                           "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
                           "verification": {
                             "avs": "D",
@@ -933,6 +970,78 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/v1/paymentTokens": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a payment token",
+        "description": "Convert a digital wallet (Apple Pay, Google Pay) token to a single-use payment token.",
+        "operationId": "createPaymentToken",
+        "tags": ["Payment Tokens"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully converted a digital token to a Circle token account.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreatePaymentTokenResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PaymentToken"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "gc988ed5-c189-4f70-a074-e5beb7eb8e32",
+                        "type": "applepay",
+                        "expiresOn": "2022-01-18T19:20:00Z",
+                        "cardDetails": {
+                          "expMonth": 1,
+                          "expYear": 2020,
+                          "network": "VISA",
+                          "last4": "0123",
+                          "bin": "401230",
+                          "fundingType": "credit",
+                          "issuerCountry": "US"
+                        },
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
           }
         }
       }
@@ -2692,7 +2801,7 @@
         ],
         "summary": "Create a payment intent",
         "operationId": "createPaymentIntent",
-        "tags": ["Payment Intents"],
+        "tags": ["Crypto Payment Intents"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2775,7 +2884,7 @@
         ],
         "summary": "List all payment intents",
         "operationId": "listPaymentIntents",
-        "tags": ["Payment Intents"],
+        "tags": ["Crypto Payment Intents"],
         "parameters": [
           {
             "name": "status",
@@ -2839,7 +2948,6 @@
                     "value": {
                       "data": [
                         {
-                          "idempotencyKey": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
                           "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
                           "amount": {
                             "amount": "3.14",
@@ -2900,7 +3008,7 @@
         ],
         "summary": "Get a payment intent",
         "operationId": "getPaymentIntent",
-        "tags": ["Payment Intents"],
+        "tags": ["Crypto Payment Intents"],
         "parameters": [
           {
             "$ref": "#/components/parameters/IdPath"
@@ -2978,7 +3086,7 @@
         ],
         "summary": "Expire a payment intent",
         "operationId": "expirePaymentIntent",
-        "tags": ["Payment Intents"],
+        "tags": ["Crypto Payment Intents"],
         "parameters": [
           {
             "$ref": "#/components/parameters/IdPath"
@@ -3065,7 +3173,560 @@
         }
       }
     },
+    "/v1/addressBook/recipients": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a recipient",
+        "operationId": "createAddressBookRecipient",
+        "tags": ["Crypto Address Book"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressBookRecipientRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created an address book recipient.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateAddressBookRecipientResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AddressBookRecipient"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "8755d0ea-14f9-4259-b092-de23c14b6568",
+                        "chain": "ETH",
+                        "address": "0x45bfcf1a6289a0b77b4d3f7d12005a05949fd8c3",
+                        "metadata": {
+                          "nickname": "sample nickname",
+                          "email": "satoshi@circle.com",
+                          "bns": "sample.circle"
+                        },
+                        "status": "pending",
+                        "createDate": "2022-07-21T20:13:35.578678Z",
+                        "updateDate": "2022-07-21T20:19:24.859052Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List all recipients",
+        "operationId": "listAddressBookRecipients",
+        "tags": ["Crypto Address Book"],
+        "parameters": [
+          {
+            "name": "address",
+            "description": "Filters results to fetch only address book recipients with the provided address.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "chain",
+            "description": "Filters results to fetch only address book recipients with the provided chain.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "description": "Filters results to fetch only address book recipients that have the provided email in their metadata.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "description": "Filters results to fetch only address book recipients that have the provided status.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["pending", "inactive", "active", "denied"]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/From"
+          },
+          {
+            "$ref": "#/components/parameters/To"
+          },
+          {
+            "$ref": "#/components/parameters/PageBefore"
+          },
+          {
+            "$ref": "#/components/parameters/PageAfter"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved a list of address book recipients.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ListAddressBookRecipientsResponse",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/AddressBookRecipient"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": [
+                        {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "chain": "ALGO",
+                          "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
+                          "addressTag": "123456789",
+                          "metadata": {
+                            "nickname": "sample nickname",
+                            "email": "satoshi@circle.com",
+                            "bns": "sample.circle"
+                          },
+                          "status": "pending",
+                          "createDate": "2020-04-10T02:13:30.000Z",
+                          "updateDate": "2020-04-10T02:13:30.000Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
+    },
+    "/v1/addressBook/recipients/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a recipient",
+        "operationId": "getAddressBookRecipient",
+        "tags": ["Crypto Address Book"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved an address book recipient.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "GetAddressBookRecipientResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AddressBookRecipient"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "chain": "ALGO",
+                        "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
+                        "addressTag": "123456789",
+                        "metadata": {
+                          "nickname": "sample nickname",
+                          "email": "satoshi@circle.com",
+                          "bns": "sample.circle"
+                        },
+                        "status": "pending",
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Modify a recipient",
+        "operationId": "modifyAddressBookRecipient",
+        "tags": ["Crypto Address Book"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddressBookRecipientModifyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated the address book recipient.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ModifyAddressBookRecipientResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/AddressBookRecipient"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "8755d0ea-14f9-4259-b092-de23c14b6568",
+                        "chain": "ETH",
+                        "address": "0x45bfcf1a6289a0b77b4d3f7d12005a05949fd8c3",
+                        "metadata": {
+                          "nickname": "sample nickname",
+                          "email": "satoshi@circle.com",
+                          "bns": "sample.circle"
+                        },
+                        "status": "pending",
+                        "createDate": "2022-07-21T20:13:35.578678Z",
+                        "updateDate": "2022-07-21T20:19:24.859052Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete a recipient",
+        "operationId": "deleteAddressBookRecipient",
+        "tags": ["Crypto Address Book"],
+        "responses": {
+          "200": {
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "description": "Successfully removed the address book recipient."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/v1/payments": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a payment",
+        "operationId": "createPayment",
+        "tags": ["Payments"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentCreationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a payment.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreatePaymentResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/DetailedPayment"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "type": "payment",
+                        "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
+                        "merchantWalletId": "212000",
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "source": {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "type": "card"
+                        },
+                        "description": "Payment",
+                        "status": "pending",
+                        "captured": false,
+                        "captureAmount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "captureDate": "2020-04-10T02:13:30.000Z",
+                        "requiredAction": {
+                          "type": "three_d_secure_required",
+                          "redirectUrl": "https://example.org"
+                        },
+                        "verification": {
+                          "avs": "D",
+                          "cvv": "not_requested",
+                          "threeDSecure": "pass",
+                          "eci": "00"
+                        },
+                        "cancel": {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "type": "cancel",
+                          "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
+                          "merchantWalletId": "212000",
+                          "amount": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "source": {
+                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                            "type": "card"
+                          },
+                          "description": "Payment",
+                          "status": "pending",
+                          "originalPayment": {
+                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                            "type": "payment",
+                            "amount": {
+                              "amount": "3.14",
+                              "currency": "USD"
+                            },
+                            "description": "Payment",
+                            "status": "pending",
+                            "requiredAction": {
+                              "type": "three_d_secure_required",
+                              "redirectUrl": "https://example.org"
+                            },
+                            "fees": {
+                              "amount": "3.14",
+                              "currency": "USD"
+                            },
+                            "createDate": "2020-04-10T02:13:30.000Z"
+                          },
+                          "fees": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
+                          "createDate": "2020-04-10T02:13:30.000Z",
+                          "updateDate": "2020-04-10T02:13:30.000Z"
+                        },
+                        "refunds": [
+                          {
+                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                            "type": "refund",
+                            "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
+                            "merchantWalletId": "212000",
+                            "amount": {
+                              "amount": "3.14",
+                              "currency": "USD"
+                            },
+                            "source": {
+                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                              "type": "card"
+                            },
+                            "description": "Payment",
+                            "status": "pending",
+                            "originalPayment": {
+                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                              "type": "payment",
+                              "amount": {
+                                "amount": "3.14",
+                                "currency": "USD"
+                              },
+                              "description": "Payment",
+                              "status": "pending",
+                              "requiredAction": {
+                                "type": "three_d_secure_required",
+                                "redirectUrl": "https://example.org"
+                              },
+                              "fees": {
+                                "amount": "3.14",
+                                "currency": "USD"
+                              },
+                              "createDate": "2020-04-10T02:13:30.000Z"
+                            },
+                            "cancel": {
+                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                              "type": "cancel",
+                              "description": "Payment",
+                              "status": "pending",
+                              "createDate": "2020-04-10T02:13:30.000Z"
+                            },
+                            "fees": {
+                              "amount": "3.14",
+                              "currency": "USD"
+                            },
+                            "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
+                            "createDate": "2020-04-10T02:13:30.000Z",
+                            "updateDate": "2020-04-10T02:13:30.000Z"
+                          }
+                        ],
+                        "fees": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "trackingRef": "24910599141085313498894",
+                        "errorCode": "payment_failed",
+                        "metadata": {
+                          "email": "satoshi@circle.com",
+                          "phoneNumber": "+14155555555"
+                        },
+                        "riskEvaluation": {
+                          "decision": "approved",
+                          "reason": "3000"
+                        },
+                        "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
       "get": {
         "security": [
           {
@@ -3327,204 +3988,6 @@
             "$ref": "#/components/responses/NotAuthorized"
           }
         }
-      },
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a payment",
-        "operationId": "createPayment",
-        "tags": ["Payments"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PaymentCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a payment.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreatePaymentResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/DetailedPayment"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "type": "payment",
-                        "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                        "merchantWalletId": "212000",
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "source": {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "type": "card"
-                        },
-                        "description": "Payment",
-                        "status": "pending",
-                        "captured": false,
-                        "captureAmount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "captureDate": "2020-04-10T02:13:30.000Z",
-                        "requiredAction": {
-                          "type": "three_d_secure_required",
-                          "redirectUrl": "https://example.org"
-                        },
-                        "verification": {
-                          "avs": "D",
-                          "cvv": "not_requested",
-                          "threeDSecure": "pass",
-                          "eci": "00"
-                        },
-                        "cancel": {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "type": "cancel",
-                          "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                          "merchantWalletId": "212000",
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "source": {
-                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                            "type": "card"
-                          },
-                          "description": "Payment",
-                          "status": "pending",
-                          "originalPayment": {
-                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                            "type": "payment",
-                            "amount": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "description": "Payment",
-                            "status": "pending",
-                            "requiredAction": {
-                              "type": "three_d_secure_required",
-                              "redirectUrl": "https://example.org"
-                            },
-                            "fees": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "createDate": "2020-04-10T02:13:30.000Z"
-                          },
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        },
-                        "refunds": [
-                          {
-                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                            "type": "refund",
-                            "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                            "merchantWalletId": "212000",
-                            "amount": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "source": {
-                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                              "type": "card"
-                            },
-                            "description": "Payment",
-                            "status": "pending",
-                            "originalPayment": {
-                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                              "type": "payment",
-                              "amount": {
-                                "amount": "3.14",
-                                "currency": "USD"
-                              },
-                              "description": "Payment",
-                              "status": "pending",
-                              "requiredAction": {
-                                "type": "three_d_secure_required",
-                                "redirectUrl": "https://example.org"
-                              },
-                              "fees": {
-                                "amount": "3.14",
-                                "currency": "USD"
-                              },
-                              "createDate": "2020-04-10T02:13:30.000Z"
-                            },
-                            "cancel": {
-                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                              "type": "cancel",
-                              "description": "Payment",
-                              "status": "pending",
-                              "createDate": "2020-04-10T02:13:30.000Z"
-                            },
-                            "fees": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                            "createDate": "2020-04-10T02:13:30.000Z",
-                            "updateDate": "2020-04-10T02:13:30.000Z"
-                          }
-                        ],
-                        "fees": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "trackingRef": "24910599141085313498894",
-                        "errorCode": "payment_failed",
-                        "metadata": {
-                          "email": "satoshi@circle.com",
-                          "phoneNumber": "+14155555555"
-                        },
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
       }
     },
     "/v1/payments/{id}": {
@@ -3567,7 +4030,7 @@
                       "discriminator": {
                         "propertyName": "type",
                         "mapping": {
-                          "Fiat Payment": "#/components/schemas/FiatPayment",
+                          "Fiat Payment": "#/components/schemas/FiatPaymentPolymorphic",
                           "Crypto Payment": "#/components/schemas/CryptoPayment"
                         }
                       }
@@ -4221,6 +4684,111 @@
       }
     },
     "/v1/businessAccount/payouts": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a payout",
+        "operationId": "createBusinessPayout",
+        "tags": ["Payouts"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BusinessPayoutCreationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a payout.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateBusinessPayoutResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/BusinessPayout"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "sourceWalletId": "53535335",
+                        "destination": {
+                          "type": "wire",
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "name": "COMMERZBANK AG ****3000"
+                        },
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "fees": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "status": "pending",
+                        "trackingRef": "CIR-6ESOQANEP3NAO",
+                        "errorCode": "insufficient_funds",
+                        "riskEvaluation": {
+                          "decision": "approved",
+                          "reason": "3000"
+                        },
+                        "adjustments": {
+                          "fxCredit": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "fxDebit": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          }
+                        },
+                        "return": {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "payoutId": "abdb500d-4a59-457c-801f-2d418c8703ac",
+                          "amount": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "fees": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "reason": "payout_returned",
+                          "status": "pending",
+                          "createDate": "2020-04-10T02:13:30.000Z",
+                          "updateDate": "2020-04-10T02:13:30.000Z"
+                        },
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      },
       "get": {
         "security": [
           {
@@ -4248,6 +4816,7 @@
             "required": false,
             "schema": {
               "type": "array",
+              "uniqueItems": true,
               "items": {
                 "$ref": "#/components/schemas/PayoutStatus"
               }
@@ -4360,111 +4929,6 @@
             "$ref": "#/components/responses/NotAuthorized"
           }
         }
-      },
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a payout",
-        "operationId": "createBusinessPayout",
-        "tags": ["Payouts"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BusinessPayoutCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a payout.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateBusinessPayoutResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/BusinessPayout"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "sourceWalletId": "53535335",
-                        "destination": {
-                          "type": "wire",
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "name": "COMMERZBANK AG ****3000"
-                        },
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "fees": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "status": "pending",
-                        "trackingRef": "CIR-6ESOQANEP3NAO",
-                        "errorCode": "insufficient_funds",
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "adjustments": {
-                          "fxCredit": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "fxDebit": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          }
-                        },
-                        "return": {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "payoutId": "abdb500d-4a59-457c-801f-2d418c8703ac",
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "reason": "payout_returned",
-                          "status": "pending",
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
       }
     },
     "/v1/businessAccount/payouts/{id}": {
@@ -4571,73 +5035,35 @@
       }
     },
     "/v1/payouts": {
-      "get": {
+      "post": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "parameters": [
-          {
-            "name": "source",
-            "description": "Universally unique identifier (UUID v4) for the source wallet. Filters the results to fetch all payouts made from a source wallet. If not provided, payouts from all wallets will be returned.",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "example": "54c1cbab-c419-450f-ad23-906fa03af7f0"
-            }
-          },
-          {
-            "name": "type",
-            "description": "Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/PayoutDestinationType"
-              }
-            }
-          },
-          {
-            "name": "status",
-            "description": "Queries items with the specified status. Matches any status if unspecified.",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/PayoutStatus"
-              }
-            }
-          },
-          {
-            "$ref": "#/components/parameters/Destination"
-          },
-          {
-            "$ref": "#/components/parameters/From"
-          },
-          {
-            "$ref": "#/components/parameters/To"
-          },
-          {
-            "$ref": "#/components/parameters/PageBefore"
-          },
-          {
-            "$ref": "#/components/parameters/PageAfter"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "summary": "List all payouts",
-        "operationId": "listPayouts",
+        "summary": "Create a payout",
+        "description": "\nCreate a wire, ACH, SEPA or crypto payout.  \n\nThe following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:\n\n| amount.currency  | toAmount.currency |\n| ---------------- | ------------      |\n| USD              | USD               |\n| USD              | BTC               |\n| USD              | ETH               |\n| USD              | MTC               |\n| EUR              | EUR               |\n| BTC              | USD               |\n| BTC              | BTC               |\n| ETH              | USD               |\n| ETH              | ETH               |\n",
+        "operationId": "createPayout",
         "tags": ["Payouts"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/FiatPayoutCreationRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CryptoPayoutCreationRequest"
+                  }
+                ]
+              }
+            }
+          }
+        },
         "responses": {
-          "200": {
-            "description": "Successfully retrieved a list of payouts.",
+          "201": {
+            "description": "Successfully created a payout.",
             "headers": {
               "X-Request-Id": {
                 "$ref": "#/components/headers/XRequestId"
@@ -4646,18 +5072,22 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "ListPayoutsResponse",
+                  "title": "CreatePayoutResponse",
                   "properties": {
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Payout"
-                      }
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/FiatPayout"
+                        },
+                        {
+                          "$ref": "#/components/schemas/CryptoPayout"
+                        }
+                      ]
                     }
                   }
                 },
                 "examples": {
-                  "response": {
+                  "Fiat Payout": {
                     "value": {
                       "data": [
                         {
@@ -4671,6 +5101,10 @@
                           "amount": {
                             "amount": "3.14",
                             "currency": "USD"
+                          },
+                          "toAmount": {
+                            "amount": "3.14",
+                            "currency": "EUR"
                           },
                           "fees": {
                             "amount": "3.14",
@@ -4714,37 +5148,150 @@
                         }
                       ]
                     }
+                  },
+                  "Crypto Payout": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "sourceWalletId": "53535335",
+                        "destination": {
+                          "type": "address_book",
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29"
+                        },
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "toAmount": {
+                          "amount": "3.14",
+                          "currency": "ETH"
+                        },
+                        "fees": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "status": "pending",
+                        "errorCode": "transaction_denied",
+                        "riskEvaluation": {
+                          "decision": "denied",
+                          "reason": "4000"
+                        },
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
                   }
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
           },
           "401": {
             "$ref": "#/components/responses/NotAuthorized"
           }
         }
       },
-      "post": {
+      "get": {
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "summary": "Create a payout",
-        "operationId": "createPayout",
-        "tags": ["Payouts"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PayoutCreationRequest"
+        "parameters": [
+          {
+            "name": "source",
+            "description": "Identifier for the source wallet. Filters the fetched payout results to only be from a specific source wallet. If not provided, payouts from all wallets will be returned.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "1000565227"
+            }
+          },
+          {
+            "name": "destination",
+            "description": "Universally unique identifier (UUID v4) for the destination. Filters the fetched payout results made to a specific destination. If not provided, payouts to all destinations will be returned.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "54c1cbab-c419-450f-ad23-906fa03af7f0"
+            }
+          },
+          {
+            "name": "type",
+            "description": "Destination type. Filters the results to fetch all payouts made to a specified destination type. This query parameter can be passed multiple times to fetch results matching multiple destination types. The address_book destination type cannot be combined with other types.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/components/schemas/PayoutDestinationType"
               }
             }
+          },
+          {
+            "name": "status",
+            "description": "Queries items with the specified status. Matches any status if unspecified.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/components/schemas/PayoutStatus"
+              }
+            }
+          },
+          {
+            "name": "sourceCurrency",
+            "description": "Queries items with the specified source currency `amount.currency`. Matches any source currency if unspecified.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["USD", "EUR", "BTC", "ETH", "MTC", "FLW", "MAN"]
+            }
+          },
+          {
+            "name": "destinationCurrency",
+            "description": "Queries items with the specified destination currency `toAmount.currency`. Matches any destination currency if unspecified.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["USD", "EUR", "BTC", "ETH", "MTC", "FLW", "MAN"]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Chain"
+          },
+          {
+            "$ref": "#/components/parameters/From"
+          },
+          {
+            "$ref": "#/components/parameters/To"
+          },
+          {
+            "$ref": "#/components/parameters/PageBefore"
+          },
+          {
+            "$ref": "#/components/parameters/PageAfter"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
           }
-        },
+        ],
+        "summary": "List all payouts",
+        "operationId": "listPayouts",
+        "tags": ["Payouts"],
         "responses": {
-          "201": {
-            "description": "Successfully created a payout.",
+          "200": {
+            "description": "Successfully retrieved a list of payouts.",
             "headers": {
               "X-Request-Id": {
                 "$ref": "#/components/headers/XRequestId"
@@ -4753,15 +5300,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreatePayoutResponse",
+                  "title": "ListPayoutsResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/Payout"
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "$ref": "#/components/schemas/FiatPayout"
+                          },
+                          {
+                            "$ref": "#/components/schemas/CryptoPayout"
+                          }
+                        ]
+                      }
                     }
                   }
                 },
                 "examples": {
-                  "response": {
+                  "Fiat Payout": {
                     "value": {
                       "data": {
                         "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
@@ -4774,6 +5331,10 @@
                         "amount": {
                           "amount": "3.14",
                           "currency": "USD"
+                        },
+                        "toAmount": {
+                          "amount": "3.14",
+                          "currency": "EUR"
                         },
                         "fees": {
                           "amount": "3.14",
@@ -4816,13 +5377,44 @@
                         "updateDate": "2020-04-10T02:13:30.000Z"
                       }
                     }
+                  },
+                  "Crypto Payout": {
+                    "value": {
+                      "data": [
+                        {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "sourceWalletId": "53535335",
+                          "destination": {
+                            "type": "address_book",
+                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29"
+                          },
+                          "amount": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "toAmount": {
+                            "amount": "3.14",
+                            "currency": "ETH"
+                          },
+                          "fees": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "status": "pending",
+                          "errorCode": "transaction_denied",
+                          "riskEvaluation": {
+                            "decision": "denied",
+                            "reason": "4000"
+                          },
+                          "createDate": "2020-04-10T02:13:30.000Z",
+                          "updateDate": "2020-04-10T02:13:30.000Z"
+                        }
+                      ]
+                    }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
           },
           "401": {
             "$ref": "#/components/responses/NotAuthorized"
@@ -4859,12 +5451,19 @@
                   "title": "GetPayoutResponse",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/DetailedPayout"
+                      "oneOf": [
+                        {
+                          "$ref": "#/components/schemas/FiatDetailedPayout"
+                        },
+                        {
+                          "$ref": "#/components/schemas/CryptoPayout"
+                        }
+                      ]
                     }
                   }
                 },
                 "examples": {
-                  "response": {
+                  "Fiat Payout": {
                     "value": {
                       "data": {
                         "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
@@ -4877,6 +5476,10 @@
                         "amount": {
                           "amount": "3.14",
                           "currency": "USD"
+                        },
+                        "toAmount": {
+                          "amount": "3.14",
+                          "currency": "EUR"
                         },
                         "fees": {
                           "amount": "3.14",
@@ -4915,6 +5518,38 @@
                           "status": "pending",
                           "createDate": "2020-04-10T02:13:30.000Z",
                           "updateDate": "2020-04-10T02:13:30.000Z"
+                        },
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
+                  },
+                  "Crypto Payout": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "sourceWalletId": "53535335",
+                        "destination": {
+                          "type": "address_book",
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29"
+                        },
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "toAmount": {
+                          "amount": "3.14",
+                          "currency": "ETH"
+                        },
+                        "fees": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "status": "pending",
+                        "errorCode": "transaction_denied",
+                        "riskEvaluation": {
+                          "decision": "denied",
+                          "reason": "4000"
                         },
                         "createDate": "2020-04-10T02:13:30.000Z",
                         "updateDate": "2020-04-10T02:13:30.000Z"
@@ -5004,6 +5639,69 @@
                           "updateDate": "2020-04-10T02:13:30.000Z"
                         }
                       ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
+    },
+    "/v1/exchange/rates/{trading-pair}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a exchange rate",
+        "description": "Fetch the current rates for the specified trading pair. The trading pair is defined by a base currency followed by a quote currency. The response contains buy and sell rates denominated in the quote currency. **Exchange rate is an estimate only and is subject to change by the time you submit the actual request.**",
+        "operationId": "getExchangeRates",
+        "tags": ["Crypto Exchange Rates"],
+        "parameters": [
+          {
+            "name": "trading-pair",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["BTC-USD", "ETH-USD", "FLOW-USD"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved rates.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "GetExchangeRatesResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Rate"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "buy": "46317.59000",
+                        "sell": "45400.41000",
+                        "createDate": "2020-04-10T02:13:30.000Z"
+                      }
                     }
                   }
                 }
@@ -5242,6 +5940,7 @@
                           "paymentId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
                           "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
                           "reasonCode": "10.4",
+                          "status": "active",
                           "category": "Canceled Recurring Payment",
                           "history": [
                             {
@@ -5317,6 +6016,7 @@
                         "paymentId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
                         "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
                         "reasonCode": "10.4",
+                        "status": "active",
                         "category": "Canceled Recurring Payment",
                         "history": [
                           {
@@ -6662,7 +7362,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "CreateAchAccountResponse",
+                  "title": "CreateMockAchAccountResponse",
                   "properties": {
                     "data": {
                       "$ref": "#/components/schemas/MockAchAccountResponse"
@@ -7201,6 +7901,11 @@
             "description": "The country code of the issuer bank. Follows the ISO 3166-1 alpha-2 standard.",
             "example": "US"
           },
+          "fundingType": {
+            "description": "The funding type of the card. Possible values are `credit`, `debit`, `prepaid`, and `unknown`.",
+            "type": "string",
+            "enum": ["credit", "debit", "prepaid", "unknown"]
+          },
           "fingerprint": {
             "$ref": "#/components/schemas/Fingerprint"
           },
@@ -7499,6 +8204,209 @@
           },
           "expYear": {
             "$ref": "#/components/schemas/CardExpYear"
+          }
+        }
+      },
+      "ApplePayTokenEcHeader": {
+        "type": "object",
+        "required": ["ephemeralPublicKey", "publicKeyHash", "transactionId"],
+        "properties": {
+          "applicationData": {
+            "description": "Optional. Hash of the applicationData property of the original PKPaymentRequest object. If the value of that property is null, this key is omitted.",
+            "type": "string",
+            "example": ""
+          },
+          "ephemeralPublicKey": {
+            "description": "Ephemeral public key bytes.",
+            "type": "string",
+            "example": "MFkwEwYHKoZIzj.../zlsw=="
+          },
+          "publicKeyHash": {
+            "description": "Hash of the X.509 encoded public key bytes of the merchant’s certificate.",
+            "type": "string",
+            "example": "tqYV+tmG9aMh+l/K6cicUnPqkb1gUiLjSTM9gEz6Nl0="
+          },
+          "transactionId": {
+            "description": "Transaction identifier, generated on the device.",
+            "type": "string",
+            "example": "3cee89679130a4b2617c76118a1c62fd400cd45b49dc0916d5b951b560cd17b4"
+          }
+        }
+      },
+      "ApplePayTokenRsaHeader": {
+        "type": "object",
+        "required": ["wrappedKey", "publicKeyHash", "transactionId"],
+        "properties": {
+          "applicationData": {
+            "description": "Optional. Hash of the applicationData property of the original PKPaymentRequest object. If the value of that property is null, this key is omitted.",
+            "type": "string"
+          },
+          "wrappedKey": {
+            "description": "The symmetric key wrapped using your RSA public key.",
+            "type": "string"
+          },
+          "publicKeyHash": {
+            "description": "Hash of the X.509 encoded public key bytes of the merchant’s certificate.",
+            "type": "string"
+          },
+          "transactionId": {
+            "description": "Transaction identifier, generated on the device.",
+            "type": "string"
+          }
+        }
+      },
+      "ApplePayToken": {
+        "type": "object",
+        "required": ["version", "data", "signature", "header"],
+        "properties": {
+          "version": {
+            "description": "ApplePay token version information.",
+            "type": "string",
+            "enum": ["EC_v1", "RSA_v1"]
+          },
+          "data": {
+            "description": "Encrypted payment data. Base64 encoded as a string.",
+            "type": "string",
+            "example": "t7GeajLB9skXB6QSWfEpPA4WPhDqB7ekdd+...T6Ms7PhiNZpuGEE2QE="
+          },
+          "signature": {
+            "description": "Signature of the payment and header data. The signature includes the signing certificate, its intermediate CA certificate, and information about the signing algorithm.",
+            "type": "string",
+            "example": "MIAGCSqGSIb3DQEHAqCAMIACAQEx.../WIDkHWiFuSm5a3NVox7DlyIf0AAAAAAAA="
+          },
+          "header": {
+            "description": "Additional version-dependent information used to decrypt and verify the payment.",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ApplePayTokenEcHeader"
+              },
+              {
+                "$ref": "#/components/schemas/ApplePayTokenRsaHeader"
+              }
+            ]
+          }
+        }
+      },
+      "GooglePayToken": {
+        "type": "object",
+        "required": ["signature", "protocolVersion", "signedMessage"],
+        "properties": {
+          "signature": {
+            "description": "Verifies the message came from Google. The signature is created using ECDSA.",
+            "type": "string"
+          },
+          "protocolVersion": {
+            "description": "Identifies which encryption/signing scheme created this message. In this way, the protocol can evolve over time if needed. If it is not set, assume ECv0.",
+            "type": "string"
+          },
+          "signedMessage": {
+            "description": "A serialized JSON string containing the encryptedMessage, ephemeralPublicKey, and tag. To simplify the signature verification process, this value is serialized.",
+            "type": "string"
+          }
+        }
+      },
+      "PaymentTokenRequest": {
+        "type": "object",
+        "required": ["idempotencyKey", "type", "tokenData"],
+        "properties": {
+          "idempotencyKey": {
+            "$ref": "#/components/schemas/IdempotencyKey"
+          },
+          "type": {
+            "description": "Type of the digital wallet token.",
+            "type": "string",
+            "enum": ["applepay", "googlepay"]
+          },
+          "tokenData": {
+            "description": "The token data",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ApplePayToken"
+              },
+              {
+                "$ref": "#/components/schemas/GooglePayToken"
+              }
+            ]
+          }
+        }
+      },
+      "TokenizedCardDetails": {
+        "type": "object",
+        "required": ["expMonth", "expYear", "last4", "bin"],
+        "properties": {
+          "expMonth": {
+            "description": "The card's expiration month.",
+            "type": "integer",
+            "example": 1
+          },
+          "expYear": {
+            "description": "Four digit number representing the card's expiration year.",
+            "type": "integer",
+            "example": 2020
+          },
+          "network": {
+            "description": "The network of the card.",
+            "type": "string",
+            "enum": ["VISA", "MASTERCARD", "AMEX", "UNKNOWN"]
+          },
+          "last4": {
+            "description": "The last 4 digits of the card.",
+            "type": "string",
+            "example": "0123"
+          },
+          "bin": {
+            "description": "The bank identification number (BIN), the first 6 digits of the card.",
+            "type": "string",
+            "example": "401230"
+          },
+          "fundingType": {
+            "description": "The funding type of the card.",
+            "type": "string",
+            "enum": ["credit", "debit", "prepaid", "unknown"]
+          },
+          "issuerCountry": {
+            "description": "The country code of the issuer bank. Follows the ISO 3166-1 alpha-2 standard.",
+            "type": "string",
+            "example": "US"
+          }
+        }
+      },
+      "PaymentToken": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "expiresOn",
+          "cardDetails",
+          "createDate",
+          "updateDate"
+        ],
+        "properties": {
+          "id": {
+            "description": "Unique system generated identifier for the digital wallet token.",
+            "type": "string",
+            "format": "uuid",
+            "example": "gc988ed5-c189-4f70-a074-e5beb7eb8e32"
+          },
+          "type": {
+            "description": "Type of the digital wallet token.",
+            "type": "string",
+            "enum": ["applepay", "googlepay"]
+          },
+          "expiresOn": {
+            "description": "Datetime when the digital token expires. ISO-8601.",
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-01-18T19:20:00Z"
+          },
+          "cardDetails": {
+            "$ref": "#/components/schemas/TokenizedCardDetails"
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -8532,14 +9440,12 @@
           },
           "address": {
             "type": "string",
-            "readOnly": true,
             "example": "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
           }
         }
       },
       "PaymentIntentFees": {
         "type": "object",
-        "readOnly": true,
         "required": ["type", "amount", "currency"],
         "properties": {
           "type": {
@@ -8560,7 +9466,6 @@
       },
       "Timeline": {
         "type": "object",
-        "readOnly": true,
         "required": ["status", "time"],
         "properties": {
           "status": {
@@ -8578,12 +9483,6 @@
           }
         }
       },
-      "UtcTimestampReadOnly": {
-        "type": "string",
-        "readOnly": true,
-        "description": "ISO-8601 UTC date/time format.",
-        "example": "2020-04-10T02:13:30.000Z"
-      },
       "PaymentIntent": {
         "type": "object",
         "required": [
@@ -8593,12 +9492,8 @@
           "paymentMethods"
         ],
         "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
           "id": {
             "type": "string",
-            "readOnly": true,
             "description": "Unique system generated identifier for the entity.",
             "format": "uuid",
             "example": "b8627ae8-732b-4d25-b947-1df8f4007a29"
@@ -8609,7 +9504,6 @@
           "amountPaid": {
             "description": "Sum of the the amount paid.",
             "type": "object",
-            "readOnly": true,
             "required": ["amount", "currency"],
             "properties": {
               "amount": {
@@ -8637,7 +9531,6 @@
           },
           "fees": {
             "type": "array",
-            "readOnly": true,
             "items": {
               "$ref": "#/components/schemas/PaymentIntentFees"
             }
@@ -8645,7 +9538,6 @@
           "paymentIds": {
             "description": "List of associated payments.",
             "type": "array",
-            "readOnly": true,
             "items": {
               "type": "string",
               "format": "uuid",
@@ -8655,19 +9547,97 @@
           "timeline": {
             "description": "State management timeline.",
             "type": "array",
-            "readOnly": true,
             "items": {
               "$ref": "#/components/schemas/Timeline"
             }
           },
           "expiresOn": {
-            "$ref": "#/components/schemas/UtcTimestampReadOnly"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestampReadOnly"
+            "$ref": "#/components/schemas/UtcTimestamp"
           },
           "createDate": {
-            "$ref": "#/components/schemas/UtcTimestampReadOnly"
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        }
+      },
+      "AddressBookRecipientMetadata": {
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "description": "Nickname related to the address.",
+            "example": "sample nickname"
+          },
+          "email": {
+            "$ref": "#/components/schemas/Email"
+          },
+          "bns": {
+            "type": "string",
+            "description": "Blockchain Name Service (e.g. ENS) domain for the address.",
+            "example": "sample.circle"
+          }
+        }
+      },
+      "AddressBookRecipient": {
+        "type": "object",
+        "required": ["chain", "address", "metadata"],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "chain": {
+            "$ref": "#/components/schemas/Chain"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "addressTag": {
+            "$ref": "#/components/schemas/AddressTag"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/AddressBookRecipientMetadata"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the address book recipient.",
+            "enum": ["pending", "inactive", "active", "denied"]
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        }
+      },
+      "AddressBookRecipientRequest": {
+        "type": "object",
+        "required": ["idempotencyKey", "chain", "address", "metadata"],
+        "properties": {
+          "idempotencyKey": {
+            "$ref": "#/components/schemas/IdempotencyKey"
+          },
+          "chain": {
+            "$ref": "#/components/schemas/Chain"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "addressTag": {
+            "$ref": "#/components/schemas/AddressTag"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/AddressBookRecipientMetadata"
+          }
+        }
+      },
+      "AddressBookRecipientModifyRequest": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/AddressBookRecipientMetadata"
           }
         }
       },
@@ -9553,10 +10523,10 @@
         "description": "Status of the payout. Status `pending` indicates that the payout is in process; `complete` indicates it finished successfully; `failed` indicates it failed.",
         "enum": ["pending", "complete", "failed"]
       },
-      "PayoutDestinationType": {
+      "BusinessAccountPayoutDestinationType": {
         "type": "string",
         "description": "The destination bank account type.",
-        "enum": ["wire", "ach", "sepa"]
+        "enum": ["wire", "ach", "sepa", "signet"]
       },
       "BankDestination": {
         "type": "object",
@@ -9564,7 +10534,7 @@
         "required": ["type", "id"],
         "properties": {
           "type": {
-            "$ref": "#/components/schemas/PayoutDestinationType"
+            "$ref": "#/components/schemas/BusinessAccountPayoutDestinationType"
           },
           "id": {
             "$ref": "#/components/schemas/Id"
@@ -9572,7 +10542,6 @@
           "name": {
             "type": "string",
             "description": "Bank name plus last four digits of the bank account number or IBAN.",
-            "readOnly": true,
             "example": "COMMERZBANK AG ****3000"
           }
         }
@@ -9703,7 +10672,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["wire", "sen"]
+            "enum": ["wire", "sen", "signet"]
           },
           "id": {
             "$ref": "#/components/schemas/Id"
@@ -9725,7 +10694,51 @@
           }
         }
       },
-      "Payout": {
+      "PayoutDestinationType": {
+        "type": "string",
+        "description": "The destination type.",
+        "enum": ["wire", "ach", "sepa", "address_book"]
+      },
+      "FiatPayoutDestinationType": {
+        "type": "string",
+        "description": "The destination type.",
+        "enum": ["wire", "ach", "sepa"]
+      },
+      "FiatPayoutDestination": {
+        "type": "object",
+        "description": "The destination.",
+        "required": ["type", "id"],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/FiatPayoutDestinationType"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "name": {
+            "type": "string",
+            "description": "Bank name plus last four digits of the bank account number or IBAN.",
+            "example": "COMMERZBANK AG ****3000"
+          }
+        }
+      },
+      "PayoutMoney": {
+        "type": "object",
+        "required": ["amount", "currency"],
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "Magnitude of the amount, in units of the currency, with a `.`.",
+            "example": "3.14"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency code for the amount.",
+            "enum": ["USD", "EUR", "BTC", "ETH", "MTC", "FLW", "MAN"]
+          }
+        }
+      },
+      "FiatPayout": {
         "type": "object",
         "properties": {
           "id": {
@@ -9737,10 +10750,13 @@
             "example": "53535335"
           },
           "destination": {
-            "$ref": "#/components/schemas/BankDestination"
+            "$ref": "#/components/schemas/FiatPayoutDestination"
           },
           "amount": {
             "$ref": "#/components/schemas/FiatMoneyUsd"
+          },
+          "toAmount": {
+            "$ref": "#/components/schemas/PayoutMoney"
           },
           "fees": {
             "$ref": "#/components/schemas/FiatMoneyUsd"
@@ -9773,6 +10789,64 @@
           }
         }
       },
+      "CryptoPayoutDestinationType": {
+        "type": "string",
+        "description": "The destination type.",
+        "enum": ["address_book"]
+      },
+      "CryptoPayoutDestination": {
+        "type": "object",
+        "description": "The destination.",
+        "required": ["type", "id"],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/CryptoPayoutDestinationType"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        }
+      },
+      "CryptoPayout": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "sourceWalletId": {
+            "type": "string",
+            "description": "The identifier of the source wallet used to fund a payout.",
+            "example": "53535335"
+          },
+          "destination": {
+            "$ref": "#/components/schemas/CryptoPayoutDestination"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/PayoutMoney"
+          },
+          "toAmount": {
+            "$ref": "#/components/schemas/PayoutMoney"
+          },
+          "fees": {
+            "$ref": "#/components/schemas/PayoutMoney"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PayoutStatus"
+          },
+          "errorCode": {
+            "$ref": "#/components/schemas/PayoutErrorCode"
+          },
+          "riskEvaluation": {
+            "$ref": "#/components/schemas/RiskEvaluation"
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        }
+      },
       "MetadataPayout": {
         "type": "object",
         "description": "Additional properties related to the payout beneficiary.",
@@ -9783,7 +10857,7 @@
           }
         }
       },
-      "PayoutCreationRequest": {
+      "FiatPayoutCreationRequest": {
         "type": "object",
         "required": ["idempotencyKey", "destination", "amount", "metadata"],
         "properties": {
@@ -9794,7 +10868,17 @@
             "$ref": "#/components/schemas/WalletLocation"
           },
           "destination": {
-            "$ref": "#/components/schemas/BankDestination"
+            "type": "object",
+            "description": "The destination.",
+            "required": ["type", "id"],
+            "properties": {
+              "type": {
+                "$ref": "#/components/schemas/FiatPayoutDestinationType"
+              },
+              "id": {
+                "$ref": "#/components/schemas/Id"
+              }
+            }
           },
           "amount": {
             "$ref": "#/components/schemas/FiatMoneyUsd"
@@ -9804,7 +10888,127 @@
           }
         }
       },
-      "DetailedPayout": {
+      "IdentityAddress": {
+        "type": "object",
+        "required": ["line1", "city", "district", "postalCode", "country"],
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "Line one of the street address.",
+            "maxLength": 1024,
+            "example": "100 Money Street"
+          },
+          "line2": {
+            "type": "string",
+            "description": "Line two of the street address.",
+            "maxLength": 1024,
+            "example": "Suite 1"
+          },
+          "city": {
+            "type": "string",
+            "description": "City portion of the address.",
+            "maxLength": 1024,
+            "example": "Boston"
+          },
+          "district": {
+            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
+            "type": "string",
+            "maxLength": 16,
+            "example": "MA"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal / ZIP code of the address.",
+            "maxLength": 16,
+            "example": "01234"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
+            "maxLength": 2,
+            "example": "US"
+          }
+        }
+      },
+      "Identity": {
+        "type": "object",
+        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
+        "required": ["type", "name", "addresses"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
+            "enum": ["individual", "business"]
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the identity.",
+            "example": "Satoshi Nakamoto",
+            "maxLength": 1024
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentityAddress"
+            }
+          }
+        }
+      },
+      "TransferSourceWalletLocation": {
+        "description": "A source wallet location.",
+        "type": "object",
+        "required": ["type", "id"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["wallet"]
+          },
+          "id": {
+            "type": "string",
+            "description": "The id of the wallet.",
+            "example": "12345"
+          },
+          "identities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Identity"
+            }
+          }
+        }
+      },
+      "ToAmount": {
+        "type": "object",
+        "required": ["currency"],
+        "properties": {
+          "currency": {
+            "type": "string",
+            "description": "Currency code for the amount.",
+            "enum": ["USD", "EUR", "BTC", "ETH", "MTC"]
+          }
+        }
+      },
+      "CryptoPayoutCreationRequest": {
+        "type": "object",
+        "required": ["idempotencyKey", "destination", "amount"],
+        "properties": {
+          "idempotencyKey": {
+            "$ref": "#/components/schemas/IdempotencyKey"
+          },
+          "source": {
+            "$ref": "#/components/schemas/TransferSourceWalletLocation"
+          },
+          "destination": {
+            "$ref": "#/components/schemas/CryptoPayoutDestination"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "toAmount": {
+            "$ref": "#/components/schemas/ToAmount"
+          }
+        }
+      },
+      "FiatDetailedPayout": {
         "type": "object",
         "properties": {
           "id": {
@@ -9816,10 +11020,13 @@
             "example": "53535335"
           },
           "destination": {
-            "$ref": "#/components/schemas/BankDestination"
+            "$ref": "#/components/schemas/FiatPayoutDestination"
           },
           "amount": {
             "$ref": "#/components/schemas/FiatMoneyUsd"
+          },
+          "toAmount": {
+            "$ref": "#/components/schemas/PayoutMoney"
           },
           "fees": {
             "$ref": "#/components/schemas/FiatMoneyUsd"
@@ -9853,6 +11060,25 @@
             "$ref": "#/components/schemas/UtcTimestamp"
           },
           "updateDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        }
+      },
+      "Rate": {
+        "type": "object",
+        "required": ["buy", "sell", "createDate"],
+        "properties": {
+          "buy": {
+            "type": "string",
+            "description": "The buy rate denominated in the quote currency of the trading pair.",
+            "example": "46317.59000"
+          },
+          "sell": {
+            "type": "string",
+            "description": "The sell rate denominated in the quote currency of the trading pair.",
+            "example": "45400.41000"
+          },
+          "createDate": {
             "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
@@ -9896,6 +11122,19 @@
         "description": "Unique system generated identifier for the payment that is associated to the chargeback item.",
         "format": "uuid",
         "example": "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+      },
+      "ChargebackStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "resolved",
+          "pending",
+          "won",
+          "lost",
+          "canceled",
+          "closed"
+        ],
+        "description": "Enumerated status of the chargeback. `active` means you’ve received a dispute and you need to submit evidence if you want to defend against it. 'resolved' means the disputed payment had been refunded previously. Your account has not been debited. `pending` means we have acknowledged your evidence and forwarded it to the card issuer. `won` means you have won the dispute and your account has been credited. `lost` means the issuing bank has rejected your evidence and you have lost the dispute. There are no further financial implications. `canceled` means the issuing bank has canceled the dispute and your account has been credited. `closed` means the time to respond to this dispute has run out. No evidence can be submitted at this point."
       },
       "ChargebackCategories": {
         "type": "string",
@@ -9952,7 +11191,14 @@
       },
       "BasicChargeback": {
         "type": "object",
-        "required": ["id", "paymentId", "merchantId", "history", "reasonCode"],
+        "required": [
+          "id",
+          "paymentId",
+          "merchantId",
+          "status",
+          "history",
+          "reasonCode"
+        ],
         "properties": {
           "id": {
             "$ref": "#/components/schemas/Id"
@@ -9967,6 +11213,9 @@
             "description": "Reason code given by the card network for the chargeback item.",
             "type": "string",
             "example": "10.4"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ChargebackStatus"
           },
           "category": {
             "$ref": "#/components/schemas/ChargebackCategories"
@@ -10086,94 +11335,6 @@
           },
           "chain": {
             "$ref": "#/components/schemas/Chain"
-          }
-        }
-      },
-      "IdentityAddress": {
-        "type": "object",
-        "required": ["line1", "city", "district", "postalCode", "country"],
-        "properties": {
-          "line1": {
-            "type": "string",
-            "description": "Line one of the street address.",
-            "maxLength": 1024,
-            "example": "100 Money Street"
-          },
-          "line2": {
-            "type": "string",
-            "description": "Line two of the street address.",
-            "maxLength": 1024,
-            "example": "Suite 1"
-          },
-          "city": {
-            "type": "string",
-            "description": "City portion of the address.",
-            "maxLength": 1024,
-            "example": "Boston"
-          },
-          "district": {
-            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
-            "type": "string",
-            "maxLength": 16,
-            "example": "MA"
-          },
-          "postalCode": {
-            "type": "string",
-            "description": "Postal / ZIP code of the address.",
-            "maxLength": 16,
-            "example": "01234"
-          },
-          "country": {
-            "type": "string",
-            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
-            "maxLength": 2,
-            "example": "US"
-          }
-        }
-      },
-      "Identity": {
-        "type": "object",
-        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
-        "required": ["type", "name", "addresses"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
-            "enum": ["individual", "business"]
-          },
-          "name": {
-            "type": "string",
-            "description": "Full name of the identity.",
-            "example": "Satoshi Nakamoto",
-            "maxLength": 1024
-          },
-          "addresses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IdentityAddress"
-            }
-          }
-        }
-      },
-      "TransferSourceWalletLocation": {
-        "description": "A source wallet location.",
-        "type": "object",
-        "required": ["type", "id"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": ["wallet"]
-          },
-          "id": {
-            "type": "string",
-            "description": "The id of the wallet.",
-            "example": "12345"
-          },
-          "identities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Identity"
-            }
           }
         }
       },
@@ -10320,7 +11481,6 @@
           },
           "fees": {
             "description": "An array of fees applied to a transaction. This is only available when there is at least one non-zero fee.",
-            "readOnly": true,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Fee"
@@ -10463,7 +11623,6 @@
           },
           "fees": {
             "description": "An array of fees applied to a transaction. This is only available when there is at least one non-zero fee.",
-            "readOnly": true,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Fee"
@@ -11006,6 +12165,7 @@
         "required": false,
         "schema": {
           "type": "array",
+          "uniqueItems": true,
           "items": {
             "type": "string",
             "enum": ["card", "wire", "ach", "sepa"]
@@ -11031,6 +12191,27 @@
           "type": "string",
           "format": "uuid",
           "example": "e3d0a838-d732-49d0-bf44-73a668e38973"
+        }
+      },
+      "Chain": {
+        "name": "chain",
+        "description": "Queries items with the specified chain. Matches any chain if unspecified",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ALGO",
+            "AVAX",
+            "BTC",
+            "ETH",
+            "FLOW",
+            "HBAR",
+            "MATIC",
+            "SOL",
+            "TRX",
+            "XLM"
+          ]
         }
       },
       "PaymentId": {
