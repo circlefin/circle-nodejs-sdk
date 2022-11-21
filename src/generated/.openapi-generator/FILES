@@ -293,4 +293,3 @@ models/wire-instruction-beneficiary-bank.ts
 models/wire-instruction-beneficiary.ts
 models/wire-instruction.ts
 models/wire.ts
-tsconfig.esm.json
