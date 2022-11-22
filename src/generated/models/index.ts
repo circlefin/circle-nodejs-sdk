@@ -186,6 +186,7 @@ export * from "./payment-info-cancel";
 export * from "./payment-info-payment-and-refund";
 export * from "./payment-intent";
 export * from "./payment-intent-amount-paid";
+export * from "./payment-intent-creation-request";
 export * from "./payment-intent-fees";
 export * from "./payment-method-blockchain";
 export * from "./payment-status";

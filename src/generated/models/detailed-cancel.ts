@@ -6,12 +6,26 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CancelRefundReversalStatus } from "./cancel-refund-reversal-status";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatPayment } from "./fiat-payment";
+// May contain unused imports in some cases
+// @ts-ignore
 import { MetadataPhoneEmail } from "./metadata-phone-email";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PaymentErrorCode } from "./payment-error-code";
+// May contain unused imports in some cases
+// @ts-ignore
 import { RiskEvaluation } from "./risk-evaluation";
+// May contain unused imports in some cases
+// @ts-ignore
 import { SourceResponse } from "./source-response";
 
 /**

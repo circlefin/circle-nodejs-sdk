@@ -6,10 +6,20 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { BankAddressNonIban } from "./bank-address-non-iban";
+// May contain unused imports in some cases
+// @ts-ignore
 import { BillingDetails } from "./billing-details";
+// May contain unused imports in some cases
+// @ts-ignore
 import { WireCreationRequestAccountNumber } from "./wire-creation-request-account-number";
+// May contain unused imports in some cases
+// @ts-ignore
 import { WireCreationRequestIban } from "./wire-creation-request-iban";
+// May contain unused imports in some cases
+// @ts-ignore
 import { WireCreationRequestUs } from "./wire-creation-request-us";
 
 /**

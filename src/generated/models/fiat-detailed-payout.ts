@@ -6,12 +6,26 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatPayoutDestination } from "./fiat-payout-destination";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FinalAdjustments } from "./final-adjustments";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PayoutErrorCode } from "./payout-error-code";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PayoutMoney } from "./payout-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { RiskEvaluation } from "./risk-evaluation";
+// May contain unused imports in some cases
+// @ts-ignore
 import { UnwithdrawalObject } from "./unwithdrawal-object";
 
 /**

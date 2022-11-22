@@ -46,7 +46,7 @@ import { NotAuthorized } from "../models";
 // @ts-ignore
 import { NotFound } from "../models";
 // @ts-ignore
-import { PaymentIntent } from "../models";
+import { PaymentIntentCreationRequest } from "../models";
 /**
  * CryptoPaymentIntentsApi - axios parameter creator
  * @export
@@ -58,12 +58,12 @@ export const CryptoPaymentIntentsApiAxiosParamCreator = function (
     /**
      *
      * @summary Create a payment intent
-     * @param {PaymentIntent} [paymentIntent]
+     * @param {PaymentIntentCreationRequest} [paymentIntentCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     createPaymentIntent: async (
-      paymentIntent?: PaymentIntent,
+      paymentIntentCreationRequest?: PaymentIntentCreationRequest,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       const localVarPath = `/v1/paymentIntents`;
@@ -97,7 +97,7 @@ export const CryptoPaymentIntentsApiAxiosParamCreator = function (
         ...options.headers
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        paymentIntent,
+        paymentIntentCreationRequest,
         localVarRequestOptions,
         configuration
       );
@@ -319,12 +319,12 @@ export const CryptoPaymentIntentsApiFp = function (
     /**
      *
      * @summary Create a payment intent
-     * @param {PaymentIntent} [paymentIntent]
+     * @param {PaymentIntentCreationRequest} [paymentIntentCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async createPaymentIntent(
-      paymentIntent?: PaymentIntent,
+      paymentIntentCreationRequest?: PaymentIntentCreationRequest,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -334,7 +334,7 @@ export const CryptoPaymentIntentsApiFp = function (
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.createPaymentIntent(
-          paymentIntent,
+          paymentIntentCreationRequest,
           options
         );
       return createRequestFunction(
@@ -459,16 +459,16 @@ export const CryptoPaymentIntentsApiFactory = function (
     /**
      *
      * @summary Create a payment intent
-     * @param {PaymentIntent} [paymentIntent]
+     * @param {PaymentIntentCreationRequest} [paymentIntentCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     createPaymentIntent(
-      paymentIntent?: PaymentIntent,
+      paymentIntentCreationRequest?: PaymentIntentCreationRequest,
       options?: any
     ): AxiosPromise<CreatePaymentIntentResponse> {
       return localVarFp
-        .createPaymentIntent(paymentIntent, options)
+        .createPaymentIntent(paymentIntentCreationRequest, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -552,17 +552,17 @@ export class CryptoPaymentIntentsApi extends BaseAPI {
   /**
    *
    * @summary Create a payment intent
-   * @param {PaymentIntent} [paymentIntent]
+   * @param {PaymentIntentCreationRequest} [paymentIntentCreationRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof CryptoPaymentIntentsApi
    */
   public createPaymentIntent(
-    paymentIntent?: PaymentIntent,
+    paymentIntentCreationRequest?: PaymentIntentCreationRequest,
     options?: AxiosRequestConfig
   ) {
     return CryptoPaymentIntentsApiFp(this.configuration)
-      .createPaymentIntent(paymentIntent, options)
+      .createPaymentIntent(paymentIntentCreationRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 

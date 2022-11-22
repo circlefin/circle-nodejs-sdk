@@ -6,8 +6,14 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CryptoPaymentDepositAddress } from "./crypto-payment-deposit-address";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PaymentStatus } from "./payment-status";
 
 /**
