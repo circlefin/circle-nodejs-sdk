@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v1.0.2...v1.1.0) (2022-11-21)
+
+
+### Features
+
+* regen code from OpenAPI doc v1.1.0 ([#39](https://github.com/circlefin/circle-nodejs-sdk/issues/39)) ([9109d23](https://github.com/circlefin/circle-nodejs-sdk/commit/9109d23ca486e46aa9962cb215ff3ffa339aa3dd))
+
 ## [1.0.2](https://github.com/circlefin/circle-nodejs-sdk/compare/v1.0.1...v1.0.2) (2022-10-21)
 
 
