@@ -6,9 +6,17 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatPayoutCreationRequestDestination } from "./fiat-payout-creation-request-destination";
+// May contain unused imports in some cases
+// @ts-ignore
 import { MetadataPayout } from "./metadata-payout";
+// May contain unused imports in some cases
+// @ts-ignore
 import { WalletLocation } from "./wallet-location";
 
 /**

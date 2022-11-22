@@ -6,10 +6,20 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CryptoPayoutDestination } from "./crypto-payout-destination";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PayoutErrorCode } from "./payout-error-code";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PayoutMoney } from "./payout-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PayoutStatus } from "./payout-status";
+// May contain unused imports in some cases
+// @ts-ignore
 import { RiskEvaluation } from "./risk-evaluation";
 
 /**

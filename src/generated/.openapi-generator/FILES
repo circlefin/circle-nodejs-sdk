@@ -218,6 +218,7 @@ models/payment-error-code.ts
 models/payment-info-cancel.ts
 models/payment-info-payment-and-refund.ts
 models/payment-intent-amount-paid.ts
+models/payment-intent-creation-request.ts
 models/payment-intent-fees.ts
 models/payment-intent.ts
 models/payment-method-blockchain.ts
@@ -293,3 +294,4 @@ models/wire-instruction-beneficiary-bank.ts
 models/wire-instruction-beneficiary.ts
 models/wire-instruction.ts
 models/wire.ts
+tsconfig.esm.json

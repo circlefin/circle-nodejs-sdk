@@ -6,10 +6,20 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CancelRefundReversalStatus } from "./cancel-refund-reversal-status";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PaymentInfoCancel } from "./payment-info-cancel";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PaymentInfoPaymentAndRefund } from "./payment-info-payment-and-refund";
+// May contain unused imports in some cases
+// @ts-ignore
 import { SourceResponse } from "./source-response";
 
 /**

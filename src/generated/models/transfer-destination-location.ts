@@ -6,8 +6,14 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { Chain } from "./chain";
+// May contain unused imports in some cases
+// @ts-ignore
 import { TransferDestinationBlockchainLocation } from "./transfer-destination-blockchain-location";
+// May contain unused imports in some cases
+// @ts-ignore
 import { TransferDestinationWalletLocation } from "./transfer-destination-wallet-location";
 
 /**

@@ -6,9 +6,17 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { CryptoPayoutDestination } from "./crypto-payout-destination";
+// May contain unused imports in some cases
+// @ts-ignore
 import { Money } from "./money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { ToAmount } from "./to-amount";
+// May contain unused imports in some cases
+// @ts-ignore
 import { TransferSourceWalletLocation } from "./transfer-source-wallet-location";
 
 /**

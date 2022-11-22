@@ -6,7 +6,11 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ApplePayTokenEcHeader } from "./apple-pay-token-ec-header";
+// May contain unused imports in some cases
+// @ts-ignore
 import { ApplePayTokenRsaHeader } from "./apple-pay-token-rsa-header";
 
 /**

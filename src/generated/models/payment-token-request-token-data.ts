@@ -6,8 +6,14 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
 import { ApplePayToken } from "./apple-pay-token";
+// May contain unused imports in some cases
+// @ts-ignore
 import { ApplePayTokenHeader } from "./apple-pay-token-header";
+// May contain unused imports in some cases
+// @ts-ignore
 import { GooglePayToken } from "./google-pay-token";
 
 /**
