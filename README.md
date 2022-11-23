@@ -1,5 +1,9 @@
 # Circle APIs Node.js Library
 
+[![npm version](https://img.shields.io/npm/v/@circle-fin/circle-sdk)](https://www.npmjs.com/package/@circle-fin/circle-sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@circle-fin/circle-sdk)](https://www.npmjs.com/package/@circle-fin/circle-sdk)
+
+
 The Circle Node library provides convenient access to the Circle API for
 applications written in server-side JavaScript. For the API reference, see the [Circle API docs](https://developers.circle.com/reference).
 
