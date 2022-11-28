@@ -86,6 +86,7 @@ models/create-business-signet-account-response.ts
 models/create-business-transfer-response.ts
 models/create-business-wire-account-response.ts
 models/create-card-response.ts
+models/create-crypto-refund-response.ts
 models/create-mock-ach-account-response.ts
 models/create-mock-chargeback-response.ts
 models/create-payment-intent-response.ts
@@ -105,10 +106,15 @@ models/create-wire-payment-response.ts
 models/crypto-payment-deposit-address.ts
 models/crypto-payment.ts
 models/crypto-payments-money.ts
+models/crypto-payments-optional-amount-money.ts
 models/crypto-payout-creation-request.ts
 models/crypto-payout-destination-type.ts
 models/crypto-payout-destination.ts
 models/crypto-payout.ts
+models/crypto-refund-creation-request-amount.ts
+models/crypto-refund-creation-request-to-amount.ts
+models/crypto-refund-creation-request.ts
+models/crypto-refund-destination.ts
 models/currency.ts
 models/cvv-results.ts
 models/delete-subscription-response.ts
@@ -218,6 +224,7 @@ models/payment-error-code.ts
 models/payment-info-cancel.ts
 models/payment-info-payment-and-refund.ts
 models/payment-intent-amount-paid.ts
+models/payment-intent-amount-refunded.ts
 models/payment-intent-creation-request.ts
 models/payment-intent-fees.ts
 models/payment-intent.ts

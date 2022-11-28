@@ -8,6 +8,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import { FiatMoney } from "./fiat-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
 // May contain unused imports in some cases
 // @ts-ignore
@@ -61,6 +64,12 @@ export interface FiatPayment {
    * @memberof FiatPayment
    */
   amount: FiatMoneyUsd;
+  /**
+   *
+   * @type {FiatMoney}
+   * @memberof FiatPayment
+   */
+  fromAmount?: FiatMoney;
   /**
    *
    * @type {SourceResponse}

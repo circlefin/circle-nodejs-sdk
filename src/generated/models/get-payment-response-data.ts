@@ -14,7 +14,13 @@ import { CryptoPayment } from "./crypto-payment";
 import { CryptoPaymentDepositAddress } from "./crypto-payment-deposit-address";
 // May contain unused imports in some cases
 // @ts-ignore
+import { CryptoPaymentsOptionalAmountMoney } from "./crypto-payments-optional-amount-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatCancel } from "./fiat-cancel";
+// May contain unused imports in some cases
+// @ts-ignore
+import { FiatMoney } from "./fiat-money";
 // May contain unused imports in some cases
 // @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";

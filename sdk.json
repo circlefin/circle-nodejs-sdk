@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.1.1",
+    "version": "1.2.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -2957,6 +2957,10 @@
                             "amount": "3.14",
                             "currency": "USD"
                           },
+                          "amountRefunded": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
                           "settlementCurrency": "USD",
                           "paymentMethods": [
                             {
@@ -2975,6 +2979,7 @@
                           "paymentIds": [
                             "69808f36-3e5e-4f37-bf82-ca79e4d70fc1"
                           ],
+                          "refundIds": ["425dca6d-ac79-43b6-b0f9-43fdc51de91b"],
                           "timeline": [
                             {
                               "status": "created",
@@ -3154,6 +3159,90 @@
                         ],
                         "createDate": "2022-07-21T20:13:35.578678Z",
                         "updateDate": "2022-07-21T20:19:24.859052Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v1/paymentIntents/{id}/refund": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a crypto refund",
+        "operationId": "createCryptoRefund",
+        "tags": ["Crypto Payment Intents"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CryptoRefundCreationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Crypto refund successfully created for the given payment intent.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateCryptoRefundResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CryptoPayment"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "3389f4ba-aafd-4eef-aaa2-3292df8f62e6",
+                        "type": "refund",
+                        "status": "pending",
+                        "amount": {
+                          "currency": "USD"
+                        },
+                        "merchantId": "5ffea093-d210-44b4-a7ca-ad33b9498188",
+                        "merchantWalletId": "1000999922",
+                        "paymentIntentId": "77c91fe9-e603-4e7b-9672-1ef8ac502cf6",
+                        "settlementAmount": {
+                          "amount": "1.00",
+                          "currency": "ETH"
+                        },
+                        "depositAddress": {
+                          "chain": "ETH",
+                          "address": "0x97de855690955e0da79ce5c1b6804847e7070c7f"
+                        },
+                        "createDate": "2022-07-21T20:16:35.092852Z",
+                        "updateDate": "2022-07-21T20:19:24.719313Z"
                       }
                     }
                   }
@@ -3824,6 +3913,10 @@
                             "amount": "3.14",
                             "currency": "USD"
                           },
+                          "fromAmount": {
+                            "amount": "3.14",
+                            "currency": "EUR"
+                          },
                           "source": {
                             "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
                             "type": "card"
@@ -4049,6 +4142,10 @@
                           "amount": {
                             "amount": "3.14",
                             "currency": "USD"
+                          },
+                          "fromAmount": {
+                            "amount": "3.14",
+                            "currency": "EUR"
                           },
                           "source": {
                             "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
@@ -4402,6 +4499,10 @@
                             "amount": "3.14",
                             "currency": "USD"
                           },
+                          "fromAmount": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
                           "source": {
                             "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
                             "type": "card"
@@ -4554,6 +4655,10 @@
                           "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
                           "merchantWalletId": "212000",
                           "amount": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "fromAmount": {
                             "amount": "3.14",
                             "currency": "USD"
                           },
@@ -9470,7 +9575,14 @@
         "properties": {
           "status": {
             "type": "string",
-            "enum": ["created", "pending", "complete", "expired", "failed"]
+            "enum": [
+              "created",
+              "pending",
+              "complete",
+              "expired",
+              "failed",
+              "refunded"
+            ]
           },
           "context": {
             "type": "string",
@@ -9514,7 +9626,24 @@
               "currency": {
                 "description": "Currency code.",
                 "type": "string",
-                "enum": ["USD"]
+                "enum": ["USD", "BTC", "ETH"]
+              }
+            }
+          },
+          "amountRefunded": {
+            "description": "Sum of the the amount refunded.",
+            "type": "object",
+            "required": ["amount", "currency"],
+            "properties": {
+              "amount": {
+                "description": "Magnitude of the amount, in units of the currency, with a `.`.",
+                "type": "string",
+                "example": "3.14"
+              },
+              "currency": {
+                "description": "Currency code.",
+                "type": "string",
+                "enum": ["USD", "BTC", "ETH"]
               }
             }
           },
@@ -9542,6 +9671,15 @@
               "type": "string",
               "format": "uuid",
               "example": "69808f36-3e5e-4f37-bf82-ca79e4d70fc1"
+            }
+          },
+          "refundIds": {
+            "description": "List of associated refunds.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "example": "425dca6d-ac79-43b6-b0f9-43fdc51de91b"
             }
           },
           "timeline": {
@@ -9587,6 +9725,219 @@
             "items": {
               "$ref": "#/components/schemas/PaymentMethodBlockchain"
             }
+          }
+        }
+      },
+      "CryptoRefundDestination": {
+        "type": "object",
+        "description": "The destination of a crypto refund.",
+        "required": ["address", "chain"],
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "The blockchain address.",
+            "example": "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+          },
+          "chain": {
+            "$ref": "#/components/schemas/Chain"
+          }
+        }
+      },
+      "IdentityAddress": {
+        "type": "object",
+        "required": ["line1", "city", "district", "postalCode", "country"],
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "Line one of the street address.",
+            "maxLength": 1024,
+            "example": "100 Money Street"
+          },
+          "line2": {
+            "type": "string",
+            "description": "Line two of the street address.",
+            "maxLength": 1024,
+            "example": "Suite 1"
+          },
+          "city": {
+            "type": "string",
+            "description": "City portion of the address.",
+            "maxLength": 1024,
+            "example": "Boston"
+          },
+          "district": {
+            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
+            "type": "string",
+            "maxLength": 16,
+            "example": "MA"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal / ZIP code of the address.",
+            "maxLength": 16,
+            "example": "01234"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
+            "maxLength": 2,
+            "example": "US"
+          }
+        }
+      },
+      "Identity": {
+        "type": "object",
+        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
+        "required": ["type", "name", "addresses"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
+            "enum": ["individual", "business"]
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the identity.",
+            "example": "Satoshi Nakamoto",
+            "maxLength": 1024
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentityAddress"
+            }
+          }
+        }
+      },
+      "CryptoRefundCreationRequest": {
+        "type": "object",
+        "required": ["idempotencyKey", "destination", "amount", "toAmount"],
+        "properties": {
+          "idempotencyKey": {
+            "$ref": "#/components/schemas/IdempotencyKey"
+          },
+          "destination": {
+            "$ref": "#/components/schemas/CryptoRefundDestination"
+          },
+          "amount": {
+            "description": "The source amount of the refund, it can be in either the original payment currency or the settlement currency.",
+            "required": ["currency"],
+            "properties": {
+              "currency": {
+                "description": "Currency code.",
+                "type": "string",
+                "enum": ["USD", "ETH", "BTC"]
+              }
+            }
+          },
+          "toAmount": {
+            "description": "The destination amount of the refund, it must be in the original payment currency.",
+            "required": ["amount", "currency"],
+            "properties": {
+              "amount": {
+                "description": "Magnitude of the amount, in units of the currency, with a `.`.",
+                "type": "string",
+                "example": "3.14"
+              },
+              "currency": {
+                "description": "Currency code.",
+                "type": "string",
+                "enum": ["USD", "ETH", "BTC"]
+              }
+            }
+          },
+          "identities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Identity"
+            }
+          }
+        }
+      },
+      "IdMerchant": {
+        "type": "string",
+        "description": "Unique system generated identifier for the merchant.",
+        "format": "uuid",
+        "example": "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
+      },
+      "CryptoPaymentsOptionalAmountMoney": {
+        "type": "object",
+        "required": ["currency"],
+        "properties": {
+          "amount": {
+            "description": "Magnitude of the amount, in units of the currency, with a `.`.",
+            "type": "string",
+            "example": "3.14"
+          },
+          "currency": {
+            "description": "Currency code.",
+            "type": "string",
+            "enum": ["USD", "ETH", "BTC"]
+          }
+        }
+      },
+      "PaymentStatus": {
+        "type": "string",
+        "description": "Enumerated status of the payment. `pending` means the payment is waiting to be processed. `confirmed` means the payment has been approved by the bank and the merchant can treat it as successful, but settlement funds are not yet available to the merchant.  `paid` means settlement funds have been received and are available to the merchant. `failed` means something went wrong (most commonly that the payment was denied). `action_required` means that additional steps are required to process this payment; refer to `requiredAction` for more details. Terminal states are `paid` and `failed`.",
+        "enum": ["pending", "confirmed", "paid", "failed", "action_required"]
+      },
+      "CryptoPayment": {
+        "type": "object",
+        "description": "Status information of the related payment. This property is only present on refund or cancel items.",
+        "required": ["id", "type", "merchantId", "amount", "status"],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "type": {
+            "description": "Type of the payment object.",
+            "type": "string",
+            "enum": ["payment", "refund"]
+          },
+          "merchantId": {
+            "$ref": "#/components/schemas/IdMerchant"
+          },
+          "merchantWalletId": {
+            "$ref": "#/components/schemas/MerchantWalletId"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/CryptoPaymentsOptionalAmountMoney"
+          },
+          "status": {
+            "$ref": "#/components/schemas/PaymentStatus"
+          },
+          "fees": {
+            "$ref": "#/components/schemas/FiatMoneyUsd"
+          },
+          "paymentIntentId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "6e4d4047-db14-4c09-b238-1215aee50d03"
+          },
+          "settlementAmount": {
+            "$ref": "#/components/schemas/FiatMoneyUsd"
+          },
+          "depositAddress": {
+            "type": "object",
+            "properties": {
+              "chain": {
+                "$ref": "#/components/schemas/Chain"
+              },
+              "address": {
+                "type": "string",
+                "example": "0x97de855690955e0da79ce5c1b6804847e7070c7f"
+              }
+            }
+          },
+          "transactionHash": {
+            "type": "string",
+            "example": "0x7351585460bd657f320b9afa02a52c26d89272d0d10cc29913eb8b28e64fd906"
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -9669,12 +10020,6 @@
           }
         }
       },
-      "IdMerchant": {
-        "type": "string",
-        "description": "Unique system generated identifier for the merchant.",
-        "format": "uuid",
-        "example": "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
-      },
       "SourceResponse": {
         "type": "object",
         "description": "The payment source.",
@@ -9688,11 +10033,6 @@
             "enum": ["card", "ach", "wire", "sepa"]
           }
         }
-      },
-      "PaymentStatus": {
-        "type": "string",
-        "description": "Enumerated status of the payment. `pending` means the payment is waiting to be processed. `confirmed` means the payment has been approved by the bank and the merchant can treat it as successful, but settlement funds are not yet available to the merchant.  `paid` means settlement funds have been received and are available to the merchant. `failed` means something went wrong (most commonly that the payment was denied). `action_required` means that additional steps are required to process this payment; refer to `requiredAction` for more details. Terminal states are `paid` and `failed`.",
-        "enum": ["pending", "confirmed", "paid", "failed", "action_required"]
       },
       "RequiredAction": {
         "type": "object",
@@ -9806,6 +10146,9 @@
           "amount": {
             "$ref": "#/components/schemas/FiatMoneyUsd"
           },
+          "fromAmount": {
+            "$ref": "#/components/schemas/FiatMoney"
+          },
           "source": {
             "$ref": "#/components/schemas/SourceResponse"
           },
@@ -9844,66 +10187,6 @@
           },
           "channel": {
             "$ref": "#/components/schemas/Channel"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          }
-        }
-      },
-      "CryptoPayment": {
-        "type": "object",
-        "description": "Status information of the related payment. This property is only present on refund or cancel items.",
-        "required": ["id", "type", "merchantId", "amount", "source", "status"],
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "type": {
-            "description": "Type of the payment object.",
-            "type": "string",
-            "enum": ["payment"]
-          },
-          "merchantId": {
-            "$ref": "#/components/schemas/IdMerchant"
-          },
-          "merchantWalletId": {
-            "$ref": "#/components/schemas/MerchantWalletId"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "status": {
-            "$ref": "#/components/schemas/PaymentStatus"
-          },
-          "fees": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "paymentIntentId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "6e4d4047-db14-4c09-b238-1215aee50d03"
-          },
-          "settlementAmount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "depositAddress": {
-            "type": "object",
-            "properties": {
-              "chain": {
-                "$ref": "#/components/schemas/Chain"
-              },
-              "address": {
-                "type": "string",
-                "example": "0x97de855690955e0da79ce5c1b6804847e7070c7f"
-              }
-            }
-          },
-          "transactionHash": {
-            "type": "string",
-            "example": "0x7351585460bd657f320b9afa02a52c26d89272d0d10cc29913eb8b28e64fd906"
           },
           "createDate": {
             "$ref": "#/components/schemas/UtcTimestamp"
@@ -10296,6 +10579,9 @@
           },
           "amount": {
             "$ref": "#/components/schemas/FiatMoneyUsd"
+          },
+          "fromAmount": {
+            "$ref": "#/components/schemas/FiatMoney"
           },
           "source": {
             "$ref": "#/components/schemas/SourceResponse"
@@ -10913,72 +11199,6 @@
           },
           "metadata": {
             "$ref": "#/components/schemas/MetadataPayout"
-          }
-        }
-      },
-      "IdentityAddress": {
-        "type": "object",
-        "required": ["line1", "city", "district", "postalCode", "country"],
-        "properties": {
-          "line1": {
-            "type": "string",
-            "description": "Line one of the street address.",
-            "maxLength": 1024,
-            "example": "100 Money Street"
-          },
-          "line2": {
-            "type": "string",
-            "description": "Line two of the street address.",
-            "maxLength": 1024,
-            "example": "Suite 1"
-          },
-          "city": {
-            "type": "string",
-            "description": "City portion of the address.",
-            "maxLength": 1024,
-            "example": "Boston"
-          },
-          "district": {
-            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
-            "type": "string",
-            "maxLength": 16,
-            "example": "MA"
-          },
-          "postalCode": {
-            "type": "string",
-            "description": "Postal / ZIP code of the address.",
-            "maxLength": 16,
-            "example": "01234"
-          },
-          "country": {
-            "type": "string",
-            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
-            "maxLength": 2,
-            "example": "US"
-          }
-        }
-      },
-      "Identity": {
-        "type": "object",
-        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
-        "required": ["type", "name", "addresses"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
-            "enum": ["individual", "business"]
-          },
-          "name": {
-            "type": "string",
-            "description": "Full name of the identity.",
-            "example": "Satoshi Nakamoto",
-            "maxLength": 1024
-          },
-          "addresses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IdentityAddress"
-            }
           }
         }
       },

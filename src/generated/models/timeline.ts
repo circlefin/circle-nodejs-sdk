@@ -37,7 +37,8 @@ export const TimelineStatusEnum = {
   Pending: "pending",
   Complete: "complete",
   Expired: "expired",
-  Failed: "failed"
+  Failed: "failed",
+  Refunded: "refunded"
 } as const;
 
 export type TimelineStatusEnum =

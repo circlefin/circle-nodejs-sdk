@@ -11,6 +11,9 @@
 import { CryptoPaymentDepositAddress } from "./crypto-payment-deposit-address";
 // May contain unused imports in some cases
 // @ts-ignore
+import { CryptoPaymentsOptionalAmountMoney } from "./crypto-payments-optional-amount-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
 // May contain unused imports in some cases
 // @ts-ignore
@@ -48,10 +51,10 @@ export interface CryptoPayment {
   merchantWalletId?: string;
   /**
    *
-   * @type {FiatMoneyUsd}
+   * @type {CryptoPaymentsOptionalAmountMoney}
    * @memberof CryptoPayment
    */
-  amount: FiatMoneyUsd;
+  amount: CryptoPaymentsOptionalAmountMoney;
   /**
    *
    * @type {PaymentStatus}
@@ -103,7 +106,8 @@ export interface CryptoPayment {
 }
 
 export const CryptoPaymentTypeEnum = {
-  Payment: "payment"
+  Payment: "payment",
+  Refund: "refund"
 } as const;
 
 export type CryptoPaymentTypeEnum =
