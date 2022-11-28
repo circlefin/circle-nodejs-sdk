@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.2.0",
+    "version": "1.2.1",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -9743,72 +9743,6 @@
           }
         }
       },
-      "IdentityAddress": {
-        "type": "object",
-        "required": ["line1", "city", "district", "postalCode", "country"],
-        "properties": {
-          "line1": {
-            "type": "string",
-            "description": "Line one of the street address.",
-            "maxLength": 1024,
-            "example": "100 Money Street"
-          },
-          "line2": {
-            "type": "string",
-            "description": "Line two of the street address.",
-            "maxLength": 1024,
-            "example": "Suite 1"
-          },
-          "city": {
-            "type": "string",
-            "description": "City portion of the address.",
-            "maxLength": 1024,
-            "example": "Boston"
-          },
-          "district": {
-            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
-            "type": "string",
-            "maxLength": 16,
-            "example": "MA"
-          },
-          "postalCode": {
-            "type": "string",
-            "description": "Postal / ZIP code of the address.",
-            "maxLength": 16,
-            "example": "01234"
-          },
-          "country": {
-            "type": "string",
-            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
-            "maxLength": 2,
-            "example": "US"
-          }
-        }
-      },
-      "Identity": {
-        "type": "object",
-        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
-        "required": ["type", "name", "addresses"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
-            "enum": ["individual", "business"]
-          },
-          "name": {
-            "type": "string",
-            "description": "Full name of the identity.",
-            "example": "Satoshi Nakamoto",
-            "maxLength": 1024
-          },
-          "addresses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IdentityAddress"
-            }
-          }
-        }
-      },
       "CryptoRefundCreationRequest": {
         "type": "object",
         "required": ["idempotencyKey", "destination", "amount", "toAmount"],
@@ -9844,12 +9778,6 @@
                 "type": "string",
                 "enum": ["USD", "ETH", "BTC"]
               }
-            }
-          },
-          "identities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Identity"
             }
           }
         }
@@ -11199,6 +11127,72 @@
           },
           "metadata": {
             "$ref": "#/components/schemas/MetadataPayout"
+          }
+        }
+      },
+      "IdentityAddress": {
+        "type": "object",
+        "required": ["line1", "city", "district", "postalCode", "country"],
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "Line one of the street address.",
+            "maxLength": 1024,
+            "example": "100 Money Street"
+          },
+          "line2": {
+            "type": "string",
+            "description": "Line two of the street address.",
+            "maxLength": 1024,
+            "example": "Suite 1"
+          },
+          "city": {
+            "type": "string",
+            "description": "City portion of the address.",
+            "maxLength": 1024,
+            "example": "Boston"
+          },
+          "district": {
+            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
+            "type": "string",
+            "maxLength": 16,
+            "example": "MA"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal / ZIP code of the address.",
+            "maxLength": 16,
+            "example": "01234"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
+            "maxLength": 2,
+            "example": "US"
+          }
+        }
+      },
+      "Identity": {
+        "type": "object",
+        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
+        "required": ["type", "name", "addresses"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
+            "enum": ["individual", "business"]
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the identity.",
+            "example": "Satoshi Nakamoto",
+            "maxLength": 1024
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentityAddress"
+            }
           }
         }
       },
