@@ -27,7 +27,9 @@ export interface PaymentIntentAmountPaid {
 }
 
 export const PaymentIntentAmountPaidCurrencyEnum = {
-  Usd: "USD"
+  Usd: "USD",
+  Btc: "BTC",
+  Eth: "ETH"
 } as const;
 
 export type PaymentIntentAmountPaidCurrencyEnum =

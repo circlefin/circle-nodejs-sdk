@@ -11,6 +11,9 @@
 import { FiatCancel } from "./fiat-cancel";
 // May contain unused imports in some cases
 // @ts-ignore
+import { FiatMoney } from "./fiat-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
 // May contain unused imports in some cases
 // @ts-ignore
@@ -76,6 +79,12 @@ export interface FiatPaymentPolymorphic {
    * @memberof FiatPaymentPolymorphic
    */
   amount: FiatMoneyUsd;
+  /**
+   *
+   * @type {FiatMoney}
+   * @memberof FiatPaymentPolymorphic
+   */
+  fromAmount?: FiatMoney;
   /**
    *
    * @type {SourceResponse}

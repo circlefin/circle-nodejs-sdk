@@ -20,6 +20,9 @@ import { CryptoPaymentDepositAddress } from "./crypto-payment-deposit-address";
 import { FiatCancel } from "./fiat-cancel";
 // May contain unused imports in some cases
 // @ts-ignore
+import { FiatMoney } from "./fiat-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoneyUsd } from "./fiat-money-usd";
 // May contain unused imports in some cases
 // @ts-ignore

@@ -14,6 +14,9 @@ import { CryptoPaymentsMoney } from "./crypto-payments-money";
 import { PaymentIntentAmountPaid } from "./payment-intent-amount-paid";
 // May contain unused imports in some cases
 // @ts-ignore
+import { PaymentIntentAmountRefunded } from "./payment-intent-amount-refunded";
+// May contain unused imports in some cases
+// @ts-ignore
 import { PaymentIntentFees } from "./payment-intent-fees";
 // May contain unused imports in some cases
 // @ts-ignore
@@ -47,6 +50,12 @@ export interface PaymentIntent {
    */
   amountPaid?: PaymentIntentAmountPaid;
   /**
+   *
+   * @type {PaymentIntentAmountRefunded}
+   * @memberof PaymentIntent
+   */
+  amountRefunded?: PaymentIntentAmountRefunded;
+  /**
    * Desired currency for the payments to settle in.
    * @type {string}
    * @memberof PaymentIntent
@@ -70,6 +79,12 @@ export interface PaymentIntent {
    * @memberof PaymentIntent
    */
   paymentIds?: Array<string>;
+  /**
+   * List of associated refunds.
+   * @type {Array<string>}
+   * @memberof PaymentIntent
+   */
+  refundIds?: Array<string>;
   /**
    * State management timeline.
    * @type {Array<Timeline>}

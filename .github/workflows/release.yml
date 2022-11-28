@@ -14,6 +14,12 @@ jobs:
         with:
           release-type: node
           package-name: "@circle-fin/circle-sdk"
+          changelog-types: |
+            [
+              {"type":"feat","section":"New Features","hidden":false},
+              {"type":"fix","section":"Fixes","hidden":false},
+              {"type":"chore","section":"Miscellaneous","hidden":true}
+            ]
 
   npm-publish:
     needs: release-please
