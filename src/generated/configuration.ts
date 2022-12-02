@@ -6,6 +6,8 @@
  * Do not edit the class manually.
  */
 
+const packageJson = require("../../package.json");
+
 export interface ConfigurationParameters {
   apiKey?:
     | string
@@ -60,7 +62,7 @@ export class Configuration {
     if (!this.baseOptions) this.baseOptions = {};
     if (!this.baseOptions.headers) this.baseOptions.headers = {};
     this.baseOptions.headers = {
-      ["User-Agent"]: `CircleNodeJs/1.2.0`,
+      ["User-Agent"]: `CircleNodeJs/${packageJson.version}`,
       ...this.baseOptions.headers
     };
   }

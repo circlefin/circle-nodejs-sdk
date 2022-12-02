@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 {{>licenseInfo}}
+const packageJson = require('../../package.json')
 
 export interface ConfigurationParameters {
     apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
@@ -49,7 +50,7 @@ export class Configuration {
         if (!this.baseOptions) this.baseOptions = {};
         if (!this.baseOptions.headers) this.baseOptions.headers = {};
         this.baseOptions.headers = {
-            ['User-Agent']: `CircleNodeJs/{{npmVersion}}`,
+            ['User-Agent']: `CircleNodeJs/${packageJson.version}`,
             ...this.baseOptions.headers,
         }
     }
