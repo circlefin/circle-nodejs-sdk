@@ -5,6 +5,7 @@ apis/balances-api.ts
 apis/cards-api.ts
 apis/channels-api.ts
 apis/chargebacks-api.ts
+apis/checkout-sessions-api.ts
 apis/crypto-address-book-api.ts
 apis/crypto-exchange-rates-api.ts
 apis/crypto-payment-intents-api.ts
@@ -75,6 +76,10 @@ models/chain.ts
 models/channel-response.ts
 models/chargeback-categories.ts
 models/chargeback-status.ts
+models/checkout-session-creation-request.ts
+models/checkout-session-money.ts
+models/checkout-session-status.ts
+models/checkout-session.ts
 models/conflict.ts
 models/create-ach-account-response.ts
 models/create-address-book-recipient-response.ts
@@ -86,6 +91,7 @@ models/create-business-signet-account-response.ts
 models/create-business-transfer-response.ts
 models/create-business-wire-account-response.ts
 models/create-card-response.ts
+models/create-checkout-session-response.ts
 models/create-crypto-refund-response.ts
 models/create-mock-ach-account-response.ts
 models/create-mock-chargeback-response.ts
@@ -123,6 +129,8 @@ models/detailed-payment.ts
 models/detailed-refund.ts
 models/eci.ts
 models/expire-payment-intent-response.ts
+models/extend-checkout-session-request.ts
+models/extend-checkout-session-response.ts
 models/external-fiat-account-status.ts
 models/fee.ts
 models/fiat-cancel.ts
@@ -152,6 +160,7 @@ models/get-business-wire-account-instructions-response.ts
 models/get-business-wire-account-response.ts
 models/get-card-response.ts
 models/get-chargeback-response.ts
+models/get-checkout-session-response.ts
 models/get-config-response.ts
 models/get-exchange-rates-response.ts
 models/get-payment-intent-response.ts

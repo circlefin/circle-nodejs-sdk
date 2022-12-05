@@ -61,65 +61,6 @@ export const CryptoPaymentIntentsApiAxiosParamCreator = function (
   return {
     /**
      *
-     * @summary Create a crypto refund
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createCryptoRefund: async (
-      id: string,
-      cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      // verify required parameter 'id' is not null or undefined
-      assertParamExists("createCryptoRefund", "id", id);
-      const localVarPath = `/v1/paymentIntents/{id}/refund`.replace(
-        `{${"id"}}`,
-        encodeURIComponent(String(id))
-      );
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        cryptoRefundCreationRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     *
      * @summary Create a payment intent
      * @param {PaymentIntentCreationRequest} [paymentIntentCreationRequest]
      * @param {*} [options] Override http request option.
@@ -365,6 +306,65 @@ export const CryptoPaymentIntentsApiAxiosParamCreator = function (
         url: toPathString(localVarUrlObj),
         options: localVarRequestOptions
       };
+    },
+    /**
+     *
+     * @summary Refund a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    refundPaymentIntent: async (
+      id: string,
+      cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("refundPaymentIntent", "id", id);
+      const localVarPath = `/v1/paymentIntents/{id}/refund`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        cryptoRefundCreationRequest,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
     }
   };
 };
@@ -379,37 +379,6 @@ export const CryptoPaymentIntentsApiFp = function (
   const localVarAxiosParamCreator =
     CryptoPaymentIntentsApiAxiosParamCreator(configuration);
   return {
-    /**
-     *
-     * @summary Create a crypto refund
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createCryptoRefund(
-      id: string,
-      cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<CreateCryptoRefundResponse>
-    > {
-      const localVarAxiosArgs =
-        await localVarAxiosParamCreator.createCryptoRefund(
-          id,
-          cryptoRefundCreationRequest,
-          options
-        );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
     /**
      *
      * @summary Create a payment intent
@@ -535,6 +504,37 @@ export const CryptoPaymentIntentsApiFp = function (
         BASE_PATH,
         configuration
       );
+    },
+    /**
+     *
+     * @summary Refund a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async refundPaymentIntent(
+      id: string,
+      cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<CreateCryptoRefundResponse>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.refundPaymentIntent(
+          id,
+          cryptoRefundCreationRequest,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
     }
   };
 };
@@ -550,23 +550,6 @@ export const CryptoPaymentIntentsApiFactory = function (
 ) {
   const localVarFp = CryptoPaymentIntentsApiFp(configuration);
   return {
-    /**
-     *
-     * @summary Create a crypto refund
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createCryptoRefund(
-      id: string,
-      cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
-      options?: any
-    ): AxiosPromise<CreateCryptoRefundResponse> {
-      return localVarFp
-        .createCryptoRefund(id, cryptoRefundCreationRequest, options)
-        .then((request) => request(axios, basePath));
-    },
     /**
      *
      * @summary Create a payment intent
@@ -649,6 +632,23 @@ export const CryptoPaymentIntentsApiFactory = function (
           options
         )
         .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary Refund a payment intent
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    refundPaymentIntent(
+      id: string,
+      cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
+      options?: any
+    ): AxiosPromise<CreateCryptoRefundResponse> {
+      return localVarFp
+        .refundPaymentIntent(id, cryptoRefundCreationRequest, options)
+        .then((request) => request(axios, basePath));
     }
   };
 };
@@ -660,25 +660,6 @@ export const CryptoPaymentIntentsApiFactory = function (
  * @extends {BaseAPI}
  */
 export class CryptoPaymentIntentsApi extends BaseAPI {
-  /**
-   *
-   * @summary Create a crypto refund
-   * @param {string} id Universally unique identifier (UUID v4) of a resource.
-   * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof CryptoPaymentIntentsApi
-   */
-  public createCryptoRefund(
-    id: string,
-    cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return CryptoPaymentIntentsApiFp(this.configuration)
-      .createCryptoRefund(id, cryptoRefundCreationRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
   /**
    *
    * @summary Create a payment intent
@@ -764,6 +745,25 @@ export class CryptoPaymentIntentsApi extends BaseAPI {
         pageSize,
         options
       )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary Refund a payment intent
+   * @param {string} id Universally unique identifier (UUID v4) of a resource.
+   * @param {CryptoRefundCreationRequest} [cryptoRefundCreationRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CryptoPaymentIntentsApi
+   */
+  public refundPaymentIntent(
+    id: string,
+    cryptoRefundCreationRequest?: CryptoRefundCreationRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return CryptoPaymentIntentsApiFp(this.configuration)
+      .refundPaymentIntent(id, cryptoRefundCreationRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

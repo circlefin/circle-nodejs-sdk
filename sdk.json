@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.2.0",
+    "version": "1.3.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -118,6 +118,10 @@
     {
       "name": "Wires",
       "description": "Create, get instructions, and get information on bank accounts for wire transfers."
+    },
+    {
+      "name": "Checkout Sessions",
+      "description": "Create, get, extend a checkout session."
     }
   ],
   "paths": {
@@ -3185,8 +3189,8 @@
             "bearerAuth": []
           }
         ],
-        "summary": "Create a crypto refund",
-        "operationId": "createCryptoRefund",
+        "summary": "Refund a payment intent",
+        "operationId": "refundPaymentIntent",
         "tags": ["Crypto Payment Intents"],
         "parameters": [
           {
@@ -7641,6 +7645,245 @@
           }
         }
       }
+    },
+    "/v1/checkoutSessions": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a checkout session",
+        "operationId": "createCheckoutSession",
+        "tags": ["Checkout Sessions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutSessionCreationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a checkout session.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateCheckoutSessionResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CheckoutSession"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "3e4f4108-cbb4-4620-bd30-4bcf8c28ca20",
+                        "type": "checkout_session",
+                        "successUrl": "https://www.example.com/success",
+                        "clientToken": "ck_test_19NoQz3jDq3mKgJFEuMkWs4dCk6Eiq1GZShWMF_jY_vL3dOAoT3EiTTgEprqaVcGbzB3pszRZhyU_v0mebyKiQ",
+                        "status": "active",
+                        "createDate": "2022-07-21T20:13:35.578678Z",
+                        "updateDate": "2022-07-21T20:13:35.578678Z",
+                        "expiresOn": "2022-07-21T20:19:24.859052Z",
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "amountPaid": {
+                          "amount": "2.20",
+                          "currency": "USD"
+                        },
+                        "paymentIds": [],
+                        "paymentIntentIds": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
+    },
+    "/v1/checkoutSessions/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a checkout session",
+        "operationId": "getCheckoutSession",
+        "tags": ["Checkout Sessions"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved a checkout session.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "GetCheckoutSessionResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CheckoutSession"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "3e4f4108-cbb4-4620-bd30-4bcf8c28ca20",
+                        "type": "checkout_session",
+                        "successUrl": "https://www.example.com/success",
+                        "clientToken": "ck_test_19NoQz3jDq3mKgJFEuMkWs4dCk6Eiq1GZShWMF_jY_vL3dOAoT3EiTTgEprqaVcGbzB3pszRZhyU_v0mebyKiQ",
+                        "status": "active",
+                        "createDate": "2022-07-21T20:13:35.578678Z",
+                        "updateDate": "2022-07-21T20:13:35.578678Z",
+                        "expiresOn": "2022-07-21T20:19:24.859052Z",
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "amountPaid": {
+                          "amount": "2.20",
+                          "currency": "USD"
+                        },
+                        "paymentIds": [],
+                        "paymentIntentIds": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v1/checkoutSessions/{id}/extend": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Extend a checkout session",
+        "operationId": "extendCheckoutSession",
+        "tags": ["Checkout Sessions"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "extendTime": {
+                    "type": "integer",
+                    "description": "Extend the CheckoutSession by extendTime seconds if it is active or expired. The field is optional, if not provided, extend a period that configured by Merchant (default 1 day)",
+                    "example": 3600
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully extended a payment intent.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ExtendCheckoutSessionResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CheckoutSession"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "3e4f4108-cbb4-4620-bd30-4bcf8c28ca20",
+                        "type": "checkout_session",
+                        "successUrl": "https://www.example.com/success",
+                        "clientToken": "ck_test_19NoQz3jDq3mKgJFEuMkWs4dCk6Eiq1GZShWMF_jY_vL3dOAoT3EiTTgEprqaVcGbzB3pszRZhyU_v0mebyKiQ",
+                        "status": "active",
+                        "createDate": "2022-07-21T20:13:35.578678Z",
+                        "updateDate": "2022-07-21T20:13:35.578678Z",
+                        "expiresOn": "2022-07-21T20:19:24.859052Z",
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "amountPaid": {
+                          "amount": "2.20",
+                          "currency": "USD"
+                        },
+                        "paymentIds": [],
+                        "paymentIntentIds": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -9743,72 +9986,6 @@
           }
         }
       },
-      "IdentityAddress": {
-        "type": "object",
-        "required": ["line1", "city", "district", "postalCode", "country"],
-        "properties": {
-          "line1": {
-            "type": "string",
-            "description": "Line one of the street address.",
-            "maxLength": 1024,
-            "example": "100 Money Street"
-          },
-          "line2": {
-            "type": "string",
-            "description": "Line two of the street address.",
-            "maxLength": 1024,
-            "example": "Suite 1"
-          },
-          "city": {
-            "type": "string",
-            "description": "City portion of the address.",
-            "maxLength": 1024,
-            "example": "Boston"
-          },
-          "district": {
-            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
-            "type": "string",
-            "maxLength": 16,
-            "example": "MA"
-          },
-          "postalCode": {
-            "type": "string",
-            "description": "Postal / ZIP code of the address.",
-            "maxLength": 16,
-            "example": "01234"
-          },
-          "country": {
-            "type": "string",
-            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
-            "maxLength": 2,
-            "example": "US"
-          }
-        }
-      },
-      "Identity": {
-        "type": "object",
-        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
-        "required": ["type", "name", "addresses"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
-            "enum": ["individual", "business"]
-          },
-          "name": {
-            "type": "string",
-            "description": "Full name of the identity.",
-            "example": "Satoshi Nakamoto",
-            "maxLength": 1024
-          },
-          "addresses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/IdentityAddress"
-            }
-          }
-        }
-      },
       "CryptoRefundCreationRequest": {
         "type": "object",
         "required": ["idempotencyKey", "destination", "amount", "toAmount"],
@@ -9844,12 +10021,6 @@
                 "type": "string",
                 "enum": ["USD", "ETH", "BTC"]
               }
-            }
-          },
-          "identities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Identity"
             }
           }
         }
@@ -11202,6 +11373,72 @@
           }
         }
       },
+      "IdentityAddress": {
+        "type": "object",
+        "required": ["line1", "city", "district", "postalCode", "country"],
+        "properties": {
+          "line1": {
+            "type": "string",
+            "description": "Line one of the street address.",
+            "maxLength": 1024,
+            "example": "100 Money Street"
+          },
+          "line2": {
+            "type": "string",
+            "description": "Line two of the street address.",
+            "maxLength": 1024,
+            "example": "Suite 1"
+          },
+          "city": {
+            "type": "string",
+            "description": "City portion of the address.",
+            "maxLength": 1024,
+            "example": "Boston"
+          },
+          "district": {
+            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
+            "type": "string",
+            "maxLength": 16,
+            "example": "MA"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal / ZIP code of the address.",
+            "maxLength": 16,
+            "example": "01234"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
+            "maxLength": 2,
+            "example": "US"
+          }
+        }
+      },
+      "Identity": {
+        "type": "object",
+        "description": "The identity of the originator. Identities are required when:\n  * `destination.type: \"blockchain\"`\n  * `destination.chain: \"ETH\"`\n  * `amount.amount` >= $3,000 in value\n",
+        "required": ["type", "name", "addresses"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of identity for the originator.\n* `individual` - A uniquely distinguishable individual.\n* `business` - Any entity other than a natural person that can establish a permanent customer relationship with an affected entity or otherwise own property. This can include companies, foundations, anstalt, partnerships, associations and other relevantly similar entities.\n",
+            "enum": ["individual", "business"]
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the identity.",
+            "example": "Satoshi Nakamoto",
+            "maxLength": 1024
+          },
+          "addresses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdentityAddress"
+            }
+          }
+        }
+      },
       "TransferSourceWalletLocation": {
         "description": "A source wallet location.",
         "type": "object",
@@ -12089,6 +12326,116 @@
             "type": "string",
             "description": "Enumerated status of the SEPA payment. Status `pending` indicates that the SEPA payment is in process; `processed` indicates it finished successfully; `failed` indicates it failed.",
             "enum": ["pending", "processed", "failed"]
+          }
+        }
+      },
+      "SuccessUrl": {
+        "type": "string",
+        "description": "The URL returned to you through client-side callback when the payment is completed.",
+        "example": "https://www.example.com/success"
+      },
+      "CheckoutSessionMoney": {
+        "type": "object",
+        "required": ["amount", "currency"],
+        "properties": {
+          "amount": {
+            "description": "Magnitude of the amount, in units of the currency, with a `.`.",
+            "type": "string",
+            "example": "3.14"
+          },
+          "currency": {
+            "description": "A currency associated with a balance or address.",
+            "type": "string",
+            "enum": ["USD", "ETH", "BTC"]
+          }
+        }
+      },
+      "CheckoutSessionCreationRequest": {
+        "type": "object",
+        "required": ["amount"],
+        "properties": {
+          "successUrl": {
+            "$ref": "#/components/schemas/SuccessUrl"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/CheckoutSessionMoney"
+          }
+        }
+      },
+      "CheckoutSessionStatus": {
+        "description": "Status of the checkout session. Active: the checkout session is still in-progress. Completed: the payments of a checkout session is successful and the checkout session is completed. Expired: indicates that it expired and is no longer accepting any new payments.",
+        "type": "string",
+        "enum": ["active", "completed", "expired"]
+      },
+      "CheckoutSession": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "clientToken",
+          "status",
+          "expiresOn",
+          "createDate",
+          "updateDate",
+          "amount",
+          "amountPaid",
+          "paymentIds",
+          "paymentIntentIds"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of this response",
+            "enum": ["checkout_session"]
+          },
+          "successUrl": {
+            "$ref": "#/components/schemas/SuccessUrl"
+          },
+          "clientToken": {
+            "type": "string",
+            "description": "The access token for the SDK to access checkout session resources",
+            "example": "ck_test_19NoQz3jDq3mKgJFEuMkWs4dCk6Eiq1GZShWMF_jY_vL3dOAoT3EiTTgEprqaVcGbzB3pszRZhyU_v0mebyKiQ"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CheckoutSessionStatus"
+          },
+          "expiresOn": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/CheckoutSessionMoney"
+          },
+          "amountPaid": {
+            "$ref": "#/components/schemas/CheckoutSessionMoney"
+          },
+          "paymentIds": {
+            "description": "IDs of all the associated payments.",
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "example": "69808f36-3e5e-4f37-bf82-ca79e4d70fc1"
+            }
+          },
+          "paymentIntentIds": {
+            "description": "IDs of all the associated payment intents.",
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "example": "69808f36-3e5e-4f37-bf82-ca79e4d70fc1"
+            }
           }
         }
       }
