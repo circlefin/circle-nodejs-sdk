@@ -15,9 +15,6 @@ import { CryptoRefundCreationRequestToAmount } from "./crypto-refund-creation-re
 // May contain unused imports in some cases
 // @ts-ignore
 import { CryptoRefundDestination } from "./crypto-refund-destination";
-// May contain unused imports in some cases
-// @ts-ignore
-import { Identity } from "./identity";
 
 /**
  *
@@ -49,10 +46,4 @@ export interface CryptoRefundCreationRequest {
    * @memberof CryptoRefundCreationRequest
    */
   toAmount: CryptoRefundCreationRequestToAmount;
-  /**
-   *
-   * @type {Array<Identity>}
-   * @memberof CryptoRefundCreationRequest
-   */
-  identities?: Array<Identity>;
 }

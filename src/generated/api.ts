@@ -12,6 +12,7 @@ export * from "./apis/balances-api";
 export * from "./apis/cards-api";
 export * from "./apis/channels-api";
 export * from "./apis/chargebacks-api";
+export * from "./apis/checkout-sessions-api";
 export * from "./apis/crypto-address-book-api";
 export * from "./apis/crypto-exchange-rates-api";
 export * from "./apis/crypto-payment-intents-api";

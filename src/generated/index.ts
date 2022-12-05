@@ -13,6 +13,7 @@ import {
   CardsApi,
   ChannelsApi,
   ChargebacksApi,
+  CheckoutSessionsApi,
   CryptoAddressBookApi,
   CryptoExchangeRatesApi,
   CryptoPaymentIntentsApi,
@@ -46,6 +47,7 @@ export class Circle {
   public cards: CardsApi;
   public channels: ChannelsApi;
   public chargebacks: ChargebacksApi;
+  public checkoutSessions: CheckoutSessionsApi;
   public cryptoAddressBook: CryptoAddressBookApi;
   public cryptoExchangeRates: CryptoExchangeRatesApi;
   public cryptoPaymentIntents: CryptoPaymentIntentsApi;
@@ -76,6 +78,7 @@ export class Circle {
     this.cards = new CardsApi(configuration);
     this.channels = new ChannelsApi(configuration);
     this.chargebacks = new ChargebacksApi(configuration);
+    this.checkoutSessions = new CheckoutSessionsApi(configuration);
     this.cryptoAddressBook = new CryptoAddressBookApi(configuration);
     this.cryptoExchangeRates = new CryptoExchangeRatesApi(configuration);
     this.cryptoPaymentIntents = new CryptoPaymentIntentsApi(configuration);
