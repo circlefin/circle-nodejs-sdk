@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v1.2.0...v1.3.0) (2022-12-05)
+
+
+### Fixes
+
+* set user agent to pack ver ([#47](https://github.com/circlefin/circle-nodejs-sdk/issues/47)) ([02c7132](https://github.com/circlefin/circle-nodejs-sdk/commit/02c71320b4719b9d36ba2dd65693a75756ea3303))
+
+
+### New Features
+
+* sync SDK to OpenAPI doc v1.3.0 ([#49](https://github.com/circlefin/circle-nodejs-sdk/issues/49)) ([286d993](https://github.com/circlefin/circle-nodejs-sdk/commit/286d9932328c64bb6b1c707d9e94446ae2b52f7b))
+
 ## [1.2.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v1.1.1...v1.2.0) (2022-11-28)
 
 
