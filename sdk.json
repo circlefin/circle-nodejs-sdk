@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.3.0",
+    "version": "1.3.1",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -2004,7 +2004,7 @@
             "bearerAuth": []
           }
         ],
-        "summary": "Create a SEPA bank account (BETA)",
+        "summary": "Create a SEPA bank account",
         "operationId": "createSepaAccount",
         "tags": ["SEPA"],
         "requestBody": {
@@ -2086,7 +2086,7 @@
             "bearerAuth": []
           }
         ],
-        "summary": "Get a SEPA bank account (BETA)",
+        "summary": "Get a SEPA bank account",
         "operationId": "getSepaAccount",
         "tags": ["SEPA"],
         "responses": {
@@ -2159,8 +2159,8 @@
             "bearerAuth": []
           }
         ],
-        "summary": "Get SEPA instructions (BETA)",
-        "description": "Get the SEPA transfer instructions into the Circle bank account given your bank account id (BETA).",
+        "summary": "Get SEPA instructions",
+        "description": "Get the SEPA transfer instructions into the Circle bank account given your bank account id.",
         "operationId": "getSepaAccountInstructions",
         "tags": ["SEPA"],
         "responses": {

@@ -55,7 +55,7 @@ export const SEPAApiAxiosParamCreator = function (
   return {
     /**
      *
-     * @summary Create a SEPA bank account (BETA)
+     * @summary Create a SEPA bank account
      * @param {SepaCreationRequest} [sepaCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -107,7 +107,7 @@ export const SEPAApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary Get a SEPA bank account (BETA)
+     * @summary Get a SEPA bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -156,8 +156,8 @@ export const SEPAApiAxiosParamCreator = function (
       };
     },
     /**
-     * Get the SEPA transfer instructions into the Circle bank account given your bank account id (BETA).
-     * @summary Get SEPA instructions (BETA)
+     * Get the SEPA transfer instructions into the Circle bank account given your bank account id.
+     * @summary Get SEPA instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -217,7 +217,7 @@ export const SEPAApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
-     * @summary Create a SEPA bank account (BETA)
+     * @summary Create a SEPA bank account
      * @param {SepaCreationRequest} [sepaCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -245,7 +245,7 @@ export const SEPAApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary Get a SEPA bank account (BETA)
+     * @summary Get a SEPA bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -271,8 +271,8 @@ export const SEPAApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Get the SEPA transfer instructions into the Circle bank account given your bank account id (BETA).
-     * @summary Get SEPA instructions (BETA)
+     * Get the SEPA transfer instructions into the Circle bank account given your bank account id.
+     * @summary Get SEPA instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -311,7 +311,7 @@ export const SEPAApiFactory = function (
   return {
     /**
      *
-     * @summary Create a SEPA bank account (BETA)
+     * @summary Create a SEPA bank account
      * @param {SepaCreationRequest} [sepaCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -326,7 +326,7 @@ export const SEPAApiFactory = function (
     },
     /**
      *
-     * @summary Get a SEPA bank account (BETA)
+     * @summary Get a SEPA bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -340,8 +340,8 @@ export const SEPAApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     * Get the SEPA transfer instructions into the Circle bank account given your bank account id (BETA).
-     * @summary Get SEPA instructions (BETA)
+     * Get the SEPA transfer instructions into the Circle bank account given your bank account id.
+     * @summary Get SEPA instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -366,7 +366,7 @@ export const SEPAApiFactory = function (
 export class SEPAApi extends BaseAPI {
   /**
    *
-   * @summary Create a SEPA bank account (BETA)
+   * @summary Create a SEPA bank account
    * @param {SepaCreationRequest} [sepaCreationRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -383,7 +383,7 @@ export class SEPAApi extends BaseAPI {
 
   /**
    *
-   * @summary Get a SEPA bank account (BETA)
+   * @summary Get a SEPA bank account
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -396,8 +396,8 @@ export class SEPAApi extends BaseAPI {
   }
 
   /**
-   * Get the SEPA transfer instructions into the Circle bank account given your bank account id (BETA).
-   * @summary Get SEPA instructions (BETA)
+   * Get the SEPA transfer instructions into the Circle bank account given your bank account id.
+   * @summary Get SEPA instructions
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
