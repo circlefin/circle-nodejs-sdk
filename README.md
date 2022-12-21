@@ -36,10 +36,10 @@ const circle = new Circle(
 
 async function createSubscription() {
     const subscribeReq: SubscriptionRequest = {
-        endpoint: "https://742ef341af57c9.lhrtunnel.link"
+        endpoint: "https://example.org/handler/for/notifications"
     };
 
-    const subscribeResp = await circle.subscriptions.createSubscribtion(subscribeReq);
+    const subscribeResp = await circle.subscriptions.createSubscription(subscribeReq);
     console.log(subscribeResp.data);
 }
 createSubscription();
