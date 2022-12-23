@@ -54,7 +54,7 @@ yarn install
 1. Run the codegen:
 
     ```sh
-    yarn gen-sdk <sdk-version>      # e.g. yarn gen-sdk 0.1.1-beta.0
+    yarn gen-sdk
     ```
 
 2. Run all tests:
