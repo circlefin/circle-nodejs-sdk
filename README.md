@@ -51,10 +51,10 @@ Clone this repo and install dependencies using
 yarn install
 ```
 
-1. Run the codegen:
+1. Run the codegen command to generate the source code for this SDK from the `sdk.json` OpenAPI specification file:
 
     ```sh
-    yarn gen-sdk <sdk-version>      # e.g. yarn gen-sdk 0.1.1-beta.0
+    yarn gen-sdk
     ```
 
 2. Run all tests:
