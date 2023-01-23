@@ -1,6 +1,6 @@
 {
   "name": "@circle-fin/circle-sdk",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Node.js SDK for Circle API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
