@@ -44,6 +44,8 @@ import { ExtendCheckoutSessionResponse } from "../models";
 // @ts-ignore
 import { GetCheckoutSessionResponse } from "../models";
 // @ts-ignore
+import { ListCheckoutSessionsResponse } from "../models";
+// @ts-ignore
 import { NotAuthorized } from "../models";
 // @ts-ignore
 import { NotFound } from "../models";
@@ -215,6 +217,81 @@ export const CheckoutSessionsApiAxiosParamCreator = function (
         url: toPathString(localVarUrlObj),
         options: localVarRequestOptions
       };
+    },
+    /**
+     *
+     * @summary List all checkout sessions
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+     * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listCheckoutSessions: async (
+      from?: string,
+      to?: string,
+      pageBefore?: string,
+      pageAfter?: string,
+      pageSize?: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/v1/checkoutSessions`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (from !== undefined) {
+        localVarQueryParameter["from"] =
+          (from as any) instanceof Date ? (from as any).toISOString() : from;
+      }
+
+      if (to !== undefined) {
+        localVarQueryParameter["to"] =
+          (to as any) instanceof Date ? (to as any).toISOString() : to;
+      }
+
+      if (pageBefore !== undefined) {
+        localVarQueryParameter["pageBefore"] = pageBefore;
+      }
+
+      if (pageAfter !== undefined) {
+        localVarQueryParameter["pageAfter"] = pageAfter;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter["pageSize"] = pageSize;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
     }
   };
 };
@@ -310,6 +387,46 @@ export const CheckoutSessionsApiFp = function (configuration?: Configuration) {
         BASE_PATH,
         configuration
       );
+    },
+    /**
+     *
+     * @summary List all checkout sessions
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+     * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async listCheckoutSessions(
+      from?: string,
+      to?: string,
+      pageBefore?: string,
+      pageAfter?: string,
+      pageSize?: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<ListCheckoutSessionsResponse>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.listCheckoutSessions(
+          from,
+          to,
+          pageBefore,
+          pageAfter,
+          pageSize,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
     }
   };
 };
@@ -371,6 +488,36 @@ export const CheckoutSessionsApiFactory = function (
       return localVarFp
         .getCheckoutSession(id, options)
         .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary List all checkout sessions
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+     * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listCheckoutSessions(
+      from?: string,
+      to?: string,
+      pageBefore?: string,
+      pageAfter?: string,
+      pageSize?: number,
+      options?: any
+    ): AxiosPromise<ListCheckoutSessionsResponse> {
+      return localVarFp
+        .listCheckoutSessions(
+          from,
+          to,
+          pageBefore,
+          pageAfter,
+          pageSize,
+          options
+        )
+        .then((request) => request(axios, basePath));
     }
   };
 };
@@ -429,6 +576,31 @@ export class CheckoutSessionsApi extends BaseAPI {
   public getCheckoutSession(id: string, options?: AxiosRequestConfig) {
     return CheckoutSessionsApiFp(this.configuration)
       .getCheckoutSession(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary List all checkout sessions
+   * @param {string} [from] Queries items created since the specified date-time (inclusive).
+   * @param {string} [to] Queries items created before the specified date-time (inclusive).
+   * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+   * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+   * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CheckoutSessionsApi
+   */
+  public listCheckoutSessions(
+    from?: string,
+    to?: string,
+    pageBefore?: string,
+    pageAfter?: string,
+    pageSize?: number,
+    options?: AxiosRequestConfig
+  ) {
+    return CheckoutSessionsApiFp(this.configuration)
+      .listCheckoutSessions(from, to, pageBefore, pageAfter, pageSize, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

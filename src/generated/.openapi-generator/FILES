@@ -202,6 +202,7 @@ models/list-business-wire-accounts-response.ts
 models/list-cards-response.ts
 models/list-channels-response.ts
 models/list-chargebacks-response.ts
+models/list-checkout-sessions-response.ts
 models/list-payment-intents-response-data-inner.ts
 models/list-payment-intents-response.ts
 models/list-payments-response-data-inner.ts
