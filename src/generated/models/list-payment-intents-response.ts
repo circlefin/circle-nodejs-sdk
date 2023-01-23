@@ -8,7 +8,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { PaymentIntent } from "./payment-intent";
+import { ListPaymentIntentsResponseDataInner } from "./list-payment-intents-response-data-inner";
 
 /**
  *
@@ -18,8 +18,8 @@ import { PaymentIntent } from "./payment-intent";
 export interface ListPaymentIntentsResponse {
   /**
    *
-   * @type {Array<PaymentIntent>}
+   * @type {Array<ListPaymentIntentsResponseDataInner>}
    * @memberof ListPaymentIntentsResponse
    */
-  data?: Array<PaymentIntent>;
+  data?: Array<ListPaymentIntentsResponseDataInner>;
 }

@@ -22,94 +22,96 @@ import { Timeline } from "./timeline";
 /**
  *
  * @export
- * @interface PaymentIntent
+ * @interface ContinuousPaymentIntent
  */
-export interface PaymentIntent {
+export interface ContinuousPaymentIntent {
   /**
    * Unique system generated identifier for the entity.
    * @type {string}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   id?: string;
   /**
-   *
-   * @type {CryptoPaymentsMoney}
-   * @memberof PaymentIntent
+   * Desired currency of the payment.
+   * @type {string}
+   * @memberof ContinuousPaymentIntent
    */
-  amount: CryptoPaymentsMoney;
+  currency: ContinuousPaymentIntentCurrencyEnum;
   /**
    *
    * @type {CryptoPaymentsMoney}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   amountPaid?: CryptoPaymentsMoney;
   /**
    *
    * @type {CryptoPaymentsMoney}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   amountRefunded?: CryptoPaymentsMoney;
   /**
    * Desired currency for the payments to settle in.
    * @type {string}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
-  settlementCurrency: PaymentIntentSettlementCurrencyEnum;
+  settlementCurrency: ContinuousPaymentIntentSettlementCurrencyEnum;
   /**
    *
    * @type {Array<PaymentMethodBlockchain>}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   paymentMethods: Array<PaymentMethodBlockchain>;
   /**
    *
    * @type {Array<PaymentIntentFees>}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   fees?: Array<PaymentIntentFees>;
   /**
-   * List of associated payments.
-   * @type {Array<string>}
-   * @memberof PaymentIntent
-   */
-  paymentIds?: Array<string>;
-  /**
-   * List of associated refunds.
-   * @type {Array<string>}
-   * @memberof PaymentIntent
-   */
-  refundIds?: Array<string>;
-  /**
    * State management timeline.
    * @type {Array<Timeline>}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   timeline?: Array<Timeline>;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof PaymentIntent
-   */
-  expiresOn?: string;
-  /**
-   * ISO-8601 UTC date/time format.
-   * @type {string}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   updateDate?: string;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof PaymentIntent
+   * @memberof ContinuousPaymentIntent
    */
   createDate?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof ContinuousPaymentIntent
+   */
+  type: ContinuousPaymentIntentTypeEnum;
 }
 
-export const PaymentIntentSettlementCurrencyEnum = {
+export const ContinuousPaymentIntentCurrencyEnum = {
   Usd: "USD",
   Btc: "BTC",
   Eth: "ETH"
 } as const;
 
-export type PaymentIntentSettlementCurrencyEnum =
-  typeof PaymentIntentSettlementCurrencyEnum[keyof typeof PaymentIntentSettlementCurrencyEnum];
+export type ContinuousPaymentIntentCurrencyEnum =
+  typeof ContinuousPaymentIntentCurrencyEnum[keyof typeof ContinuousPaymentIntentCurrencyEnum];
+export const ContinuousPaymentIntentSettlementCurrencyEnum = {
+  Usd: "USD",
+  Btc: "BTC",
+  Eth: "ETH"
+} as const;
+
+export type ContinuousPaymentIntentSettlementCurrencyEnum =
+  typeof ContinuousPaymentIntentSettlementCurrencyEnum[keyof typeof ContinuousPaymentIntentSettlementCurrencyEnum];
+export const ContinuousPaymentIntentTypeEnum = {
+  Continuous: "continuous"
+} as const;
+
+export type ContinuousPaymentIntentTypeEnum =
+  typeof ContinuousPaymentIntentTypeEnum[keyof typeof ContinuousPaymentIntentTypeEnum];
