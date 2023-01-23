@@ -81,6 +81,8 @@ models/checkout-session-money.ts
 models/checkout-session-status.ts
 models/checkout-session.ts
 models/conflict.ts
+models/continuous-payment-intent-creation-request.ts
+models/continuous-payment-intent.ts
 models/create-ach-account-response.ts
 models/create-address-book-recipient-response.ts
 models/create-business-deposit-address-response.ts
@@ -95,6 +97,8 @@ models/create-checkout-session-response.ts
 models/create-crypto-refund-response.ts
 models/create-mock-ach-account-response.ts
 models/create-mock-chargeback-response.ts
+models/create-payment-intent-request.ts
+models/create-payment-intent-response-data.ts
 models/create-payment-intent-response.ts
 models/create-payment-response.ts
 models/create-payment-token-response.ts
@@ -146,6 +150,7 @@ models/fiat-payout-destination.ts
 models/fiat-payout.ts
 models/fiat-refund.ts
 models/final-adjustments.ts
+models/forbidden.ts
 models/generate-address-request.ts
 models/generate-address-response.ts
 models/get-ach-account-response.ts
@@ -197,6 +202,8 @@ models/list-business-wire-accounts-response.ts
 models/list-cards-response.ts
 models/list-channels-response.ts
 models/list-chargebacks-response.ts
+models/list-checkout-sessions-response.ts
+models/list-payment-intents-response-data-inner.ts
 models/list-payment-intents-response.ts
 models/list-payments-response-data-inner.ts
 models/list-payments-response.ts
@@ -232,8 +239,6 @@ models/payment-creation-request.ts
 models/payment-error-code.ts
 models/payment-info-cancel.ts
 models/payment-info-payment-and-refund.ts
-models/payment-intent-amount-paid.ts
-models/payment-intent-amount-refunded.ts
 models/payment-intent-creation-request.ts
 models/payment-intent-fees.ts
 models/payment-intent.ts

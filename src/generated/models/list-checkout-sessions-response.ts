@@ -8,18 +8,18 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreatePaymentIntentResponseData } from "./create-payment-intent-response-data";
+import { CheckoutSession } from "./checkout-session";
 
 /**
  *
  * @export
- * @interface CreatePaymentIntentResponse
+ * @interface ListCheckoutSessionsResponse
  */
-export interface CreatePaymentIntentResponse {
+export interface ListCheckoutSessionsResponse {
   /**
    *
-   * @type {CreatePaymentIntentResponseData}
-   * @memberof CreatePaymentIntentResponse
+   * @type {Array<CheckoutSession>}
+   * @memberof ListCheckoutSessionsResponse
    */
-  data?: CreatePaymentIntentResponseData;
+  data?: Array<CheckoutSession>;
 }
