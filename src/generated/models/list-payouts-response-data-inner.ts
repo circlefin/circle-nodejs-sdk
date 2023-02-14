@@ -124,4 +124,10 @@ export interface ListPayoutsResponseDataInner {
    * @memberof ListPayoutsResponseDataInner
    */
   updateDate?: string;
+  /**
+   *
+   * @type {PayoutMoney}
+   * @memberof ListPayoutsResponseDataInner
+   */
+  networkFees?: PayoutMoney;
 }

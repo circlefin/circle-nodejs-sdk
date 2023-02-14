@@ -82,6 +82,8 @@ export * from "./create-wire-account-response";
 export * from "./create-wire-payment-response";
 export * from "./crypto-payment";
 export * from "./crypto-payment-deposit-address";
+export * from "./crypto-payment-from-addresses";
+export * from "./crypto-payment-network-fee";
 export * from "./crypto-payments-money";
 export * from "./crypto-payments-optional-amount-money";
 export * from "./crypto-payout";

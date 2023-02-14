@@ -28,4 +28,10 @@ export interface CryptoPaymentDepositAddress {
    * @memberof CryptoPaymentDepositAddress
    */
   address?: string;
+  /**
+   * The secondary identifier for a blockchain address. An example of this is the memo field on the Stellar network, which can be text, id, or hash format.
+   * @type {string}
+   * @memberof CryptoPaymentDepositAddress
+   */
+  addressTag?: string | null;
 }

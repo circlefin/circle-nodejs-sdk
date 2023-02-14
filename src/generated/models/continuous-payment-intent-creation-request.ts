@@ -41,6 +41,12 @@ export interface ContinuousPaymentIntentCreationRequest {
    */
   paymentMethods: Array<PaymentMethodBlockchain>;
   /**
+   * Unique system generated identifier for the wallet of the merchant.
+   * @type {string}
+   * @memberof ContinuousPaymentIntentCreationRequest
+   */
+  merchantWalletId?: string;
+  /**
    *
    * @type {string}
    * @memberof ContinuousPaymentIntentCreationRequest

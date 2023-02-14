@@ -91,6 +91,12 @@ export interface ContinuousPaymentIntent {
    * @memberof ContinuousPaymentIntent
    */
   type: ContinuousPaymentIntentTypeEnum;
+  /**
+   * Unique system generated identifier for the wallet of the merchant.
+   * @type {string}
+   * @memberof ContinuousPaymentIntent
+   */
+  merchantWalletId?: string;
 }
 
 export const ContinuousPaymentIntentCurrencyEnum = {
