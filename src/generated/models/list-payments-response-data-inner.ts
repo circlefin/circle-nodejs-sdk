@@ -17,6 +17,12 @@ import { CryptoPayment } from "./crypto-payment";
 import { CryptoPaymentDepositAddress } from "./crypto-payment-deposit-address";
 // May contain unused imports in some cases
 // @ts-ignore
+import { CryptoPaymentFromAddresses } from "./crypto-payment-from-addresses";
+// May contain unused imports in some cases
+// @ts-ignore
+import { CryptoPaymentNetworkFee } from "./crypto-payment-network-fee";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatCancel } from "./fiat-cancel";
 // May contain unused imports in some cases
 // @ts-ignore

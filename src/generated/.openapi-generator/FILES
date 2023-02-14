@@ -114,6 +114,8 @@ models/create-wallet-response.ts
 models/create-wire-account-response.ts
 models/create-wire-payment-response.ts
 models/crypto-payment-deposit-address.ts
+models/crypto-payment-from-addresses.ts
+models/crypto-payment-network-fee.ts
 models/crypto-payment.ts
 models/crypto-payments-money.ts
 models/crypto-payments-optional-amount-money.ts

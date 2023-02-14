@@ -103,6 +103,12 @@ export interface PaymentIntent {
    * @memberof PaymentIntent
    */
   createDate?: string;
+  /**
+   * Unique system generated identifier for the wallet of the merchant.
+   * @type {string}
+   * @memberof PaymentIntent
+   */
+  merchantWalletId?: string;
 }
 
 export const PaymentIntentSettlementCurrencyEnum = {

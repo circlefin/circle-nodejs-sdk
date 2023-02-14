@@ -110,6 +110,12 @@ export interface ListPaymentIntentsResponseDataInner {
    */
   createDate?: string;
   /**
+   * Unique system generated identifier for the wallet of the merchant.
+   * @type {string}
+   * @memberof ListPaymentIntentsResponseDataInner
+   */
+  merchantWalletId?: string;
+  /**
    * Desired currency of the payment.
    * @type {string}
    * @memberof ListPaymentIntentsResponseDataInner

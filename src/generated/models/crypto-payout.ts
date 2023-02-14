@@ -66,6 +66,12 @@ export interface CryptoPayout {
   fees?: PayoutMoney;
   /**
    *
+   * @type {PayoutMoney}
+   * @memberof CryptoPayout
+   */
+  networkFees?: PayoutMoney;
+  /**
+   *
    * @type {PayoutStatus}
    * @memberof CryptoPayout
    */

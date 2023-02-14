@@ -43,6 +43,12 @@ export interface PaymentIntentCreationRequest {
    * @memberof PaymentIntentCreationRequest
    */
   paymentMethods: Array<PaymentMethodBlockchain>;
+  /**
+   * Unique system generated identifier for the wallet of the merchant.
+   * @type {string}
+   * @memberof PaymentIntentCreationRequest
+   */
+  merchantWalletId?: string;
 }
 
 export const PaymentIntentCreationRequestSettlementCurrencyEnum = {
