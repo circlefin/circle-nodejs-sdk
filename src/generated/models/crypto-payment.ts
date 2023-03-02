@@ -24,9 +24,12 @@ import { FiatMoneyUsd } from "./fiat-money-usd";
 // May contain unused imports in some cases
 // @ts-ignore
 import { PaymentStatus } from "./payment-status";
+// May contain unused imports in some cases
+// @ts-ignore
+import { RiskEvaluation } from "./risk-evaluation";
 
 /**
- * Status information of the related payment. This property is only present on refund or cancel items.
+ * Status information of the related payment.
  * @export
  * @interface CryptoPayment
  */
@@ -121,6 +124,12 @@ export interface CryptoPayment {
    * @memberof CryptoPayment
    */
   updateDate?: string;
+  /**
+   *
+   * @type {RiskEvaluation}
+   * @memberof CryptoPayment
+   */
+  riskEvaluation?: RiskEvaluation | null;
 }
 
 export const CryptoPaymentTypeEnum = {

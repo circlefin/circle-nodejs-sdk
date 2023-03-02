@@ -23,6 +23,7 @@ export * from "./apis/management-api";
 export * from "./apis/payment-tokens-api";
 export * from "./apis/payments-api";
 export * from "./apis/payouts-api";
+export * from "./apis/pull-crypto-payments-api";
 export * from "./apis/returns-api";
 export * from "./apis/reversals-api";
 export * from "./apis/senapi";

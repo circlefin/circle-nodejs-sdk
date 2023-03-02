@@ -47,6 +47,9 @@ import { PaymentInfoPaymentAndRefund } from "./payment-info-payment-and-refund";
 import { RequiredAction } from "./required-action";
 // May contain unused imports in some cases
 // @ts-ignore
+import { RiskEvaluation } from "./risk-evaluation";
+// May contain unused imports in some cases
+// @ts-ignore
 import { SourceResponse } from "./source-response";
 
 /**

@@ -24,6 +24,7 @@ import {
   PaymentTokensApi,
   PaymentsApi,
   PayoutsApi,
+  PullCryptoPaymentsApi,
   ReturnsApi,
   ReversalsApi,
   SENApi,
@@ -58,6 +59,7 @@ export class Circle {
   public paymentTokens: PaymentTokensApi;
   public payments: PaymentsApi;
   public payouts: PayoutsApi;
+  public pullCryptoPayments: PullCryptoPaymentsApi;
   public returns: ReturnsApi;
   public reversals: ReversalsApi;
   public sen: SENApi;
@@ -89,6 +91,7 @@ export class Circle {
     this.paymentTokens = new PaymentTokensApi(configuration);
     this.payments = new PaymentsApi(configuration);
     this.payouts = new PayoutsApi(configuration);
+    this.pullCryptoPayments = new PullCryptoPaymentsApi(configuration);
     this.returns = new ReturnsApi(configuration);
     this.reversals = new ReversalsApi(configuration);
     this.sen = new SENApi(configuration);
