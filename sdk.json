@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.6.0",
+    "version": "1.7.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -70,6 +70,10 @@
     {
       "name": "Payments",
       "description": "Get updates on whether user's crypto payment was received."
+    },
+    {
+      "name": "Pull Crypto Payments",
+      "description": "Create pull crypto payments and generate typed messages for signing."
     },
     {
       "name": "Payouts",
@@ -4236,6 +4240,104 @@
         }
       }
     },
+    "/v1/payments/crypto": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a crypto payment",
+        "operationId": "createCryptoPayment",
+        "tags": ["Pull Crypto Payments"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CryptoPaymentCreationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a crypto payment.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateCryptoPaymentResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CryptoPayment"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "type": "payment",
+                        "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
+                        "merchantWalletId": "212000",
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "status": "pending",
+                        "fees": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "networkFees": {
+                          "amount": "3.14",
+                          "currency": "USD",
+                          "feePayer": "endUser"
+                        },
+                        "paymentIntentId": "6e4d4047-db14-4c09-b238-1215aee50d03",
+                        "settlementAmount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "fromAddresses": {
+                          "chain": "ALGO",
+                          "addresses": [
+                            "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+                          ]
+                        },
+                        "depositAddress": {
+                          "chain": "ALGO",
+                          "address": "0x97de855690955e0da79ce5c1b6804847e7070c7f",
+                          "addressTag": "123456789"
+                        },
+                        "transactionHash": "0x7351585460bd657f320b9afa02a52c26d89272d0d10cc29913eb8b28e64fd906",
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z",
+                        "riskEvaluation": {
+                          "decision": "approved",
+                          "reason": "3000"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
+    },
     "/v1/payments/{id}": {
       "get": {
         "parameters": [
@@ -4942,6 +5044,171 @@
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v1/payments/presign": {
+      "get": {
+        "parameters": [
+          {
+            "name": "endUserAddress",
+            "description": "User wallet address",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "0xdB055877e6c13b6A6B25aBcAA29B393777dD0a73"
+            }
+          },
+          {
+            "name": "paymentIntentId",
+            "description": "Payment intent id which is from the create payment intent endpoint response",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "b48c8962-8e9f-40c3-9f1d-d9adde2ffe61"
+            }
+          },
+          {
+            "name": "amount",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "2.3"
+            }
+          },
+          {
+            "name": "currency",
+            "description": "Only support USD at the moment",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["USD"]
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a typed message for signing",
+        "operationId": "presign",
+        "tags": ["Pull Crypto Payments"],
+        "responses": {
+          "200": {
+            "description": "Successfully got a typed message for signing",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateCryptoPaymentResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/PresignResponse"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "typedData": {
+                          "domain": {
+                            "name": "USD Coin",
+                            "verifyingContract": "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
+                            "version": "2",
+                            "chainId": 5
+                          },
+                          "message": {
+                            "from": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
+                            "to": "0xdB055877e6c13b6A6B25aBcAA29B393777dD0a73",
+                            "value": "5003456",
+                            "validAfter": 1675317371,
+                            "validBefore": 1675107967,
+                            "nonce": "0x4f716a578b96592599c3ca7b2a46453df87511d4809f608cec982d6e83632604"
+                          },
+                          "totalAmount": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "feeChargeModel": "endUser",
+                          "networkFeeQuote": {
+                            "quoteId": "5d0bb4e7-bd83-44dd-b8f5-53ddd5f35a3a",
+                            "amount": {
+                              "amount": "3.14",
+                              "currency": "USD"
+                            },
+                            "expiresAt": "2023-02-02T06:01:21.152737680Z"
+                          },
+                          "types": {
+                            "EIP712Domain": [
+                              {
+                                "name": "name",
+                                "type": "string"
+                              },
+                              {
+                                "name": "version",
+                                "type": "string"
+                              },
+                              {
+                                "name": "chainId",
+                                "type": "uint256"
+                              },
+                              {
+                                "name": "verifyingContract",
+                                "type": "address"
+                              }
+                            ],
+                            "TransferWithAuthorization": [
+                              {
+                                "name": "from",
+                                "type": "address"
+                              },
+                              {
+                                "name": "to",
+                                "type": "address"
+                              },
+                              {
+                                "name": "validAfter",
+                                "type": "uint256"
+                              },
+                              {
+                                "name": "validBefore",
+                                "type": "uint256"
+                              },
+                              {
+                                "name": "nonce",
+                                "type": "byte32"
+                              }
+                            ]
+                          },
+                          "primaryType": "TransferWithAuthorization"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
           },
           "401": {
             "$ref": "#/components/responses/NotAuthorized"
@@ -10411,7 +10678,7 @@
       },
       "CryptoPayment": {
         "type": "object",
-        "description": "Status information of the related payment. This property is only present on refund or cancel items.",
+        "description": "Status information of the related payment.",
         "required": ["id", "type", "merchantId", "amount", "status"],
         "properties": {
           "id": {
@@ -10486,6 +10753,9 @@
           },
           "updateDate": {
             "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "riskEvaluation": {
+            "$ref": "#/components/schemas/RiskEvaluation"
           }
         }
       },
@@ -11102,6 +11372,114 @@
           }
         }
       },
+      "MetadataCryptoPayment": {
+        "type": "object",
+        "required": [
+          "type",
+          "metaTxNonce",
+          "signatureValidAfter",
+          "signatureValidBefore",
+          "rawSignature"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The protocol type. so far we only support \"TransferWithAuthorization\". find more details in EIP-3009",
+            "enum": ["TransferWithAuthorization"],
+            "example": "TransferWithAuthorization"
+          },
+          "metaTxNonce": {
+            "type": "string",
+            "description": "meta transaction nonce",
+            "example": "0xfdb476566b75311fdd14444e6a77630c36e653a3e255adcaa7c34f3babc1de76"
+          },
+          "signatureValidAfter": {
+            "type": "string",
+            "description": "This comes from the /presign response",
+            "example": "1675104393"
+          },
+          "signatureValidBefore": {
+            "type": "string",
+            "description": "This comes from the /presign response",
+            "example": "1675107967"
+          },
+          "rawSignature": {
+            "type": "string",
+            "description": "Raw signature coming from the wallet response",
+            "example": "0xcff7ef7a24b88d83fa3d6e81b41c9cef19cc0119c085a6ef98cb1b6bc9436a9f18dcb2d46b9cb4d31a7031466b450bbe1e6c0230c5503c7a68e04055b4be0cbc1b"
+          }
+        }
+      },
+      "CryptoPaymentSource": {
+        "type": "object",
+        "required": ["address", "type"],
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "The source address",
+            "example": "0xdB055877e6c13b6A6B25aBcAA29B393777dD0a73"
+          },
+          "type": {
+            "type": "string",
+            "description": "The source type",
+            "enum": ["blockchain"]
+          }
+        }
+      },
+      "CryptoPaymentDestination": {
+        "type": "object",
+        "required": ["address", "chain"],
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "The destination address",
+            "example": "0xda1ab716f7f7b3cb036a7fd74e5ca852126834c1"
+          },
+          "chain": {
+            "type": "string",
+            "enum": ["ETH"]
+          }
+        }
+      },
+      "CryptoPaymentCreationRequest": {
+        "type": "object",
+        "required": [
+          "idempotencyKey",
+          "paymentIntentId",
+          "amount",
+          "destination",
+          "source",
+          "protocolMetadata"
+        ],
+        "properties": {
+          "idempotencyKey": {
+            "$ref": "#/components/schemas/IdempotencyKey"
+          },
+          "paymentIntentId": {
+            "type": "string",
+            "description": "Payment intent uuid which is generated by the create payment intent call",
+            "example": "4e9fa5b1-3964-4f02-a7ba-811cc5d94be1"
+          },
+          "protocolMetadata": {
+            "$ref": "#/components/schemas/MetadataCryptoPayment"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/CryptoPaymentsMoney"
+          },
+          "source": {
+            "$ref": "#/components/schemas/CryptoPaymentSource"
+          },
+          "destination": {
+            "$ref": "#/components/schemas/CryptoPaymentDestination"
+          },
+          "quoteId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Network fee quote uuid which is returned from the /presign response. Only required when end user pays for gas fee",
+            "example": "c6ac001e-9812-4bc1-8dc3-1549b5adaa23"
+          }
+        }
+      },
       "ExternalRef": {
         "type": "string",
         "description": "External network identifier which will be present once provided from the applicable network. \n\nExamples:\n* **Input/Output Message Accountability Data (IMAD/OMAD)**: unique number given to each FedWire payment when using the Federal Reserve Bank Service which can be used to investigate and track wire transfers.\n",
@@ -11377,6 +11755,219 @@
           },
           "updateDate": {
             "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        }
+      },
+      "PresignDomain": {
+        "type": "object",
+        "required": ["name", "verifyingContract", "version", "chainId"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User readable name of signing domain",
+            "example": "USD Coin"
+          },
+          "verifyingContract": {
+            "type": "string",
+            "description": "The address of the contract that will verify the signature",
+            "example": "0x07865c6e87b9f70255377e024ace6630c1eaa37f"
+          },
+          "version": {
+            "type": "string",
+            "description": "The current major version of the signing domain. Signatures from different versions are not compatible",
+            "example": "2"
+          },
+          "chainId": {
+            "type": "integer",
+            "description": "chain id from https://chainid.network/",
+            "example": 5
+          }
+        }
+      },
+      "PresignMessage": {
+        "type": "object",
+        "required": [
+          "from",
+          "to",
+          "value",
+          "validAfter",
+          "validBefore",
+          "nonce"
+        ],
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "A blockchain address representing payer's address",
+            "example": "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+          },
+          "to": {
+            "type": "string",
+            "description": "A blockchain address representing payee's address",
+            "example": "0xdB055877e6c13b6A6B25aBcAA29B393777dD0a73"
+          },
+          "value": {
+            "type": "string",
+            "description": "Amount to be transferred",
+            "example": "5003456"
+          },
+          "validAfter": {
+            "type": "integer",
+            "format": "int64",
+            "description": "the timestamp after which this is valid (unix time)",
+            "example": 1675317371
+          },
+          "validBefore": {
+            "type": "integer",
+            "format": "int64",
+            "description": "the timestamp before which this is valid (unix time)",
+            "example": 1675107967
+          },
+          "nonce": {
+            "type": "string",
+            "description": "unique nonce",
+            "example": "0x4f716a578b96592599c3ca7b2a46453df87511d4809f608cec982d6e83632604"
+          }
+        }
+      },
+      "NetworkFeeQuote": {
+        "type": "object",
+        "required": ["quoteId", "amount", "expiresAt"],
+        "properties": {
+          "quoteId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "UUID of network fee quote",
+            "example": "5d0bb4e7-bd83-44dd-b8f5-53ddd5f35a3a"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/CryptoPaymentsMoney"
+          },
+          "expiresAt": {
+            "description": "The timestamp when the quote will expire at, in ISO-8601 UTC date/time format.",
+            "type": "string",
+            "example": "2023-02-02T06:01:21.152737680Z"
+          }
+        }
+      },
+      "PresignMessageTypesItems": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": {
+            "description": "The name of the field",
+            "type": "string",
+            "example": "name"
+          },
+          "type": {
+            "description": "The type of the field",
+            "type": "string",
+            "example": "string"
+          }
+        }
+      },
+      "PresignMessageTypes": {
+        "type": "object",
+        "description": "The data schema of the message",
+        "properties": {
+          "EIP712Domain": {
+            "description": "Data schema of the domain field in typedData. It's a list of (name, type) pair",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PresignMessageTypesItems"
+            },
+            "example": [
+              {
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "version",
+                "type": "string"
+              },
+              {
+                "name": "chainId",
+                "type": "uint256"
+              },
+              {
+                "name": "verifyingContract",
+                "type": "address"
+              }
+            ]
+          },
+          "TransferWithAuthorization": {
+            "description": "Data schema of the message in typedData. It's a list of (name, type) pair",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PresignMessageTypesItems"
+            },
+            "example": [
+              {
+                "name": "from",
+                "type": "address"
+              },
+              {
+                "name": "to",
+                "type": "address"
+              },
+              {
+                "name": "validAfter",
+                "type": "uint256"
+              },
+              {
+                "name": "validBefore",
+                "type": "uint256"
+              },
+              {
+                "name": "nonce",
+                "type": "byte32"
+              }
+            ]
+          }
+        }
+      },
+      "PresignResponse": {
+        "type": "object",
+        "description": "Response of the GET /presign endpoint",
+        "required": ["typedData"],
+        "properties": {
+          "typedData": {
+            "type": "object",
+            "description": "The typed data",
+            "required": [
+              "domain",
+              "message",
+              "totalAmount",
+              "feeChargeModel",
+              "types",
+              "primaryType"
+            ],
+            "properties": {
+              "domain": {
+                "$ref": "#/components/schemas/PresignDomain"
+              },
+              "message": {
+                "$ref": "#/components/schemas/PresignMessage"
+              },
+              "totalAmount": {
+                "$ref": "#/components/schemas/FiatMoneyUsd"
+              },
+              "feeChargeModel": {
+                "type": "string",
+                "description": "Who pays for network fee. Can only be endUser or merchant. If it's the endUser, totalAmount includes the network fee and networkFeeQuote isn't null; If it's the merchant, totalAmount doesn't include network fee and networkFeeQuote is null.",
+                "enum": ["endUser", "merchant"]
+              },
+              "networkFeeQuote": {
+                "$ref": "#/components/schemas/NetworkFeeQuote"
+              },
+              "types": {
+                "$ref": "#/components/schemas/PresignMessageTypes"
+              },
+              "primaryType": {
+                "type": "string",
+                "description": "Type of the message",
+                "enum": ["TransferWithAuthorization", "EIP712Domain"]
+              }
+            }
           }
         }
       },

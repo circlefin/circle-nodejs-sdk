@@ -16,6 +16,7 @@ apis/management-api.ts
 apis/payment-tokens-api.ts
 apis/payments-api.ts
 apis/payouts-api.ts
+apis/pull-crypto-payments-api.ts
 apis/returns-api.ts
 apis/reversals-api.ts
 apis/senapi.ts
@@ -94,6 +95,8 @@ models/create-business-transfer-response.ts
 models/create-business-wire-account-response.ts
 models/create-card-response.ts
 models/create-checkout-session-response.ts
+models/create-crypto-payment-response.ts
+models/create-crypto-payment-response1.ts
 models/create-crypto-refund-response.ts
 models/create-mock-ach-account-response.ts
 models/create-mock-chargeback-response.ts
@@ -113,9 +116,12 @@ models/create-transfer-response.ts
 models/create-wallet-response.ts
 models/create-wire-account-response.ts
 models/create-wire-payment-response.ts
+models/crypto-payment-creation-request.ts
 models/crypto-payment-deposit-address.ts
+models/crypto-payment-destination.ts
 models/crypto-payment-from-addresses.ts
 models/crypto-payment-network-fee.ts
+models/crypto-payment-source.ts
 models/crypto-payment.ts
 models/crypto-payments-money.ts
 models/crypto-payments-optional-amount-money.ts
@@ -218,6 +224,7 @@ models/list-subscriptions-response.ts
 models/list-transfers-response.ts
 models/list-wallets-response.ts
 models/metadata-card-and-ach.ts
+models/metadata-crypto-payment.ts
 models/metadata-payment.ts
 models/metadata-payout.ts
 models/metadata-phone-email.ts
@@ -235,6 +242,7 @@ models/mock-wire-payment-request.ts
 models/mock-wire-payment-response.ts
 models/modify-address-book-recipient-response.ts
 models/money.ts
+models/network-fee-quote.ts
 models/not-authorized.ts
 models/not-found.ts
 models/payment-creation-request.ts
@@ -255,6 +263,12 @@ models/payout-error-code.ts
 models/payout-money.ts
 models/payout-status.ts
 models/ping.ts
+models/presign-domain.ts
+models/presign-message-types-items.ts
+models/presign-message-types.ts
+models/presign-message.ts
+models/presign-response-typed-data.ts
+models/presign-response.ts
 models/public-key.ts
 models/rate.ts
 models/refund-creation-request.ts
