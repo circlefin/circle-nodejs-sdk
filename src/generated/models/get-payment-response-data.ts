@@ -65,6 +65,4 @@ import { SourceResponse } from "./source-response";
  * @type GetPaymentResponseData
  * @export
  */
-export type GetPaymentResponseData =
-  | ({ type: "Crypto Payment" } & CryptoPayment)
-  | ({ type: "Fiat Payment" } & FiatPaymentPolymorphic);
+export type GetPaymentResponseData = CryptoPayment | FiatPaymentPolymorphic;
