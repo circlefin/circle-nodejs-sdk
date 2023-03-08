@@ -57,7 +57,7 @@ import { SourceResponse } from "./source-response";
  * @export
  */
 export type ListPaymentsResponseDataInner =
-  | ({ type: "Crypto Payment" } & CryptoPayment)
-  | ({ type: "Fiat Cancel" } & FiatCancel)
-  | ({ type: "Fiat Payment" } & FiatPayment)
-  | ({ type: "Fiat Refund" } & FiatRefund);
+  | CryptoPayment
+  | FiatCancel
+  | FiatPayment
+  | FiatRefund;

@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.7.0",
+    "version": "1.7.1",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -4032,16 +4032,7 @@
                           {
                             "$ref": "#/components/schemas/FiatRefund"
                           }
-                        ],
-                        "discriminator": {
-                          "propertyName": "type",
-                          "mapping": {
-                            "Fiat Payment": "#/components/schemas/FiatPayment",
-                            "Crypto Payment": "#/components/schemas/CryptoPayment",
-                            "Fiat Cancel": "#/components/schemas/FiatCancel",
-                            "Fiat Refund": "#/components/schemas/FiatRefund"
-                          }
-                        }
+                        ]
                       }
                     }
                   }
@@ -4374,14 +4365,7 @@
                         {
                           "$ref": "#/components/schemas/CryptoPayment"
                         }
-                      ],
-                      "discriminator": {
-                        "propertyName": "type",
-                        "mapping": {
-                          "Fiat Payment": "#/components/schemas/FiatPaymentPolymorphic",
-                          "Crypto Payment": "#/components/schemas/CryptoPayment"
-                        }
-                      }
+                      ]
                     }
                   }
                 },
@@ -12823,10 +12807,7 @@
           {
             "$ref": "#/components/schemas/TransferSourceBlockchainLocation"
           }
-        ],
-        "discriminator": {
-          "propertyName": "type"
-        }
+        ]
       },
       "TransferDestinationBlockchainLocation": {
         "description": "A destination blockchain address.",
@@ -12881,10 +12862,7 @@
           {
             "$ref": "#/components/schemas/TransferDestinationWalletLocation"
           }
-        ],
-        "discriminator": {
-          "propertyName": "type"
-        }
+        ]
       },
       "Fee": {
         "type": "object",
