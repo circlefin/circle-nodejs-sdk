@@ -103,9 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-#openapi
-openapitools.json
-
 #test coverage
 /coverage/
 
