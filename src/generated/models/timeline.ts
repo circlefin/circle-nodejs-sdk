@@ -25,6 +25,12 @@ export interface Timeline {
    */
   context?: TimelineContextEnum;
   /**
+   *
+   * @type {string}
+   * @memberof Timeline
+   */
+  reason?: TimelineReasonEnum;
+  /**
    * ISO-8601 UTC date/time format.
    * @type {string}
    * @memberof Timeline
@@ -51,3 +57,10 @@ export const TimelineContextEnum = {
 
 export type TimelineContextEnum =
   typeof TimelineContextEnum[keyof typeof TimelineContextEnum];
+export const TimelineReasonEnum = {
+  RequestedByMerchant: "requested_by_merchant",
+  FeeCollectionFailed: "fee_collection_failed"
+} as const;
+
+export type TimelineReasonEnum =
+  typeof TimelineReasonEnum[keyof typeof TimelineReasonEnum];
