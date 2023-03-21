@@ -40,7 +40,9 @@ export const PaymentIntentFeesTypeEnum = {
 export type PaymentIntentFeesTypeEnum =
   typeof PaymentIntentFeesTypeEnum[keyof typeof PaymentIntentFeesTypeEnum];
 export const PaymentIntentFeesCurrencyEnum = {
-  Usd: "USD"
+  Usd: "USD",
+  Btc: "BTC",
+  Eth: "ETH"
 } as const;
 
 export type PaymentIntentFeesCurrencyEnum =

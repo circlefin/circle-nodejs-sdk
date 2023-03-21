@@ -18,8 +18,8 @@ import { ListPaymentIntentsResponseDataInner } from "./list-payment-intents-resp
 export interface ExpirePaymentIntentResponse {
   /**
    *
-   * @type {Array<ListPaymentIntentsResponseDataInner>}
+   * @type {ListPaymentIntentsResponseDataInner}
    * @memberof ExpirePaymentIntentResponse
    */
-  data?: Array<ListPaymentIntentsResponseDataInner>;
+  data?: ListPaymentIntentsResponseDataInner;
 }
