@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.7.1",
+    "version": "1.7.2",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -3007,61 +3007,65 @@
                 "examples": {
                   "Transient Payment Intent": {
                     "value": {
-                      "data": {
-                        "id": "8755d0ea-14f9-4259-b092-de23c14b6568",
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "amountPaid": {
-                          "amount": "0.00",
-                          "currency": "USD"
-                        },
-                        "settlementCurrency": "USD",
-                        "paymentMethods": [
-                          {
-                            "type": "blockchain",
-                            "chain": "ETH"
-                          }
-                        ],
-                        "paymentIds": [],
-                        "timeline": [
-                          {
-                            "status": "created",
-                            "time": "2022-07-21T20:13:35.579331Z"
-                          }
-                        ],
-                        "createDate": "2022-07-21T20:13:35.578678Z",
-                        "updateDate": "2022-07-21T20:19:24.859052Z"
-                      }
+                      "data": [
+                        {
+                          "id": "8755d0ea-14f9-4259-b092-de23c14b6568",
+                          "amount": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "amountPaid": {
+                            "amount": "0.00",
+                            "currency": "USD"
+                          },
+                          "settlementCurrency": "USD",
+                          "paymentMethods": [
+                            {
+                              "type": "blockchain",
+                              "chain": "ETH"
+                            }
+                          ],
+                          "paymentIds": [],
+                          "timeline": [
+                            {
+                              "status": "created",
+                              "time": "2022-07-21T20:13:35.579331Z"
+                            }
+                          ],
+                          "createDate": "2022-07-21T20:13:35.578678Z",
+                          "updateDate": "2022-07-21T20:19:24.859052Z"
+                        }
+                      ]
                     }
                   },
                   "Continuous Payment Intent": {
                     "value": {
-                      "data": {
-                        "id": "e2e90ba3-9d1f-490d-9460-24ac6eb55a1b",
-                        "currency": "USD",
-                        "settlementCurrency": "USD",
-                        "amountPaid": {
-                          "amount": "0.00",
-                          "currency": "USD"
-                        },
-                        "paymentMethods": [
-                          {
-                            "type": "blockchain",
-                            "chain": "ETH"
-                          }
-                        ],
-                        "timeline": [
-                          {
-                            "status": "created",
-                            "time": "2023-01-21T20:13:35.579331Z"
-                          }
-                        ],
-                        "type": "continuous",
-                        "createDate": "2023-01-21T20:13:35.578678Z",
-                        "updateDate": "2023-01-21T20:13:35.578678Z"
-                      }
+                      "data": [
+                        {
+                          "id": "e2e90ba3-9d1f-490d-9460-24ac6eb55a1b",
+                          "currency": "USD",
+                          "settlementCurrency": "USD",
+                          "amountPaid": {
+                            "amount": "0.00",
+                            "currency": "USD"
+                          },
+                          "paymentMethods": [
+                            {
+                              "type": "blockchain",
+                              "chain": "ETH"
+                            }
+                          ],
+                          "timeline": [
+                            {
+                              "status": "created",
+                              "time": "2023-01-21T20:13:35.579331Z"
+                            }
+                          ],
+                          "type": "continuous",
+                          "createDate": "2023-01-21T20:13:35.578678Z",
+                          "updateDate": "2023-01-21T20:13:35.578678Z"
+                        }
+                      ]
                     }
                   }
                 }
@@ -3103,17 +3107,14 @@
                   "title": "GetPaymentIntentResponse",
                   "properties": {
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "anyOf": [
-                          {
-                            "$ref": "#/components/schemas/PaymentIntent"
-                          },
-                          {
-                            "$ref": "#/components/schemas/ContinuousPaymentIntent"
-                          }
-                        ]
-                      }
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/PaymentIntent"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ContinuousPaymentIntent"
+                        }
+                      ]
                     }
                   }
                 },
@@ -3228,17 +3229,14 @@
                   "title": "ExpirePaymentIntentResponse",
                   "properties": {
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "anyOf": [
-                          {
-                            "$ref": "#/components/schemas/PaymentIntent"
-                          },
-                          {
-                            "$ref": "#/components/schemas/ContinuousPaymentIntent"
-                          }
-                        ]
-                      }
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/PaymentIntent"
+                        },
+                        {
+                          "$ref": "#/components/schemas/ContinuousPaymentIntent"
+                        }
+                      ]
                     }
                   }
                 },
@@ -10317,7 +10315,7 @@
           "currency": {
             "description": "Currency code.",
             "type": "string",
-            "enum": ["USD"]
+            "enum": ["USD", "BTC", "ETH"]
           }
         }
       },
