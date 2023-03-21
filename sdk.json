@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "1.7.2",
+    "version": "1.7.3",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -10337,6 +10337,10 @@
           "context": {
             "type": "string",
             "enum": ["underpaid", "paid", "overpaid"]
+          },
+          "reason": {
+            "type": "string",
+            "enum": ["requested_by_merchant", "fee_collection_failed"]
           },
           "time": {
             "description": "ISO-8601 UTC date/time format.",
