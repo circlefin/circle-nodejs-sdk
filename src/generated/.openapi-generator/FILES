@@ -3,6 +3,7 @@ apis/achapi.ts
 apis/addresses-api.ts
 apis/balances-api.ts
 apis/cards-api.ts
+apis/cbitapi.ts
 apis/channels-api.ts
 apis/chargebacks-api.ts
 apis/checkout-sessions-api.ts
@@ -73,6 +74,9 @@ models/card-creation-request.ts
 models/card-update.ts
 models/card-verification-response.ts
 models/card.ts
+models/cbit-fiat-account-creation-request.ts
+models/cbit-fiat-account-response.ts
+models/cbit-instruction.ts
 models/chain.ts
 models/channel-response.ts
 models/chargeback-categories.ts
@@ -86,6 +90,7 @@ models/continuous-payment-intent-creation-request.ts
 models/continuous-payment-intent.ts
 models/create-ach-account-response.ts
 models/create-address-book-recipient-response.ts
+models/create-business-cbit-account-response.ts
 models/create-business-deposit-address-response.ts
 models/create-business-payout-response.ts
 models/create-business-recipient-address-response.ts
@@ -163,6 +168,7 @@ models/generate-address-request.ts
 models/generate-address-response.ts
 models/get-ach-account-response.ts
 models/get-address-book-recipient-response.ts
+models/get-business-cbit-account-response.ts
 models/get-business-deposit-address-response.ts
 models/get-business-payout-response.ts
 models/get-business-sen-account-instructions-response.ts
@@ -199,6 +205,8 @@ models/list-address-book-recipients-response.ts
 models/list-addresses-response.ts
 models/list-balances-response.ts
 models/list-business-balances-response.ts
+models/list-business-cbit-account-instructions-response.ts
+models/list-business-cbit-accounts-response.ts
 models/list-business-deposits-response.ts
 models/list-business-payouts-response.ts
 models/list-business-recipient-addresses-response.ts

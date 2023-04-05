@@ -9,6 +9,7 @@
 export * from "./apis/achapi";
 export * from "./apis/addresses-api";
 export * from "./apis/balances-api";
+export * from "./apis/cbitapi";
 export * from "./apis/cards-api";
 export * from "./apis/channels-api";
 export * from "./apis/chargebacks-api";

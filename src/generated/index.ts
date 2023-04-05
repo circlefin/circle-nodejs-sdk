@@ -10,6 +10,7 @@ import {
   ACHApi,
   AddressesApi,
   BalancesApi,
+  CBITApi,
   CardsApi,
   ChannelsApi,
   ChargebacksApi,
@@ -45,6 +46,7 @@ export class Circle {
   public ach: ACHApi;
   public addresses: AddressesApi;
   public balances: BalancesApi;
+  public cbit: CBITApi;
   public cards: CardsApi;
   public channels: ChannelsApi;
   public chargebacks: ChargebacksApi;
@@ -77,6 +79,7 @@ export class Circle {
     this.ach = new ACHApi(configuration);
     this.addresses = new AddressesApi(configuration);
     this.balances = new BalancesApi(configuration);
+    this.cbit = new CBITApi(configuration);
     this.cards = new CardsApi(configuration);
     this.channels = new ChannelsApi(configuration);
     this.chargebacks = new ChargebacksApi(configuration);
