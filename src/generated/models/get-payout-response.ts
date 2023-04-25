@@ -8,7 +8,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { GetPayoutResponseData } from "./get-payout-response-data";
+import { CryptoPayout } from "./crypto-payout";
 
 /**
  *
@@ -18,8 +18,8 @@ import { GetPayoutResponseData } from "./get-payout-response-data";
 export interface GetPayoutResponse {
   /**
    *
-   * @type {GetPayoutResponseData}
+   * @type {CryptoPayout}
    * @memberof GetPayoutResponse
    */
-  data?: GetPayoutResponseData;
+  data?: CryptoPayout;
 }

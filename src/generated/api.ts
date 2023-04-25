@@ -6,7 +6,6 @@
  * Do not edit the class manually.
  */
 
-export * from "./apis/achapi";
 export * from "./apis/addresses-api";
 export * from "./apis/balances-api";
 export * from "./apis/cbitapi";
@@ -25,12 +24,7 @@ export * from "./apis/payment-tokens-api";
 export * from "./apis/payments-api";
 export * from "./apis/payouts-api";
 export * from "./apis/pull-crypto-payments-api";
-export * from "./apis/returns-api";
-export * from "./apis/reversals-api";
-export * from "./apis/senapi";
-export * from "./apis/sepaapi";
 export * from "./apis/settlements-api";
-export * from "./apis/signet-api";
 export * from "./apis/stablecoins-api";
 export * from "./apis/subscriptions-api";
 export * from "./apis/transfers-api";

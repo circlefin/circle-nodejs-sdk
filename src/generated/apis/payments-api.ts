@@ -42,15 +42,11 @@ import { CaptureCreationRequest } from "../models";
 // @ts-ignore
 import { CreatePaymentResponse } from "../models";
 // @ts-ignore
-import { CreateSepaPaymentResponse } from "../models";
-// @ts-ignore
 import { CreateWirePaymentResponse } from "../models";
 // @ts-ignore
 import { GetPaymentResponse } from "../models";
 // @ts-ignore
 import { ListPaymentsResponse } from "../models";
-// @ts-ignore
-import { MockSepaPaymentRequest } from "../models";
 // @ts-ignore
 import { MockWirePaymentRequest } from "../models";
 // @ts-ignore
@@ -180,58 +176,6 @@ export const PaymentsApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         captureCreationRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     * In the sandbox environment, initiate a mock SEPA payment that mimics the behavior of funds sent through the bank (SEPA) account linked to master wallet.
-     * @summary Create a mock SEPA payment
-     * @param {MockSepaPaymentRequest} [mockSepaPaymentRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createMockSepaPayment: async (
-      mockSepaPaymentRequest?: MockSepaPaymentRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/mocks/payments/sepa`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        mockSepaPaymentRequest,
         localVarRequestOptions,
         configuration
       );
@@ -401,7 +345,7 @@ export const PaymentsApiAxiosParamCreator = function (
      * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
      * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
      * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
-     * @param {Set<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
+     * @param {Set<'card'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
      * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -415,7 +359,7 @@ export const PaymentsApiAxiosParamCreator = function (
       source?: string,
       settlementId?: string,
       paymentIntentId?: string,
-      type?: Set<"card" | "wire" | "ach" | "sepa">,
+      type?: Set<"card">,
       status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
       from?: string,
       to?: string,
@@ -627,34 +571,6 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * In the sandbox environment, initiate a mock SEPA payment that mimics the behavior of funds sent through the bank (SEPA) account linked to master wallet.
-     * @summary Create a mock SEPA payment
-     * @param {MockSepaPaymentRequest} [mockSepaPaymentRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createMockSepaPayment(
-      mockSepaPaymentRequest?: MockSepaPaymentRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<CreateSepaPaymentResponse>
-    > {
-      const localVarAxiosArgs =
-        await localVarAxiosParamCreator.createMockSepaPayment(
-          mockSepaPaymentRequest,
-          options
-        );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
      * In the sandbox environment, initiate a mock wire payment that mimics the behavior of funds sent through the bank (wire) account linked to master wallet.
      * @summary Create a mock Wire payment
      * @param {MockWirePaymentRequest} [mockWirePaymentRequest]
@@ -742,7 +658,7 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
      * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
      * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
      * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
-     * @param {Set<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
+     * @param {Set<'card'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
      * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -756,7 +672,7 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
       source?: string,
       settlementId?: string,
       paymentIntentId?: string,
-      type?: Set<"card" | "wire" | "ach" | "sepa">,
+      type?: Set<"card">,
       status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
       from?: string,
       to?: string,
@@ -869,21 +785,6 @@ export const PaymentsApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     * In the sandbox environment, initiate a mock SEPA payment that mimics the behavior of funds sent through the bank (SEPA) account linked to master wallet.
-     * @summary Create a mock SEPA payment
-     * @param {MockSepaPaymentRequest} [mockSepaPaymentRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createMockSepaPayment(
-      mockSepaPaymentRequest?: MockSepaPaymentRequest,
-      options?: any
-    ): AxiosPromise<CreateSepaPaymentResponse> {
-      return localVarFp
-        .createMockSepaPayment(mockSepaPaymentRequest, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
      * In the sandbox environment, initiate a mock wire payment that mimics the behavior of funds sent through the bank (wire) account linked to master wallet.
      * @summary Create a mock Wire payment
      * @param {MockWirePaymentRequest} [mockWirePaymentRequest]
@@ -931,7 +832,7 @@ export const PaymentsApiFactory = function (
      * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
      * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
      * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
-     * @param {Set<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
+     * @param {Set<'card'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
      * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -945,7 +846,7 @@ export const PaymentsApiFactory = function (
       source?: string,
       settlementId?: string,
       paymentIntentId?: string,
-      type?: Set<"card" | "wire" | "ach" | "sepa">,
+      type?: Set<"card">,
       status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
       from?: string,
       to?: string,
@@ -1036,23 +937,6 @@ export class PaymentsApi extends BaseAPI {
   }
 
   /**
-   * In the sandbox environment, initiate a mock SEPA payment that mimics the behavior of funds sent through the bank (SEPA) account linked to master wallet.
-   * @summary Create a mock SEPA payment
-   * @param {MockSepaPaymentRequest} [mockSepaPaymentRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof PaymentsApi
-   */
-  public createMockSepaPayment(
-    mockSepaPaymentRequest?: MockSepaPaymentRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return PaymentsApiFp(this.configuration)
-      .createMockSepaPayment(mockSepaPaymentRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
    * In the sandbox environment, initiate a mock wire payment that mimics the behavior of funds sent through the bank (wire) account linked to master wallet.
    * @summary Create a mock Wire payment
    * @param {MockWirePaymentRequest} [mockWirePaymentRequest]
@@ -1106,7 +990,7 @@ export class PaymentsApi extends BaseAPI {
    * @param {string} [source] Universally unique identifier (UUID v4) for the source. Filters results to fetch only payments made from the provdided source.
    * @param {string} [settlementId] Queries items with the specified settlement id. Matches any settlement id if unspecified.
    * @param {string} [paymentIntentId] Queries items with the specified payment intent id.
-   * @param {Set<'card' | 'wire' | 'ach' | 'sepa'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
+   * @param {Set<'card'>} [type] Source account type. Filters the results to fetch all payments made from a specified account type. Matches any source type if unspecified.
    * @param {'pending' | 'confirmed' | 'paid' | 'failed' | 'action_required'} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -1121,7 +1005,7 @@ export class PaymentsApi extends BaseAPI {
     source?: string,
     settlementId?: string,
     paymentIntentId?: string,
-    type?: Set<"card" | "wire" | "ach" | "sepa">,
+    type?: Set<"card">,
     status?: "pending" | "confirmed" | "paid" | "failed" | "action_required",
     from?: string,
     to?: string,

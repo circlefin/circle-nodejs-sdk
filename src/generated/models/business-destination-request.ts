@@ -28,8 +28,7 @@ export interface BusinessDestinationRequest {
 
 export const BusinessDestinationRequestTypeEnum = {
   Wire: "wire",
-  Sen: "sen",
-  Signet: "signet"
+  Cbit: "cbit"
 } as const;
 
 export type BusinessDestinationRequestTypeEnum =

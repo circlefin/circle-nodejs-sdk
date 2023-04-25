@@ -32,13 +32,7 @@ import {
   RequiredError
 } from "../base";
 // @ts-ignore
-import { BadRequest } from "../models";
-// @ts-ignore
-import { CreateSenPaymentResponse } from "../models";
-// @ts-ignore
 import { ListBusinessDepositsResponse } from "../models";
-// @ts-ignore
-import { MockSenPaymentRequest } from "../models";
 // @ts-ignore
 import { NotAuthorized } from "../models";
 /**
@@ -49,58 +43,6 @@ export const DepositsApiAxiosParamCreator = function (
   configuration?: Configuration
 ) {
   return {
-    /**
-     * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-     * @summary Create a mock Silvergate SEN payment
-     * @param {MockSenPaymentRequest} [mockSenPaymentRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createMockSenPayment: async (
-      mockSenPaymentRequest?: MockSenPaymentRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/mocks/payments/sen`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        mockSenPaymentRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
     /**
      * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
      * @summary List all deposits
@@ -193,34 +135,6 @@ export const DepositsApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = DepositsApiAxiosParamCreator(configuration);
   return {
     /**
-     * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-     * @summary Create a mock Silvergate SEN payment
-     * @param {MockSenPaymentRequest} [mockSenPaymentRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createMockSenPayment(
-      mockSenPaymentRequest?: MockSenPaymentRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<CreateSenPaymentResponse>
-    > {
-      const localVarAxiosArgs =
-        await localVarAxiosParamCreator.createMockSenPayment(
-          mockSenPaymentRequest,
-          options
-        );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
      * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
      * @summary List all deposits
      * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
@@ -278,21 +192,6 @@ export const DepositsApiFactory = function (
   const localVarFp = DepositsApiFp(configuration);
   return {
     /**
-     * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-     * @summary Create a mock Silvergate SEN payment
-     * @param {MockSenPaymentRequest} [mockSenPaymentRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createMockSenPayment(
-      mockSenPaymentRequest?: MockSenPaymentRequest,
-      options?: any
-    ): AxiosPromise<CreateSenPaymentResponse> {
-      return localVarFp
-        .createMockSenPayment(mockSenPaymentRequest, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
      * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
      * @summary List all deposits
      * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
@@ -335,23 +234,6 @@ export const DepositsApiFactory = function (
  * @extends {BaseAPI}
  */
 export class DepositsApi extends BaseAPI {
-  /**
-   * In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.
-   * @summary Create a mock Silvergate SEN payment
-   * @param {MockSenPaymentRequest} [mockSenPaymentRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof DepositsApi
-   */
-  public createMockSenPayment(
-    mockSenPaymentRequest?: MockSenPaymentRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return DepositsApiFp(this.configuration)
-      .createMockSenPayment(mockSenPaymentRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
   /**
    * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
    * @summary List all deposits

@@ -36,15 +36,9 @@ import { BadRequest } from "../models";
 // @ts-ignore
 import { CreateBusinessWireAccountResponse } from "../models";
 // @ts-ignore
-import { CreateWireAccountResponse } from "../models";
-// @ts-ignore
 import { GetBusinessWireAccountInstructionsResponse } from "../models";
 // @ts-ignore
 import { GetBusinessWireAccountResponse } from "../models";
-// @ts-ignore
-import { GetWireAccountInstructionsResponse } from "../models";
-// @ts-ignore
-import { GetWireAccountResponse } from "../models";
 // @ts-ignore
 import { ListBusinessWireAccountsResponse } from "../models";
 // @ts-ignore
@@ -73,58 +67,6 @@ export const WiresApiAxiosParamCreator = function (
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       const localVarPath = `/v1/businessAccount/banks/wires`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        wireCreationRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     *
-     * @summary Create a Wire bank account
-     * @param {WireCreationRequest} [wireCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createWireAccount: async (
-      wireCreationRequest?: WireCreationRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/banks/wires`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -274,106 +216,6 @@ export const WiresApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary Get a Wire bank account
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getWireAccount: async (
-      id: string,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      // verify required parameter 'id' is not null or undefined
-      assertParamExists("getWireAccount", "id", id);
-      const localVarPath = `/v1/banks/wires/{id}`.replace(
-        `{${"id"}}`,
-        encodeURIComponent(String(id))
-      );
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "GET",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     * Get the wire transfer instructions into the Circle bank account given your bank account id
-     * @summary Get Wire instructions
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getWireAccountInstructions: async (
-      id: string,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      // verify required parameter 'id' is not null or undefined
-      assertParamExists("getWireAccountInstructions", "id", id);
-      const localVarPath = `/v1/banks/wires/{id}/instructions`.replace(
-        `{${"id"}}`,
-        encodeURIComponent(String(id))
-      );
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "GET",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     *
      * @summary List all Wire bank accounts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -455,34 +297,6 @@ export const WiresApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary Create a Wire bank account
-     * @param {WireCreationRequest} [wireCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createWireAccount(
-      wireCreationRequest?: WireCreationRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<CreateWireAccountResponse>
-    > {
-      const localVarAxiosArgs =
-        await localVarAxiosParamCreator.createWireAccount(
-          wireCreationRequest,
-          options
-        );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
-     *
      * @summary Get a Wire bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
@@ -530,58 +344,6 @@ export const WiresApiFp = function (configuration?: Configuration) {
           currency,
           options
         );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
-     *
-     * @summary Get a Wire bank account
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async getWireAccount(
-      id: string,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<GetWireAccountResponse>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getWireAccount(
-        id,
-        options
-      );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
-     * Get the wire transfer instructions into the Circle bank account given your bank account id
-     * @summary Get Wire instructions
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async getWireAccountInstructions(
-      id: string,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<GetWireAccountInstructionsResponse>
-    > {
-      const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getWireAccountInstructions(id, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -643,21 +405,6 @@ export const WiresApiFactory = function (
     },
     /**
      *
-     * @summary Create a Wire bank account
-     * @param {WireCreationRequest} [wireCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createWireAccount(
-      wireCreationRequest?: WireCreationRequest,
-      options?: any
-    ): AxiosPromise<CreateWireAccountResponse> {
-      return localVarFp
-        .createWireAccount(wireCreationRequest, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
-     *
      * @summary Get a Wire bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
@@ -686,36 +433,6 @@ export const WiresApiFactory = function (
     ): AxiosPromise<GetBusinessWireAccountInstructionsResponse> {
       return localVarFp
         .getBusinessWireAccountInstructions(id, currency, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
-     *
-     * @summary Get a Wire bank account
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getWireAccount(
-      id: string,
-      options?: any
-    ): AxiosPromise<GetWireAccountResponse> {
-      return localVarFp
-        .getWireAccount(id, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
-     * Get the wire transfer instructions into the Circle bank account given your bank account id
-     * @summary Get Wire instructions
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    getWireAccountInstructions(
-      id: string,
-      options?: any
-    ): AxiosPromise<GetWireAccountInstructionsResponse> {
-      return localVarFp
-        .getWireAccountInstructions(id, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -760,23 +477,6 @@ export class WiresApi extends BaseAPI {
 
   /**
    *
-   * @summary Create a Wire bank account
-   * @param {WireCreationRequest} [wireCreationRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof WiresApi
-   */
-  public createWireAccount(
-    wireCreationRequest?: WireCreationRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return WiresApiFp(this.configuration)
-      .createWireAccount(wireCreationRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   *
    * @summary Get a Wire bank account
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
@@ -805,34 +505,6 @@ export class WiresApi extends BaseAPI {
   ) {
     return WiresApiFp(this.configuration)
       .getBusinessWireAccountInstructions(id, currency, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   *
-   * @summary Get a Wire bank account
-   * @param {string} id Universally unique identifier (UUID v4) of a resource.
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof WiresApi
-   */
-  public getWireAccount(id: string, options?: AxiosRequestConfig) {
-    return WiresApiFp(this.configuration)
-      .getWireAccount(id, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   * Get the wire transfer instructions into the Circle bank account given your bank account id
-   * @summary Get Wire instructions
-   * @param {string} id Universally unique identifier (UUID v4) of a resource.
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof WiresApi
-   */
-  public getWireAccountInstructions(id: string, options?: AxiosRequestConfig) {
-    return WiresApiFp(this.configuration)
-      .getWireAccountInstructions(id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 

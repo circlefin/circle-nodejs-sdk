@@ -7,7 +7,6 @@
  */
 
 import {
-  ACHApi,
   AddressesApi,
   BalancesApi,
   CBITApi,
@@ -26,12 +25,7 @@ import {
   PaymentsApi,
   PayoutsApi,
   PullCryptoPaymentsApi,
-  ReturnsApi,
-  ReversalsApi,
-  SENApi,
-  SEPAApi,
   SettlementsApi,
-  SignetApi,
   StablecoinsApi,
   SubscriptionsApi,
   TransfersApi,
@@ -43,7 +37,6 @@ import { Configuration } from "./configuration";
 export * from "./models";
 
 export class Circle {
-  public ach: ACHApi;
   public addresses: AddressesApi;
   public balances: BalancesApi;
   public cbit: CBITApi;
@@ -62,12 +55,7 @@ export class Circle {
   public payments: PaymentsApi;
   public payouts: PayoutsApi;
   public pullCryptoPayments: PullCryptoPaymentsApi;
-  public returns: ReturnsApi;
-  public reversals: ReversalsApi;
-  public sen: SENApi;
-  public sepa: SEPAApi;
   public settlements: SettlementsApi;
-  public signet: SignetApi;
   public stablecoins: StablecoinsApi;
   public subscriptions: SubscriptionsApi;
   public transfers: TransfersApi;
@@ -76,7 +64,6 @@ export class Circle {
 
   constructor(apiKey: string, baseUrl: string) {
     const configuration = new Configuration({ basePath: baseUrl, apiKey });
-    this.ach = new ACHApi(configuration);
     this.addresses = new AddressesApi(configuration);
     this.balances = new BalancesApi(configuration);
     this.cbit = new CBITApi(configuration);
@@ -95,12 +82,7 @@ export class Circle {
     this.payments = new PaymentsApi(configuration);
     this.payouts = new PayoutsApi(configuration);
     this.pullCryptoPayments = new PullCryptoPaymentsApi(configuration);
-    this.returns = new ReturnsApi(configuration);
-    this.reversals = new ReversalsApi(configuration);
-    this.sen = new SENApi(configuration);
-    this.sepa = new SEPAApi(configuration);
     this.settlements = new SettlementsApi(configuration);
-    this.signet = new SignetApi(configuration);
     this.stablecoins = new StablecoinsApi(configuration);
     this.subscriptions = new SubscriptionsApi(configuration);
     this.transfers = new TransfersApi(configuration);

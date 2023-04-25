@@ -38,9 +38,9 @@ import { BusinessPayoutCreationRequest } from "../models";
 // @ts-ignore
 import { CreateBusinessPayoutResponse } from "../models";
 // @ts-ignore
-import { CreatePayoutRequest } from "../models";
-// @ts-ignore
 import { CreatePayoutResponse } from "../models";
+// @ts-ignore
+import { CryptoPayoutCreationRequest } from "../models";
 // @ts-ignore
 import { GetBusinessPayoutResponse } from "../models";
 // @ts-ignore
@@ -118,14 +118,14 @@ export const PayoutsApiAxiosParamCreator = function (
       };
     },
     /**
-     *  Create a wire, ACH, SEPA or crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+     *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
      * @summary Create a payout
-     * @param {CreatePayoutRequest} [createPayoutRequest]
+     * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     createPayout: async (
-      createPayoutRequest?: CreatePayoutRequest,
+      cryptoPayoutCreationRequest?: CryptoPayoutCreationRequest,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       const localVarPath = `/v1/payouts`;
@@ -159,7 +159,7 @@ export const PayoutsApiAxiosParamCreator = function (
         ...options.headers
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        createPayoutRequest,
+        cryptoPayoutCreationRequest,
         localVarRequestOptions,
         configuration
       );
@@ -273,7 +273,7 @@ export const PayoutsApiAxiosParamCreator = function (
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -285,7 +285,7 @@ export const PayoutsApiAxiosParamCreator = function (
      */
     listBusinessPayouts: async (
       destination?: string,
-      type?: "wire",
+      type?: "wire" | "cbit",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -535,14 +535,14 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     *  Create a wire, ACH, SEPA or crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+     *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
      * @summary Create a payout
-     * @param {CreatePayoutRequest} [createPayoutRequest]
+     * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async createPayout(
-      createPayoutRequest?: CreatePayoutRequest,
+      cryptoPayoutCreationRequest?: CryptoPayoutCreationRequest,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -551,7 +551,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       ) => AxiosPromise<CreatePayoutResponse>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.createPayout(
-        createPayoutRequest,
+        cryptoPayoutCreationRequest,
         options
       );
       return createRequestFunction(
@@ -617,7 +617,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -629,7 +629,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      */
     async listBusinessPayouts(
       destination?: string,
-      type?: "wire",
+      type?: "wire" | "cbit",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -769,18 +769,18 @@ export const PayoutsApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     *  Create a wire, ACH, SEPA or crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+     *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
      * @summary Create a payout
-     * @param {CreatePayoutRequest} [createPayoutRequest]
+     * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     createPayout(
-      createPayoutRequest?: CreatePayoutRequest,
+      cryptoPayoutCreationRequest?: CryptoPayoutCreationRequest,
       options?: any
     ): AxiosPromise<CreatePayoutResponse> {
       return localVarFp
-        .createPayout(createPayoutRequest, options)
+        .createPayout(cryptoPayoutCreationRequest, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -814,7 +814,7 @@ export const PayoutsApiFactory = function (
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -826,7 +826,7 @@ export const PayoutsApiFactory = function (
      */
     listBusinessPayouts(
       destination?: string,
-      type?: "wire",
+      type?: "wire" | "cbit",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -945,19 +945,19 @@ export class PayoutsApi extends BaseAPI {
   }
 
   /**
-   *  Create a wire, ACH, SEPA or crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+   *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
    * @summary Create a payout
-   * @param {CreatePayoutRequest} [createPayoutRequest]
+   * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof PayoutsApi
    */
   public createPayout(
-    createPayoutRequest?: CreatePayoutRequest,
+    cryptoPayoutCreationRequest?: CryptoPayoutCreationRequest,
     options?: AxiosRequestConfig
   ) {
     return PayoutsApiFp(this.configuration)
-      .createPayout(createPayoutRequest, options)
+      .createPayout(cryptoPayoutCreationRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -993,7 +993,7 @@ export class PayoutsApi extends BaseAPI {
    *
    * @summary List all payouts
    * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-   * @param {'wire'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+   * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
    * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -1006,7 +1006,7 @@ export class PayoutsApi extends BaseAPI {
    */
   public listBusinessPayouts(
     destination?: string,
-    type?: "wire",
+    type?: "wire" | "cbit",
     status?: Set<PayoutStatus>,
     from?: string,
     to?: string,

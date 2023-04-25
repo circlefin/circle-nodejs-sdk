@@ -8,7 +8,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ListPayoutsResponseDataInner } from "./list-payouts-response-data-inner";
+import { CryptoPayout } from "./crypto-payout";
 
 /**
  *
@@ -18,8 +18,8 @@ import { ListPayoutsResponseDataInner } from "./list-payouts-response-data-inner
 export interface ListPayoutsResponse {
   /**
    *
-   * @type {Array<ListPayoutsResponseDataInner>}
+   * @type {Array<CryptoPayout>}
    * @memberof ListPayoutsResponse
    */
-  data?: Array<ListPayoutsResponseDataInner>;
+  data?: Array<CryptoPayout>;
 }
