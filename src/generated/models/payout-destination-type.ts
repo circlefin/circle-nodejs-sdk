@@ -13,9 +13,6 @@
  */
 
 export const PayoutDestinationType = {
-  Wire: "wire",
-  Ach: "ach",
-  Sepa: "sepa",
   AddressBook: "address_book"
 } as const;
 

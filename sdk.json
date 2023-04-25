@@ -6,15 +6,11 @@
     }
   ],
   "info": {
-    "version": "1.8.0",
+    "version": "2.0.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
   "tags": [
-    {
-      "name": "ACH",
-      "description": "Link and get information on bank account for ACH payments."
-    },
     {
       "name": "Addresses",
       "description": "Generate and get information on blockchain addresses."
@@ -77,31 +73,11 @@
     },
     {
       "name": "Payouts",
-      "description": "Create and get information on wire, ACH, SEPA and address book payouts."
-    },
-    {
-      "name": "Returns",
-      "description": "Get information on returned payouts."
-    },
-    {
-      "name": "Reversals",
-      "description": "Get information on ACH reversals."
-    },
-    {
-      "name": "SEN",
-      "description": "Create and get information on SEN accounts."
-    },
-    {
-      "name": "SEPA",
-      "description": "Create and get information on SEPA accounts."
+      "description": "Create and get information on address book payouts."
     },
     {
       "name": "Settlements",
       "description": "Get information on settlement batches."
-    },
-    {
-      "name": "Signet",
-      "description": "Create and get information on Signet accounts."
     },
     {
       "name": "CBIT",
@@ -1346,1100 +1322,6 @@
                           "postalCode": "02110",
                           "country": "US"
                         }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/banks/wires": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a Wire bank account",
-        "operationId": "createWireAccount",
-        "tags": ["Wires"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WireCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a bank account for wire transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateWireAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Wire"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "description": "WELLS FARGO BANK, NA ****0010",
-                        "trackingRef": "CIR13FB13A",
-                        "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
-                        "billingDetails": {
-                          "name": "Satoshi Nakamoto",
-                          "city": "Boston",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "MA",
-                          "postalCode": "01234"
-                        },
-                        "bankAddress": {
-                          "bankName": "SAN FRANCISCO",
-                          "city": "SAN FRANCISCO",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "CA"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/banks/wires/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get a Wire bank account",
-        "operationId": "getWireAccount",
-        "tags": ["Wires"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a bank account for wire transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetWireAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Wire"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "description": "WELLS FARGO BANK, NA ****0010",
-                        "trackingRef": "CIR13FB13A",
-                        "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
-                        "billingDetails": {
-                          "name": "Satoshi Nakamoto",
-                          "city": "Boston",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "MA",
-                          "postalCode": "01234"
-                        },
-                        "bankAddress": {
-                          "bankName": "SAN FRANCISCO",
-                          "city": "SAN FRANCISCO",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "CA"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/banks/wires/{id}/instructions": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get Wire instructions",
-        "description": "Get the wire transfer instructions into the Circle bank account given your bank account id",
-        "operationId": "getWireAccountInstructions",
-        "tags": ["Wires"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved wire transfer instructions for the bank account.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetWireAccountInstructionsResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/WireInstruction"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "trackingRef": "CIR13FB13A",
-                        "beneficiary": {
-                          "name": "CIRCLE INTERNET FINANCIAL INC",
-                          "address1": "99 HIGH STREET",
-                          "address2": "BOSTON MA 02110"
-                        },
-                        "beneficiaryBank": {
-                          "name": "SILVERGATE BANK",
-                          "swiftCode": "SIVGUS66XXX",
-                          "routingNumber": "322286803",
-                          "accountNumber": "****7427",
-                          "currency": "USD",
-                          "address": "4250 EXECUTIVE SQUARE SUITE 300",
-                          "city": "LA JOLLA",
-                          "postalCode": "02110",
-                          "country": "US"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/businessAccount/banks/sen": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a Silvergate SEN bank account (BETA)",
-        "operationId": "createBusinessSenAccount",
-        "tags": ["SEN"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SenFiatAccountCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a bank account for Silvergate SEN transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateBusinessSenAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SenFiatAccountResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "description": "SILVERGATE BANK ****1111",
-                        "trackingRef": "CIR13FB14A",
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z",
-                        "currency": "USD"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      },
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "List all Silvergate SEN bank accounts (BETA).",
-        "operationId": "listBusinessSenAccounts",
-        "tags": ["SEN"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved all bank accounts for Silvergate SEN transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListBusinessSenAccountsResponse",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SenFiatAccountResponse"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": [
-                        {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "status": "pending",
-                          "description": "SILVERGATE BANK ****1111",
-                          "trackingRef": "CIR13FB14A",
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z",
-                          "currency": "USD"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/businessAccount/banks/sen/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get a Silvergate SEN bank account (BETA)",
-        "operationId": "getBusinessSenAccount",
-        "tags": ["SEN"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a bank account for Silvergate SEN transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetBusinessSenAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SenFiatAccountResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "description": "SILVERGATE BANK ****1111",
-                        "trackingRef": "CIR13FB14A",
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z",
-                        "currency": "USD"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/businessAccount/banks/sen/{id}/instructions": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get Silvergate SEN instructions (BETA)",
-        "description": "Get the Silvergate SEN transfer instructions into the Circle bank account given your bank account id (BETA).",
-        "operationId": "getBusinessSenAccountInstructions",
-        "tags": ["SEN"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved Sen transfer instructions for the bank account.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetBusinessSenAccountInstructionsResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SenInstruction"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "trackingRef": "CIR13FB14A",
-                        "accountNumber": "11111111",
-                        "currency": "USD"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/banks/ach": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a ACH bank account",
-        "operationId": "createAchAccount",
-        "tags": ["ACH"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AchCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a bank account for ACH transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateAchAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Ach"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "accountNumber": "****6789",
-                        "routingNumber": "613334455",
-                        "billingDetails": {
-                          "name": "Satoshi Nakamoto",
-                          "city": "Boston",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "MA",
-                          "postalCode": "01234"
-                        },
-                        "bankAccountType": "retail",
-                        "bankAddress": {
-                          "bankName": "SAN FRANCISCO",
-                          "city": "SAN FRANCISCO",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "CA"
-                        },
-                        "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
-                        "errorCode": "bank_account_authorization_expired",
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z",
-                        "metadata": {
-                          "email": "satoshi@circle.com",
-                          "phoneNumber": "+14155555555"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/banks/ach/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get a ACH bank account",
-        "operationId": "getAchAccount",
-        "tags": ["ACH"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a bank account for ACH transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetAchAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Ach"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "accountNumber": "****6789",
-                        "routingNumber": "613334455",
-                        "billingDetails": {
-                          "name": "Satoshi Nakamoto",
-                          "city": "Boston",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "MA",
-                          "postalCode": "01234"
-                        },
-                        "bankAccountType": "retail",
-                        "bankAddress": {
-                          "bankName": "SAN FRANCISCO",
-                          "city": "SAN FRANCISCO",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "CA"
-                        },
-                        "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
-                        "errorCode": "bank_account_authorization_expired",
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z",
-                        "metadata": {
-                          "email": "satoshi@circle.com",
-                          "phoneNumber": "+14155555555"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/banks/sepa": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a SEPA bank account",
-        "operationId": "createSepaAccount",
-        "tags": ["SEPA"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SepaCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a bank account for SEPA transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateSepaAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Sepa"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "description": "Bank of Ireland ****0010",
-                        "trackingRef": "CIR13FB13A",
-                        "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "billingDetails": {
-                          "name": "Satoshi Nakamoto",
-                          "city": "Boston",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "MA",
-                          "postalCode": "01234"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/banks/sepa/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get a SEPA bank account",
-        "operationId": "getSepaAccount",
-        "tags": ["SEPA"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a bank account for SEPA transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetSepaAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Sepa"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "description": "Bank of Ireland ****0010",
-                        "trackingRef": "CIR13FB13A",
-                        "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "billingDetails": {
-                          "name": "Satoshi Nakamoto",
-                          "city": "Boston",
-                          "country": "US",
-                          "line1": "100 Money Street",
-                          "line2": "Suite 1",
-                          "district": "MA",
-                          "postalCode": "01234"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/banks/sepa/{id}/instructions": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get SEPA instructions",
-        "description": "Get the SEPA transfer instructions into the Circle bank account given your bank account id.",
-        "operationId": "getSepaAccountInstructions",
-        "tags": ["SEPA"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved SEPA transfer instructions for the bank account.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetSepaAccountInstructionsResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SepaInstruction"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "trackingRef": "CIR13FB13A",
-                        "beneficiary": {
-                          "name": "CIRCLE INTERNET FINANCIAL INC",
-                          "address1": "99 HIGH STREET",
-                          "address2": "BOSTON MA 02110"
-                        },
-                        "beneficiaryBank": {
-                          "name": "LHV Bank",
-                          "bic": "LHVBEE22XXX",
-                          "iban": "****6789",
-                          "address": "Tartu mnt 2, 10145 Tallinn",
-                          "city": "Tallinn",
-                          "postalCode": "10017",
-                          "country": "EE"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/businessAccount/banks/signet": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a Signet bank account (Production Only)",
-        "operationId": "createBusinessSignetAccount",
-        "tags": ["Signet"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SignetFiatAccountCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a bank account for Signet transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateBusinessSignetAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SignetFiatAccountResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "trackingRef": "CIR13FB14A",
-                        "walletAddress": "0xcac04f0069e4ac9314ac4e608e99278a3bebabcd",
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      },
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "List all Signet bank accounts (Production Only).",
-        "operationId": "listBusinessSignetAccounts",
-        "tags": ["Signet"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved all bank accounts for Signet transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListBusinessSignetAccountsResponse",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/SignetFiatAccountResponse"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": [
-                        {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "status": "pending",
-                          "trackingRef": "CIR13FB14A",
-                          "walletAddress": "0xcac04f0069e4ac9314ac4e608e99278a3bebabcd",
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/businessAccount/banks/signet/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get a Signet bank account (Production Only)",
-        "operationId": "getBusinessSignetAccount",
-        "tags": ["Signet"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a bank account for Signet transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetBusinessSignetAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SignetFiatAccountResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "status": "pending",
-                        "trackingRef": "CIR13FB14A",
-                        "walletAddress": "0xcac04f0069e4ac9314ac4e608e99278a3bebabcd",
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/businessAccount/banks/signet/{id}/instructions": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get Signet instructions (Production Only)",
-        "description": "Get the Signet transfer instructions into the Circle bank account given your bank account id (only available on Production now).",
-        "operationId": "getBusinessSignetAccountInstructions",
-        "tags": ["Signet"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved Signet transfer instructions for the bank account.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListBusinessSignetAccountInstructionsResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/SignetInstruction"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "trackingRef": "CIR13FB14A",
-                        "walletAddress": "0x7e4f4fe03243ac7b291ebaee90b2bb27025a1234"
                       }
                     }
                   }
@@ -4607,7 +3489,35 @@
                   "Fiat Payment": {
                     "value": {
                       "data": {
-                        "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "type": "payment",
+                        "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
+                        "merchantWalletId": "212000",
+                        "amount": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "fromAmount": {
+                          "amount": "3.14",
+                          "currency": "EUR"
+                        },
+                        "source": {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "type": "card"
+                        },
+                        "description": "Payment",
+                        "status": "pending",
+                        "requiredAction": {
+                          "type": "three_d_secure_required",
+                          "redirectUrl": "https://example.org"
+                        },
+                        "verification": {
+                          "avs": "D",
+                          "cvv": "not_requested",
+                          "threeDSecure": "pass",
+                          "eci": "00"
+                        },
+                        "originalPayment": {
                           "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
                           "type": "payment",
                           "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
@@ -4616,9 +3526,66 @@
                             "amount": "3.14",
                             "currency": "USD"
                           },
-                          "fromAmount": {
+                          "source": {
+                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                            "type": "card"
+                          },
+                          "description": "Payment",
+                          "status": "pending",
+                          "captured": false,
+                          "captureAmount": {
                             "amount": "3.14",
-                            "currency": "EUR"
+                            "currency": "USD"
+                          },
+                          "captureDate": "2020-04-10T02:13:30.000Z",
+                          "requiredAction": {
+                            "type": "three_d_secure_required",
+                            "redirectUrl": "https://example.org"
+                          },
+                          "cancel": {
+                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                            "type": "cancel",
+                            "description": "Payment",
+                            "status": "pending",
+                            "createDate": "2020-04-10T02:13:30.000Z"
+                          },
+                          "refunds": [
+                            {
+                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                              "type": "payment",
+                              "amount": {
+                                "amount": "3.14",
+                                "currency": "USD"
+                              },
+                              "description": "Payment",
+                              "status": "pending",
+                              "requiredAction": {
+                                "type": "three_d_secure_required",
+                                "redirectUrl": "https://example.org"
+                              },
+                              "fees": {
+                                "amount": "3.14",
+                                "currency": "USD"
+                              },
+                              "createDate": "2020-04-10T02:13:30.000Z"
+                            }
+                          ],
+                          "fees": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
+                          "createDate": "2020-04-10T02:13:30.000Z",
+                          "updateDate": "2020-04-10T02:13:30.000Z"
+                        },
+                        "cancel": {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "type": "cancel",
+                          "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
+                          "merchantWalletId": "212000",
+                          "amount": {
+                            "amount": "3.14",
+                            "currency": "USD"
                           },
                           "source": {
                             "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
@@ -4626,80 +3593,37 @@
                           },
                           "description": "Payment",
                           "status": "pending",
-                          "requiredAction": {
-                            "type": "three_d_secure_required",
-                            "redirectUrl": "https://example.org"
-                          },
-                          "verification": {
-                            "avs": "D",
-                            "cvv": "not_requested",
-                            "threeDSecure": "pass",
-                            "eci": "00"
-                          },
                           "originalPayment": {
                             "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
                             "type": "payment",
-                            "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                            "merchantWalletId": "212000",
                             "amount": {
                               "amount": "3.14",
                               "currency": "USD"
                             },
-                            "source": {
-                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                              "type": "card"
-                            },
                             "description": "Payment",
                             "status": "pending",
-                            "captured": false,
-                            "captureAmount": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "captureDate": "2020-04-10T02:13:30.000Z",
                             "requiredAction": {
                               "type": "three_d_secure_required",
                               "redirectUrl": "https://example.org"
                             },
-                            "cancel": {
-                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                              "type": "cancel",
-                              "description": "Payment",
-                              "status": "pending",
-                              "createDate": "2020-04-10T02:13:30.000Z"
-                            },
-                            "refunds": [
-                              {
-                                "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                                "type": "payment",
-                                "amount": {
-                                  "amount": "3.14",
-                                  "currency": "USD"
-                                },
-                                "description": "Payment",
-                                "status": "pending",
-                                "requiredAction": {
-                                  "type": "three_d_secure_required",
-                                  "redirectUrl": "https://example.org"
-                                },
-                                "fees": {
-                                  "amount": "3.14",
-                                  "currency": "USD"
-                                },
-                                "createDate": "2020-04-10T02:13:30.000Z"
-                              }
-                            ],
                             "fees": {
                               "amount": "3.14",
                               "currency": "USD"
                             },
-                            "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                            "createDate": "2020-04-10T02:13:30.000Z",
-                            "updateDate": "2020-04-10T02:13:30.000Z"
+                            "createDate": "2020-04-10T02:13:30.000Z"
                           },
-                          "cancel": {
+                          "fees": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
+                          "createDate": "2020-04-10T02:13:30.000Z",
+                          "updateDate": "2020-04-10T02:13:30.000Z"
+                        },
+                        "refunds": [
+                          {
                             "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                            "type": "cancel",
+                            "type": "refund",
                             "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
                             "merchantWalletId": "212000",
                             "amount": {
@@ -4731,6 +3655,13 @@
                               },
                               "createDate": "2020-04-10T02:13:30.000Z"
                             },
+                            "cancel": {
+                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                              "type": "cancel",
+                              "description": "Payment",
+                              "status": "pending",
+                              "createDate": "2020-04-10T02:13:30.000Z"
+                            },
                             "fees": {
                               "amount": "3.14",
                               "currency": "USD"
@@ -4738,77 +3669,26 @@
                             "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
                             "createDate": "2020-04-10T02:13:30.000Z",
                             "updateDate": "2020-04-10T02:13:30.000Z"
-                          },
-                          "refunds": [
-                            {
-                              "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                              "type": "refund",
-                              "merchantId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                              "merchantWalletId": "212000",
-                              "amount": {
-                                "amount": "3.14",
-                                "currency": "USD"
-                              },
-                              "source": {
-                                "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                                "type": "card"
-                              },
-                              "description": "Payment",
-                              "status": "pending",
-                              "originalPayment": {
-                                "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                                "type": "payment",
-                                "amount": {
-                                  "amount": "3.14",
-                                  "currency": "USD"
-                                },
-                                "description": "Payment",
-                                "status": "pending",
-                                "requiredAction": {
-                                  "type": "three_d_secure_required",
-                                  "redirectUrl": "https://example.org"
-                                },
-                                "fees": {
-                                  "amount": "3.14",
-                                  "currency": "USD"
-                                },
-                                "createDate": "2020-04-10T02:13:30.000Z"
-                              },
-                              "cancel": {
-                                "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                                "type": "cancel",
-                                "description": "Payment",
-                                "status": "pending",
-                                "createDate": "2020-04-10T02:13:30.000Z"
-                              },
-                              "fees": {
-                                "amount": "3.14",
-                                "currency": "USD"
-                              },
-                              "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                              "createDate": "2020-04-10T02:13:30.000Z",
-                              "updateDate": "2020-04-10T02:13:30.000Z"
-                            }
-                          ],
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "trackingRef": "24910599141085313498894",
-                          "externalRef": "YYYYMMDDXXXXXXXX012345",
-                          "errorCode": "payment_failed",
-                          "metadata": {
-                            "email": "satoshi@circle.com",
-                            "phoneNumber": "+14155555555"
-                          },
-                          "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                          "riskEvaluation": {
-                            "decision": "approved",
-                            "reason": "3000"
-                          },
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        }
+                          }
+                        ],
+                        "fees": {
+                          "amount": "3.14",
+                          "currency": "USD"
+                        },
+                        "trackingRef": "24910599141085313498894",
+                        "externalRef": "YYYYMMDDXXXXXXXX012345",
+                        "errorCode": "payment_failed",
+                        "metadata": {
+                          "email": "satoshi@circle.com",
+                          "phoneNumber": "+14155555555"
+                        },
+                        "channel": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
+                        "riskEvaluation": {
+                          "decision": "approved",
+                          "reason": "3000"
+                        },
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
                       }
                     }
                   },
@@ -5560,7 +4440,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["wire"]
+              "enum": ["wire", "cbit"]
             }
           },
           {
@@ -5796,21 +4676,14 @@
           }
         ],
         "summary": "Create a payout",
-        "description": "\nCreate a wire, ACH, SEPA or crypto payout.  \n\nThe following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:\n\n| amount.currency  | toAmount.currency |\n| ---------------- | ------------      |\n| USD              | USD               |\n| USD              | BTC               |\n| USD              | ETH               |\n| USD              | MTC               |\n| EUR              | EUR               |\n| BTC              | USD               |\n| BTC              | BTC               |\n| ETH              | USD               |\n| ETH              | ETH               |\n",
+        "description": "\nCreate a crypto payout.  \n\nThe following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:\n\n| amount.currency  | toAmount.currency |\n| ---------------- | ------------      |\n| USD              | USD               |\n| USD              | BTC               |\n| USD              | ETH               |\n| USD              | MTC               |\n| EUR              | EUR               |\n| BTC              | USD               |\n| BTC              | BTC               |\n| ETH              | USD               |\n| ETH              | ETH               |\n",
         "operationId": "createPayout",
         "tags": ["Payouts"],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/FiatPayoutCreationRequest"
-                  },
-                  {
-                    "$ref": "#/components/schemas/CryptoPayoutCreationRequest"
-                  }
-                ]
+                "$ref": "#/components/schemas/CryptoPayoutCreationRequest"
               }
             }
           }
@@ -5829,80 +4702,11 @@
                   "title": "CreatePayoutResponse",
                   "properties": {
                     "data": {
-                      "oneOf": [
-                        {
-                          "$ref": "#/components/schemas/FiatPayout"
-                        },
-                        {
-                          "$ref": "#/components/schemas/CryptoPayout"
-                        }
-                      ]
+                      "$ref": "#/components/schemas/CryptoPayout"
                     }
                   }
                 },
                 "examples": {
-                  "Fiat Payout": {
-                    "value": {
-                      "data": [
-                        {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "sourceWalletId": "53535335",
-                          "destination": {
-                            "type": "wire",
-                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                            "name": "COMMERZBANK AG ****3000"
-                          },
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "toAmount": {
-                            "amount": "3.14",
-                            "currency": "EUR"
-                          },
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "status": "pending",
-                          "trackingRef": "CIR-6ESOQANEP3NAO",
-                          "errorCode": "insufficient_funds",
-                          "riskEvaluation": {
-                            "decision": "approved",
-                            "reason": "3000"
-                          },
-                          "adjustments": {
-                            "fxCredit": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "fxDebit": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            }
-                          },
-                          "return": {
-                            "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                            "payoutId": "abdb500d-4a59-457c-801f-2d418c8703ac",
-                            "amount": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "fees": {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            },
-                            "reason": "payout_returned",
-                            "status": "pending",
-                            "createDate": "2020-04-10T02:13:30.000Z",
-                            "updateDate": "2020-04-10T02:13:30.000Z"
-                          },
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        }
-                      ]
-                    }
-                  },
                   "Crypto Payout": {
                     "value": {
                       "data": {
@@ -6063,79 +4867,12 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "anyOf": [
-                          {
-                            "$ref": "#/components/schemas/FiatPayout"
-                          },
-                          {
-                            "$ref": "#/components/schemas/CryptoPayout"
-                          }
-                        ]
+                        "$ref": "#/components/schemas/CryptoPayout"
                       }
                     }
                   }
                 },
                 "examples": {
-                  "Fiat Payout": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "sourceWalletId": "53535335",
-                        "destination": {
-                          "type": "wire",
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "name": "COMMERZBANK AG ****3000"
-                        },
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "toAmount": {
-                          "amount": "3.14",
-                          "currency": "EUR"
-                        },
-                        "fees": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "status": "pending",
-                        "trackingRef": "CIR-6ESOQANEP3NAO",
-                        "errorCode": "insufficient_funds",
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "adjustments": {
-                          "fxCredit": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "fxDebit": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          }
-                        },
-                        "return": {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "payoutId": "abdb500d-4a59-457c-801f-2d418c8703ac",
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "reason": "payout_returned",
-                          "status": "pending",
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  },
                   "Crypto Payout": {
                     "value": {
                       "data": [
@@ -6213,79 +4950,11 @@
                   "title": "GetPayoutResponse",
                   "properties": {
                     "data": {
-                      "oneOf": [
-                        {
-                          "$ref": "#/components/schemas/FiatDetailedPayout"
-                        },
-                        {
-                          "$ref": "#/components/schemas/CryptoPayout"
-                        }
-                      ]
+                      "$ref": "#/components/schemas/CryptoPayout"
                     }
                   }
                 },
                 "examples": {
-                  "Fiat Payout": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "sourceWalletId": "53535335",
-                        "destination": {
-                          "type": "wire",
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "name": "COMMERZBANK AG ****3000"
-                        },
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "toAmount": {
-                          "amount": "3.14",
-                          "currency": "EUR"
-                        },
-                        "fees": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "status": "pending",
-                        "trackingRef": "CIR-6ESOQANEP3NAO",
-                        "externalRef": "YYYYMMDDXXXXXXXX012345",
-                        "errorCode": "insufficient_funds",
-                        "riskEvaluation": {
-                          "decision": "approved",
-                          "reason": "3000"
-                        },
-                        "adjustments": {
-                          "fxCredit": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "fxDebit": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          }
-                        },
-                        "return": {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "payoutId": "abdb500d-4a59-457c-801f-2d418c8703ac",
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "reason": "payout_returned",
-                          "status": "pending",
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        },
-                        "createDate": "2020-04-10T02:13:30.000Z",
-                        "updateDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  },
                   "Crypto Payout": {
                     "value": {
                       "data": {
@@ -6331,91 +5000,6 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/returns": {
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/From"
-          },
-          {
-            "$ref": "#/components/parameters/To"
-          },
-          {
-            "$ref": "#/components/parameters/PageBefore"
-          },
-          {
-            "$ref": "#/components/parameters/PageAfter"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "summary": "List all payout returns",
-        "description": "Retrieve a list of Wire and ACH payout returns. Results will be sorted by create date descending; more recent returns will be at the beginning of the list.",
-        "operationId": "listReturns",
-        "tags": ["Returns"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a list of payout returns.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListReturnsResponse",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/UnwithdrawalObject"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": [
-                        {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "payoutId": "abdb500d-4a59-457c-801f-2d418c8703ac",
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "reason": "payout_returned",
-                          "status": "pending",
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
           }
         }
       }
@@ -6812,95 +5396,6 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/reversals": {
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/PaymentStatus"
-          },
-          {
-            "$ref": "#/components/parameters/From"
-          },
-          {
-            "$ref": "#/components/parameters/To"
-          },
-          {
-            "$ref": "#/components/parameters/PageBefore"
-          },
-          {
-            "$ref": "#/components/parameters/PageAfter"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "summary": "List all ACH payment reversals.",
-        "description": "Retrieve a list of ACH payment reversals. Results will be sorted by create date descending; more recent reversals will be at the beginning of the list",
-        "operationId": "listReversals",
-        "tags": ["Reversals"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a list of ACH payment reversals.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListReversalsResponse",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Reversal"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": [
-                        {
-                          "id": "key1",
-                          "paymentId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "description": "Merchant Payment Reversal",
-                          "status": "pending",
-                          "reason": "duplicate",
-                          "fees": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "createDate": "2020-04-10T02:13:30.000Z",
-                          "updateDate": "2020-04-10T02:13:30.000Z"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
           }
         }
       }
@@ -8030,141 +6525,6 @@
         }
       }
     },
-    "/v1/mocks/payments/sen": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a mock Silvergate SEN payment",
-        "description": "In the sandbox environment, initiate a mock SEN transfer that mimics the behavior of funds sent through the Silvergate SEN account linked to master wallet.",
-        "operationId": "createMockSenPayment",
-        "tags": ["Deposits"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MockSenPaymentRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a mock SEN transfer.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateSenPaymentResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/MockSenPaymentResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "trackingRef": "CIR13FB13A",
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "beneficiaryBank": {
-                          "accountNumber": "11111111"
-                        },
-                        "status": "pending"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/mocks/ach/accounts": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a mock ACH bank account",
-        "description": "In the sandbox environment, create a mock ACH account and retrieve a processor token that can be used to link an ACH account.",
-        "operationId": "createMockAchAccount",
-        "tags": ["ACH"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MockAchAccountCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a mock ach payment.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateMockAchAccountResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/MockAchAccountResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "processorToken": "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621",
-                        "balance": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "account": {
-                          "accountNumber": "123456789",
-                          "routingNumber": "011000028",
-                          "description": "My ACH account"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
     "/v1/mocks/payments/wire": {
       "post": {
         "security": [
@@ -8214,77 +6574,6 @@
                         },
                         "beneficiaryBank": {
                           "accountNumber": "11111111"
-                        },
-                        "status": "pending"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/mocks/payments/sepa": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a mock SEPA payment",
-        "description": "In the sandbox environment, initiate a mock SEPA payment that mimics the behavior of funds sent through the bank (SEPA) account linked to master wallet.",
-        "operationId": "createMockSepaPayment",
-        "tags": ["Payments"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MockSepaPaymentRequest"
-              },
-              "example": {
-                "trackingRef": "CIR13FB13A",
-                "amount": {
-                  "amount": 3.14,
-                  "currency": "EUR"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully created a mock SEPA payment.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateSepaPaymentResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/MockSepaPaymentResponse"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "trackingRef": "CIR13FB13A",
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
                         },
                         "status": "pending"
                       }
@@ -9869,451 +8158,6 @@
           }
         }
       },
-      "SenFiatAccountResponse": {
-        "type": "object",
-        "required": [
-          "id",
-          "status",
-          "description",
-          "trackingRef",
-          "createDate",
-          "updateDate"
-        ],
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ExternalFiatAccountStatus"
-          },
-          "description": {
-            "type": "string",
-            "description": "Bank name plus last four digits of the bank account number.",
-            "example": "SILVERGATE BANK ****1111"
-          },
-          "trackingRef": {
-            "type": "string",
-            "description": "Circle tracking reference that needs to be set in the memo field..",
-            "example": "CIR13FB14A"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "currency": {
-            "type": "string",
-            "description": "Currency of the fiat account.",
-            "example": "USD"
-          }
-        }
-      },
-      "SenFiatAccountCreationRequest": {
-        "type": "object",
-        "required": ["idempotencyKey", "accountNumber"],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "accountNumber": {
-            "type": "string",
-            "description": "Silvergate SEN account number.",
-            "example": "12345678"
-          },
-          "currency": {
-            "type": "string",
-            "description": "Currency of the Silvergate SEN account.",
-            "example": "USD"
-          }
-        }
-      },
-      "SenInstruction": {
-        "type": "object",
-        "properties": {
-          "trackingRef": {
-            "type": "string",
-            "description": "Circle tracking reference that needs to be set in the memo field.",
-            "example": "CIR13FB14A"
-          },
-          "accountNumber": {
-            "type": "string",
-            "description": "Circle corporate Silvergate SEN account number that needs to be set as destination.",
-            "example": "11111111"
-          },
-          "currency": {
-            "type": "string",
-            "description": "Currency of Circle corporate Silvergate SEN account.",
-            "example": "USD"
-          }
-        }
-      },
-      "AchBillingDetails": {
-        "type": "object",
-        "description": "Billing details of the account holder.",
-        "required": ["name"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Full name of the card or bank account holder.",
-            "maxLength": 1024,
-            "example": "Satoshi Nakamoto"
-          },
-          "city": {
-            "type": "string",
-            "description": "City portion of the address.",
-            "maxLength": 1024,
-            "example": "Boston"
-          },
-          "country": {
-            "type": "string",
-            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
-            "maxLength": 2,
-            "example": "US"
-          },
-          "line1": {
-            "type": "string",
-            "description": "Line one of the street address.",
-            "maxLength": 1024,
-            "example": "100 Money Street"
-          },
-          "line2": {
-            "type": "string",
-            "description": "Line two of the street address.",
-            "maxLength": 1024,
-            "example": "Suite 1"
-          },
-          "district": {
-            "type": "string",
-            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
-            "maxLength": 16,
-            "example": "MA"
-          },
-          "postalCode": {
-            "type": "string",
-            "description": "Postal / ZIP code of the address.",
-            "maxLength": 16,
-            "example": "01234"
-          }
-        }
-      },
-      "AchAccountType": {
-        "type": "string",
-        "description": "Retail account (individual consumer account) or Business account (e.g. sole prop, LLC, corporation).",
-        "nullable": true,
-        "enum": ["retail", "business"]
-      },
-      "AchCreationRequest": {
-        "type": "object",
-        "required": [
-          "idempotencyKey",
-          "plaidProcessorToken",
-          "billingDetails",
-          "metadata"
-        ],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "plaidProcessorToken": {
-            "type": "string",
-            "description": "The token for the ACH account provided by the processor (Plaid).",
-            "example": "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621"
-          },
-          "billingDetails": {
-            "$ref": "#/components/schemas/AchBillingDetails"
-          },
-          "bankAccountType": {
-            "$ref": "#/components/schemas/AchAccountType"
-          },
-          "metadata": {
-            "$ref": "#/components/schemas/MetadataCardAndAch"
-          }
-        }
-      },
-      "AccountNumberMasked": {
-        "type": "string",
-        "description": "The redacted account number of the ACH account.",
-        "example": "****6789"
-      },
-      "RoutingNumber": {
-        "type": "string",
-        "description": "The routing number of the ACH account.",
-        "example": "613334455"
-      },
-      "AchVerificationErrorCodes": {
-        "type": "string",
-        "description": "Indicates the failure reason of the ACH account. Only present on failed accounts. Possible values are [bank_account_authorization_expired, bank_account_error, bank_account_ineligible, bank_account_not_found, bank_account_unauthorized, unsupported_routing_number, verification_failed].",
-        "nullable": true,
-        "enum": [
-          "bank_account_authorization_expired",
-          "bank_account_error",
-          "bank_account_ineligible",
-          "bank_account_not_found",
-          "bank_account_unauthorized",
-          "unsupported_routing_number",
-          "verification_failed"
-        ]
-      },
-      "Ach": {
-        "type": "object",
-        "required": [
-          "id",
-          "accountNumber",
-          "routingNumber",
-          "description",
-          "billingDetails",
-          "bankAddress",
-          "fingerprint",
-          "metadata",
-          "createDate",
-          "updateDate"
-        ],
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ExternalFiatAccountStatus"
-          },
-          "accountNumber": {
-            "$ref": "#/components/schemas/AccountNumberMasked"
-          },
-          "routingNumber": {
-            "$ref": "#/components/schemas/RoutingNumber"
-          },
-          "billingDetails": {
-            "$ref": "#/components/schemas/AchBillingDetails"
-          },
-          "bankAccountType": {
-            "$ref": "#/components/schemas/AchAccountType"
-          },
-          "bankAddress": {
-            "$ref": "#/components/schemas/BankAddress"
-          },
-          "fingerprint": {
-            "$ref": "#/components/schemas/Fingerprint"
-          },
-          "errorCode": {
-            "$ref": "#/components/schemas/AchVerificationErrorCodes"
-          },
-          "riskEvaluation": {
-            "$ref": "#/components/schemas/RiskEvaluation"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "metadata": {
-            "$ref": "#/components/schemas/MetadataPhoneEmail"
-          }
-        }
-      },
-      "SepaCreationRequest": {
-        "type": "object",
-        "required": ["idempotencyKey", "accountName", "iban", "billingDetails"],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "iban": {
-            "type": "string",
-            "description": "International Bank Account Number (IBAN) for the bank account.",
-            "example": "DE31100400480532013000"
-          },
-          "billingDetails": {
-            "$ref": "#/components/schemas/BillingDetails"
-          }
-        }
-      },
-      "Sepa": {
-        "type": "object",
-        "required": [
-          "id",
-          "status",
-          "description",
-          "trackingRef",
-          "fingerprint",
-          "billingDetails",
-          "createDate",
-          "updateDate"
-        ],
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ExternalFiatAccountStatus"
-          },
-          "description": {
-            "type": "string",
-            "description": "Bank name plus last four digits of the IBAN.",
-            "example": "Bank of Ireland ****0010"
-          },
-          "trackingRef": {
-            "type": "string",
-            "description": "Tracking reference that needs to be set in the payment details or description.",
-            "example": "CIR13FB13A"
-          },
-          "fingerprint": {
-            "$ref": "#/components/schemas/Fingerprint"
-          },
-          "riskEvaluation": {
-            "$ref": "#/components/schemas/RiskEvaluation"
-          },
-          "billingDetails": {
-            "$ref": "#/components/schemas/BillingDetails"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          }
-        }
-      },
-      "SepaInstructionBeneficiary": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the beneficiary.",
-            "example": "CIRCLE INTERNET FINANCIAL INC"
-          },
-          "address1": {
-            "type": "string",
-            "description": "Address line 1 of the beneficiary's address.",
-            "example": "99 HIGH STREET"
-          },
-          "address2": {
-            "type": "string",
-            "description": "Address line 2 of the beneficiary's address.",
-            "example": "BOSTON MA 02110"
-          }
-        }
-      },
-      "SepaInstructionBeneficiaryBank": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the beneficiary's bank.",
-            "example": "LHV Bank"
-          },
-          "bic": {
-            "type": "string",
-            "description": "BIC code of the beneficiary's bank account.",
-            "example": "LHVBEE22XXX"
-          },
-          "iban": {
-            "description": "IBAN of the beneficiary's bank account.",
-            "type": "string",
-            "example": "****6789"
-          },
-          "address": {
-            "description": "Address of the beneficiary's bank.",
-            "type": "string",
-            "example": "Tartu mnt 2, 10145 Tallinn"
-          },
-          "city": {
-            "description": "City of the beneficiary's bank.",
-            "type": "string",
-            "example": "Tallinn"
-          },
-          "postalCode": {
-            "description": "Postal code of the beneficiary's bank.",
-            "type": "string",
-            "example": "10017"
-          },
-          "country": {
-            "description": "Country code of the beneficiary's bank. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
-            "type": "string",
-            "example": "EE"
-          }
-        }
-      },
-      "SepaInstruction": {
-        "type": "object",
-        "properties": {
-          "trackingRef": {
-            "type": "string",
-            "description": "Circle tracking reference that needs to be set in the SEPA transfer reference field.",
-            "example": "CIR13FB13A"
-          },
-          "beneficiary": {
-            "$ref": "#/components/schemas/SepaInstructionBeneficiary"
-          },
-          "beneficiaryBank": {
-            "$ref": "#/components/schemas/SepaInstructionBeneficiaryBank"
-          }
-        }
-      },
-      "SignetFiatAccountResponse": {
-        "type": "object",
-        "required": [
-          "id",
-          "status",
-          "trackingRef",
-          "walletAddress",
-          "createDate",
-          "updateDate"
-        ],
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "status": {
-            "$ref": "#/components/schemas/ExternalFiatAccountStatus"
-          },
-          "trackingRef": {
-            "type": "string",
-            "description": "Tracking ref that needs to be set in the public description field when you send the funds to Circle Signet wallet.",
-            "example": "CIR13FB14A"
-          },
-          "walletAddress": {
-            "type": "string",
-            "description": "Your signet wallet address.",
-            "example": "0xcac04f0069e4ac9314ac4e608e99278a3bebabcd"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          }
-        }
-      },
-      "SignetFiatAccountCreationRequest": {
-        "type": "object",
-        "required": ["idempotencyKey", "walletAddress"],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "walletAddress": {
-            "type": "string",
-            "description": "Signet wallet address.",
-            "example": "0xcac04f0069e4ac9314ac4e608e99278a3bebabcd"
-          }
-        }
-      },
-      "SignetInstruction": {
-        "type": "object",
-        "properties": {
-          "trackingRef": {
-            "type": "string",
-            "description": "Circle tracking reference that needs to be set in the signet public description field.",
-            "example": "CIR13FB14A"
-          },
-          "walletAddress": {
-            "type": "string",
-            "description": "Circle wallet address that needs to be set in the signet recipient wallet field.",
-            "example": "0x7e4f4fe03243ac7b291ebaee90b2bb27025a1234"
-          }
-        }
-      },
       "CbitFiatAccountResponse": {
         "type": "object",
         "required": [
@@ -11430,7 +9274,7 @@
           "type": {
             "type": "string",
             "description": "Type of the source.",
-            "enum": ["card", "ach"]
+            "enum": ["card"]
           }
         }
       },
@@ -12265,7 +10109,7 @@
       "BusinessAccountPayoutDestinationType": {
         "type": "string",
         "description": "The destination bank account type.",
-        "enum": ["wire", "ach", "sepa", "signet"]
+        "enum": ["wire", "cbit"]
       },
       "BankDestination": {
         "type": "object",
@@ -12411,7 +10255,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["wire", "sen", "signet"]
+            "enum": ["wire", "cbit"]
           },
           "id": {
             "$ref": "#/components/schemas/Id"
@@ -12436,97 +10280,7 @@
       "PayoutDestinationType": {
         "type": "string",
         "description": "The destination type.",
-        "enum": ["wire", "ach", "sepa", "address_book"]
-      },
-      "FiatPayoutDestinationType": {
-        "type": "string",
-        "description": "The destination type.",
-        "enum": ["wire", "ach", "sepa"]
-      },
-      "FiatPayoutDestination": {
-        "type": "object",
-        "description": "The destination.",
-        "required": ["type", "id"],
-        "properties": {
-          "type": {
-            "$ref": "#/components/schemas/FiatPayoutDestinationType"
-          },
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "name": {
-            "type": "string",
-            "description": "Bank name plus last four digits of the bank account number or IBAN.",
-            "example": "COMMERZBANK AG ****3000"
-          }
-        }
-      },
-      "PayoutMoney": {
-        "type": "object",
-        "required": ["amount", "currency"],
-        "properties": {
-          "amount": {
-            "type": "string",
-            "description": "Magnitude of the amount, in units of the currency, with a `.`.",
-            "example": "3.14"
-          },
-          "currency": {
-            "type": "string",
-            "description": "Currency code for the amount.",
-            "enum": ["USD", "EUR", "BTC", "ETH", "MTC", "FLW", "MAN"]
-          }
-        }
-      },
-      "FiatPayout": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "sourceWalletId": {
-            "type": "string",
-            "description": "The identifier of the source wallet used to fund a payout.",
-            "example": "53535335"
-          },
-          "destination": {
-            "$ref": "#/components/schemas/FiatPayoutDestination"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "toAmount": {
-            "$ref": "#/components/schemas/PayoutMoney"
-          },
-          "fees": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "status": {
-            "$ref": "#/components/schemas/PayoutStatus"
-          },
-          "trackingRef": {
-            "description": "A payout tracking reference. Will be present once known.",
-            "nullable": true,
-            "example": "CIR-6ESOQANEP3NAO"
-          },
-          "errorCode": {
-            "$ref": "#/components/schemas/PayoutErrorCode"
-          },
-          "riskEvaluation": {
-            "$ref": "#/components/schemas/RiskEvaluation"
-          },
-          "adjustments": {
-            "$ref": "#/components/schemas/FinalAdjustments"
-          },
-          "return": {
-            "$ref": "#/components/schemas/UnwithdrawalObject"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          }
-        }
+        "enum": ["address_book"]
       },
       "CryptoPayoutDestinationType": {
         "type": "string",
@@ -12543,6 +10297,22 @@
           },
           "id": {
             "$ref": "#/components/schemas/Id"
+          }
+        }
+      },
+      "PayoutMoney": {
+        "type": "object",
+        "required": ["amount", "currency"],
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "Magnitude of the amount, in units of the currency, with a `.`.",
+            "example": "3.14"
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency code for the amount.",
+            "enum": ["USD", "EUR", "BTC", "ETH", "MTC", "FLW", "MAN"]
           }
         }
       },
@@ -12586,47 +10356,6 @@
           },
           "updateDate": {
             "$ref": "#/components/schemas/UtcTimestamp"
-          }
-        }
-      },
-      "MetadataPayout": {
-        "type": "object",
-        "description": "Additional properties related to the payout beneficiary.",
-        "required": ["beneficiaryEmail"],
-        "properties": {
-          "beneficiaryEmail": {
-            "$ref": "#/components/schemas/Email"
-          }
-        }
-      },
-      "FiatPayoutCreationRequest": {
-        "type": "object",
-        "required": ["idempotencyKey", "destination", "amount", "metadata"],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "source": {
-            "$ref": "#/components/schemas/WalletLocation"
-          },
-          "destination": {
-            "type": "object",
-            "description": "The destination.",
-            "required": ["type", "id"],
-            "properties": {
-              "type": {
-                "$ref": "#/components/schemas/FiatPayoutDestinationType"
-              },
-              "id": {
-                "$ref": "#/components/schemas/Id"
-              }
-            }
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "metadata": {
-            "$ref": "#/components/schemas/MetadataPayout"
           }
         }
       },
@@ -12747,62 +10476,6 @@
           },
           "toAmount": {
             "$ref": "#/components/schemas/ToAmount"
-          }
-        }
-      },
-      "FiatDetailedPayout": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "sourceWalletId": {
-            "description": "The identifier of the source wallet used to fund a payout.",
-            "type": "string",
-            "example": "53535335"
-          },
-          "destination": {
-            "$ref": "#/components/schemas/FiatPayoutDestination"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "toAmount": {
-            "$ref": "#/components/schemas/PayoutMoney"
-          },
-          "fees": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "status": {
-            "description": "Status of the payout. Status `pending` indicates that the payout is in process; `complete` indicates it finished successfully; `failed` indicates it failed.",
-            "type": "string",
-            "enum": ["pending", "complete", "failed"]
-          },
-          "trackingRef": {
-            "description": "A payout tracking reference. Will be present once known.",
-            "nullable": true,
-            "example": "CIR-6ESOQANEP3NAO"
-          },
-          "externalRef": {
-            "$ref": "#/components/schemas/ExternalRef"
-          },
-          "errorCode": {
-            "$ref": "#/components/schemas/PayoutErrorCode"
-          },
-          "riskEvaluation": {
-            "$ref": "#/components/schemas/RiskEvaluation"
-          },
-          "adjustments": {
-            "$ref": "#/components/schemas/FinalAdjustments"
-          },
-          "return": {
-            "$ref": "#/components/schemas/UnwithdrawalObject"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -12969,51 +10642,6 @@
             "items": {
               "$ref": "#/components/schemas/BasicChargebackHistory"
             }
-          }
-        }
-      },
-      "Reversal": {
-        "type": "object",
-        "required": [
-          "id",
-          "paymentId",
-          "amount",
-          "description",
-          "status",
-          "reason",
-          "fees",
-          "createDate",
-          "updateDate"
-        ],
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/IdKey"
-          },
-          "paymentId": {
-            "$ref": "#/components/schemas/IdPayment"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "description": {
-            "type": "string",
-            "description": "Enumerated description of the payment.",
-            "example": "Merchant Payment Reversal"
-          },
-          "status": {
-            "$ref": "#/components/schemas/CancelRefundReversalStatus"
-          },
-          "reason": {
-            "$ref": "#/components/schemas/ReversalReason"
-          },
-          "fees": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
-          },
-          "updateDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -13401,104 +11029,6 @@
         "type": "object",
         "properties": {}
       },
-      "MockSenPaymentBeneficiaryBankInstruction": {
-        "type": "object",
-        "required": ["accountNumber"],
-        "properties": {
-          "accountNumber": {
-            "type": "string",
-            "description": "Circle corporate Silvergate SEN account number that needs to be set as destination.",
-            "example": "11111111"
-          }
-        }
-      },
-      "MockSenPaymentRequest": {
-        "type": "object",
-        "required": ["trackingRef", "amount", "beneficiaryBank"],
-        "properties": {
-          "trackingRef": {
-            "type": "string",
-            "description": "Circle tracking reference that needs to be set in the memo filed. This field is retrievable through the response during SEN account creation or via the bank instruction endpoint.",
-            "example": "CIR13FB13A"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoney"
-          },
-          "beneficiaryBank": {
-            "$ref": "#/components/schemas/MockSenPaymentBeneficiaryBankInstruction"
-          }
-        }
-      },
-      "MockSenPaymentResponse": {
-        "type": "object",
-        "properties": {
-          "trackingRef": {
-            "type": "string",
-            "description": "Wire tracking reference that needs to be set in the wire reference to beneficiary field. This field is retrievable through the response during wire creation or via the bank instruction endpoint.",
-            "example": "CIR13FB13A"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "beneficiaryBank": {
-            "$ref": "#/components/schemas/MockSenPaymentBeneficiaryBankInstruction"
-          },
-          "status": {
-            "type": "string",
-            "description": "Enumerated status of the wire payment. Status `pending` indicates that the wire payment is in process; `processed` indicates it finished successfully; `failed` indicates it failed.",
-            "enum": ["pending", "processed", "failed"]
-          }
-        }
-      },
-      "MockAchAccount": {
-        "type": "object",
-        "required": ["accountNumber", "routingNumber", "description"],
-        "properties": {
-          "accountNumber": {
-            "type": "string",
-            "description": "The account number of the ACH account.",
-            "example": "123456789"
-          },
-          "routingNumber": {
-            "type": "string",
-            "description": "The routing number of the ACH account.\n\nFor sandbox testing, valid routing numbers include `011000028`, `011201762`, `011500120`, `021214862`, `121000248`, `121140399`, `211073473`, `221172610`, and `011000138`.\n",
-            "example": "011000028"
-          },
-          "description": {
-            "type": "string",
-            "description": "A description for the ACH account.",
-            "example": "My ACH account"
-          }
-        }
-      },
-      "MockAchAccountCreationRequest": {
-        "type": "object",
-        "required": ["account", "balance"],
-        "properties": {
-          "account": {
-            "$ref": "#/components/schemas/MockAchAccount"
-          },
-          "balance": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          }
-        }
-      },
-      "MockAchAccountResponse": {
-        "type": "object",
-        "properties": {
-          "processorToken": {
-            "type": "string",
-            "description": "The processor token needs to be provided when linking an ACH account against this mock.",
-            "example": "processor-sandbox-circle-82cf95bb-43f8-4191-8d30-2c9f42853621"
-          },
-          "balance": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "account": {
-            "$ref": "#/components/schemas/MockAchAccount"
-          }
-        }
-      },
       "MockWirePaymentBeneficiaryBankInstruction": {
         "type": "object",
         "required": ["accountNumber"],
@@ -13544,38 +11074,6 @@
           "status": {
             "type": "string",
             "description": "Enumerated status of the wire payment. Status `pending` indicates that the wire payment is in process; `processed` indicates it finished successfully; `failed` indicates it failed.",
-            "enum": ["pending", "processed", "failed"]
-          }
-        }
-      },
-      "MockSepaPaymentRequest": {
-        "type": "object",
-        "required": ["trackingRef", "amount"],
-        "properties": {
-          "trackingRef": {
-            "type": "string",
-            "description": "SEPA tracking reference that needs to be set in the payment details or description.",
-            "example": "CIR13FB13A"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          }
-        }
-      },
-      "MockSepaPaymentResponse": {
-        "type": "object",
-        "properties": {
-          "trackingRef": {
-            "type": "string",
-            "description": "SEPA tracking reference that needs to be set in the payment details or description.",
-            "example": "CIR13FB13A"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/FiatMoneyUsd"
-          },
-          "status": {
-            "type": "string",
-            "description": "Enumerated status of the SEPA payment. Status `pending` indicates that the SEPA payment is in process; `processed` indicates it finished successfully; `failed` indicates it failed.",
             "enum": ["pending", "processed", "failed"]
           }
         }
@@ -14053,7 +11551,7 @@
           "uniqueItems": true,
           "items": {
             "type": "string",
-            "enum": ["card", "wire", "ach", "sepa"]
+            "enum": ["card"]
           }
         }
       },

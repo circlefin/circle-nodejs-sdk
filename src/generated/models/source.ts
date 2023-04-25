@@ -27,8 +27,7 @@ export interface Source {
 }
 
 export const SourceTypeEnum = {
-  Card: "card",
-  Ach: "ach"
+  Card: "card"
 } as const;
 
 export type SourceTypeEnum = typeof SourceTypeEnum[keyof typeof SourceTypeEnum];
