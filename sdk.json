@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.0.0",
+    "version": "2.0.1",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -8495,12 +8495,7 @@
       },
       "PaymentIntent": {
         "type": "object",
-        "required": [
-          "idempotencyKey",
-          "amount",
-          "settlementCurrency",
-          "paymentMethods"
-        ],
+        "required": ["amount", "settlementCurrency", "paymentMethods"],
         "properties": {
           "id": {
             "type": "string",
@@ -8576,7 +8571,6 @@
       "ContinuousPaymentIntent": {
         "type": "object",
         "required": [
-          "idempotencyKey",
           "currency",
           "settlementCurrency",
           "paymentMethods",
