@@ -262,6 +262,7 @@ models/transfer-source-location.ts
 models/transfer-source-wallet-location.ts
 models/transfer.ts
 models/unwithdrawal-object.ts
+models/update-billing-details.ts
 models/update-card-response.ts
 models/verification-error-code.ts
 models/wallet-config.ts

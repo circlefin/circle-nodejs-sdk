@@ -232,6 +232,7 @@ export * from "./transfer-source-blockchain-location";
 export * from "./transfer-source-location";
 export * from "./transfer-source-wallet-location";
 export * from "./unwithdrawal-object";
+export * from "./update-billing-details";
 export * from "./update-card-response";
 export * from "./verification-error-code";
 export * from "./wallet";
