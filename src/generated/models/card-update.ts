@@ -6,6 +6,10 @@
  * Do not edit the class manually.
  */
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { UpdateBillingDetails } from "./update-billing-details";
+
 /**
  *
  * @export
@@ -29,11 +33,17 @@ export interface CardUpdate {
    * @type {number}
    * @memberof CardUpdate
    */
-  expMonth: number;
+  expMonth?: number;
   /**
    * Four digit number representing the card\'s expiration year.
    * @type {number}
    * @memberof CardUpdate
    */
-  expYear: number;
+  expYear?: number;
+  /**
+   *
+   * @type {UpdateBillingDetails}
+   * @memberof CardUpdate
+   */
+  billingDetails?: UpdateBillingDetails;
 }
