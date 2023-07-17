@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.0.1",
+    "version": "2.1.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -7566,9 +7566,68 @@
           }
         }
       },
+      "UpdateBillingDetails": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name of the card or bank account holder.",
+            "maxLength": 1024,
+            "example": "Satoshi"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the card or bank account holder.",
+            "maxLength": 1024,
+            "example": "Nakamoto"
+          },
+          "line1": {
+            "type": "string",
+            "description": "Line one of the street address.",
+            "maxLength": 1024,
+            "example": "100 Money Street"
+          },
+          "line2": {
+            "type": "string",
+            "description": "Line two of the street address.",
+            "maxLength": 1024,
+            "example": "Suite 1"
+          },
+          "city": {
+            "type": "string",
+            "description": "City portion of the address.",
+            "maxLength": 1024,
+            "example": "Boston"
+          },
+          "district": {
+            "description": "State / County / Province / Region portion of the address. If the country is US or Canada, then district is required and should use the two-letter code for the subdivision.",
+            "type": "string",
+            "maxLength": 16,
+            "example": "MA"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal / ZIP code of the address.",
+            "maxLength": 16,
+            "example": "01234"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country portion of the address. Formatted as a two-letter country code specified in ISO 3166-1 alpha-2.",
+            "maxLength": 2,
+            "example": "US"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/PhoneNumber"
+          },
+          "email": {
+            "$ref": "#/components/schemas/Email"
+          }
+        }
+      },
       "CardUpdate": {
         "type": "object",
-        "required": ["keyId", "encryptedData", "expMonth", "expYear"],
+        "required": ["keyId", "encryptedData"],
         "properties": {
           "keyId": {
             "$ref": "#/components/schemas/IdKey"
@@ -7584,6 +7643,9 @@
           },
           "expYear": {
             "$ref": "#/components/schemas/CardExpYear"
+          },
+          "billingDetails": {
+            "$ref": "#/components/schemas/UpdateBillingDetails"
           }
         }
       },
