@@ -14,12 +14,15 @@
 
 export const Chain = {
   Algo: "ALGO",
+  Arb: "ARB",
   Avax: "AVAX",
+  Base: "BASE",
   Btc: "BTC",
   Eth: "ETH",
   Flow: "FLOW",
   Hbar: "HBAR",
   Matic: "MATIC",
+  Op: "OP",
   Sol: "SOL",
   Trx: "TRX",
   Xlm: "XLM"
