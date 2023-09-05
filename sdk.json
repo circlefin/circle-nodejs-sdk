@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.1.0",
+    "version": "2.2.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -7061,12 +7061,15 @@
         "description": "A blockchain that a given currency is available on.",
         "enum": [
           "ALGO",
+          "ARB",
           "AVAX",
+          "BASE",
           "BTC",
           "ETH",
           "FLOW",
           "HBAR",
           "MATIC",
+          "OP",
           "SOL",
           "TRX",
           "XLM"
@@ -11641,12 +11644,15 @@
           "type": "string",
           "enum": [
             "ALGO",
+            "ARB",
             "AVAX",
+            "BASE",
             "BTC",
             "ETH",
             "FLOW",
             "HBAR",
             "MATIC",
+            "OP",
             "SOL",
             "TRX",
             "XLM"
