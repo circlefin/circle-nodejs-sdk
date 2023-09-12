@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.2.0",
+    "version": "2.3.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -7069,6 +7069,7 @@
           "FLOW",
           "HBAR",
           "MATIC",
+          "NOBLE",
           "OP",
           "SOL",
           "TRX",
@@ -11652,6 +11653,7 @@
             "FLOW",
             "HBAR",
             "MATIC",
+            "NOBLE",
             "OP",
             "SOL",
             "TRX",
