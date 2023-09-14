@@ -22,6 +22,7 @@ export const Chain = {
   Flow: "FLOW",
   Hbar: "HBAR",
   Matic: "MATIC",
+  Near: "NEAR",
   Noble: "NOBLE",
   Op: "OP",
   Sol: "SOL",
