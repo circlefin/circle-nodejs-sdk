@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.3.0...v2.4.0) (2023-09-14)
+
+
+### New Features
+
+* sync SDK to OpenAPI doc v2.4.0 ([#87](https://github.com/circlefin/circle-nodejs-sdk/issues/87)) ([6db59ac](https://github.com/circlefin/circle-nodejs-sdk/commit/6db59ac34ca36247d8bbf4dbbedc83642ef98019))
+
 ## [2.3.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.2.0...v2.3.0) (2023-09-12)
 
 
