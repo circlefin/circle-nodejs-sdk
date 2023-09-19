@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.4.0",
+    "version": "2.5.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -7072,6 +7072,7 @@
           "NEAR",
           "NOBLE",
           "OP",
+          "PAH",
           "SOL",
           "TRX",
           "XLM"
@@ -11657,6 +11658,7 @@
             "NEAR",
             "NOBLE",
             "OP",
+            "PAH",
             "SOL",
             "TRX",
             "XLM"

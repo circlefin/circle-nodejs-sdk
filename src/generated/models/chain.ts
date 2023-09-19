@@ -25,6 +25,7 @@ export const Chain = {
   Near: "NEAR",
   Noble: "NOBLE",
   Op: "OP",
+  Pah: "PAH",
   Sol: "SOL",
   Trx: "TRX",
   Xlm: "XLM"
