@@ -26,6 +26,7 @@ export const Chain = {
   Noble: "NOBLE",
   Op: "OP",
   Pah: "PAH",
+  Poly: "POLY",
   Sol: "SOL",
   Trx: "TRX",
   Xlm: "XLM"
