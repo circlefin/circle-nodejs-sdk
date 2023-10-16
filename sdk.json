@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.6.0",
+    "version": "2.6.1",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -1578,7 +1578,7 @@
           }
         ],
         "summary": "Create a deposit address",
-        "description": "Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you're requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.\n",
+        "description": "Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you're requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status. \n",
         "operationId": "createBusinessDepositAddress",
         "tags": ["Addresses"],
         "requestBody": {
@@ -1692,7 +1692,7 @@
           }
         ],
         "summary": "Create a recipient address",
-        "description": "Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.\n",
+        "description": "Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.\n",
         "operationId": "createBusinessRecipientAddress",
         "tags": ["Addresses"],
         "requestBody": {
@@ -10919,7 +10919,7 @@
             "example": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63"
           },
           "status": {
-            "description": "Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed.",
+            "description": "Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed. Circle Mint Singapore customers may have transfers in the `pending` status if the recipient addresses are not verified.",
             "type": "string",
             "enum": ["pending", "complete", "failed"]
           },

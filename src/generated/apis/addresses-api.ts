@@ -56,7 +56,7 @@ export const AddressesApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.
+     * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a deposit address
      * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
      * @param {*} [options] Override http request option.
@@ -108,7 +108,7 @@ export const AddressesApiAxiosParamCreator = function (
       };
     },
     /**
-     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.
+     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a recipient address
      * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
      * @param {*} [options] Override http request option.
@@ -289,7 +289,7 @@ export const AddressesApiFp = function (configuration?: Configuration) {
     AddressesApiAxiosParamCreator(configuration);
   return {
     /**
-     * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.
+     * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a deposit address
      * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
      * @param {*} [options] Override http request option.
@@ -317,7 +317,7 @@ export const AddressesApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.
+     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a recipient address
      * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
      * @param {*} [options] Override http request option.
@@ -422,7 +422,7 @@ export const AddressesApiFactory = function (
   const localVarFp = AddressesApiFp(configuration);
   return {
     /**
-     * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.
+     * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a deposit address
      * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
      * @param {*} [options] Override http request option.
@@ -437,7 +437,7 @@ export const AddressesApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.
+     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a recipient address
      * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
      * @param {*} [options] Override http request option.
@@ -508,7 +508,7 @@ export const AddressesApiFactory = function (
  */
 export class AddressesApi extends BaseAPI {
   /**
-   * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.
+   * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
    * @summary Create a deposit address
    * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
    * @param {*} [options] Override http request option.
@@ -525,7 +525,7 @@ export class AddressesApi extends BaseAPI {
   }
 
   /**
-   * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.
+   * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
    * @summary Create a recipient address
    * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
    * @param {*} [options] Override http request option.
