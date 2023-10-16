@@ -65,7 +65,7 @@ export interface Transfer {
    */
   transactionHash?: string;
   /**
-   * Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed.
+   * Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed. Circle Mint Singapore customers may have transfers in the `pending` status if the recipient addresses are not verified.
    * @type {string}
    * @memberof Transfer
    */
