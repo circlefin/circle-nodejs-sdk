@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.6.1",
+    "version": "2.6.2",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -8776,6 +8776,9 @@
             "type": "string",
             "description": "The blockchain address.",
             "example": "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
+          },
+          "addressTag": {
+            "$ref": "#/components/schemas/AddressTag"
           },
           "chain": {
             "$ref": "#/components/schemas/Chain"
