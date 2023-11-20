@@ -23,6 +23,12 @@ export interface CryptoRefundDestination {
    */
   address: string;
   /**
+   * The secondary identifier for a blockchain address. An example of this is the memo field on the Stellar network, which can be text, id, or hash format.
+   * @type {string}
+   * @memberof CryptoRefundDestination
+   */
+  addressTag?: string | null;
+  /**
    *
    * @type {Chain}
    * @memberof CryptoRefundDestination
