@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       did-create-release: ${{ steps.release.outputs.release_created }}
+      release-tag: ${{ steps.release.outputs.tag_name }}
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
@@ -26,3 +27,10 @@ jobs:
     if: needs.release-please.outputs.did-create-release
     uses: ./.github/workflows/npm-publish.yml
     secrets: inherit
+
+  release-sbom:
+    needs: release-please
+    if: needs.release-please.outputs.did-create-release
+    uses: circlefin/circle-public-github-workflows/.github/workflows/attach-release-assets.yaml@v1
+    with:
+      release_tag: ${{ needs.release-please.outputs.release-tag }}
