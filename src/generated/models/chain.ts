@@ -21,7 +21,6 @@ export const Chain = {
   Eth: "ETH",
   Flow: "FLOW",
   Hbar: "HBAR",
-  Matic: "MATIC",
   Near: "NEAR",
   Noble: "NOBLE",
   Op: "OP",

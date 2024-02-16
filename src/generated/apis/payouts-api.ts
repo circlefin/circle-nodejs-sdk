@@ -371,7 +371,7 @@ export const PayoutsApiAxiosParamCreator = function (
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'MATIC' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -403,7 +403,6 @@ export const PayoutsApiAxiosParamCreator = function (
         | "ETH"
         | "FLOW"
         | "HBAR"
-        | "MATIC"
         | "NEAR"
         | "NOBLE"
         | "OP"
@@ -678,7 +677,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'MATIC' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -710,7 +709,6 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
         | "ETH"
         | "FLOW"
         | "HBAR"
-        | "MATIC"
         | "NEAR"
         | "NOBLE"
         | "OP"
@@ -872,7 +870,7 @@ export const PayoutsApiFactory = function (
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'MATIC' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -904,7 +902,6 @@ export const PayoutsApiFactory = function (
         | "ETH"
         | "FLOW"
         | "HBAR"
-        | "MATIC"
         | "NEAR"
         | "NOBLE"
         | "OP"
@@ -1060,7 +1057,7 @@ export class PayoutsApi extends BaseAPI {
    * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
    * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-   * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'MATIC' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+   * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -1086,7 +1083,6 @@ export class PayoutsApi extends BaseAPI {
       | "ETH"
       | "FLOW"
       | "HBAR"
-      | "MATIC"
       | "NEAR"
       | "NOBLE"
       | "OP"
