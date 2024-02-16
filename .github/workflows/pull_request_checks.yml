@@ -21,3 +21,7 @@ jobs:
         run: yarn build
       - name: Running unit test's
         run: yarn test
+
+  scan:
+    needs: lint
+    uses: circlefin/circle-public-github-workflows/.github/workflows/pr-scan.yaml@v1
