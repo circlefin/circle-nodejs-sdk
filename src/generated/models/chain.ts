@@ -18,6 +18,7 @@ export const Chain = {
   Avax: "AVAX",
   Base: "BASE",
   Btc: "BTC",
+  Celo: "CELO",
   Eth: "ETH",
   Flow: "FLOW",
   Hbar: "HBAR",
