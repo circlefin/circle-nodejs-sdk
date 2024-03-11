@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.7.1",
+    "version": "2.8.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -1816,6 +1816,42 @@
           },
           "401": {
             "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
+    },
+    "/v1/businessAccount/wallets/addresses/recipient/{id}": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "summary": "Delete a recipient address",
+        "operationId": "deleteBusinessRecipientAddress",
+        "tags": ["Addresses"],
+        "responses": {
+          "200": {
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "description": "Successfully removed the recipient address."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }

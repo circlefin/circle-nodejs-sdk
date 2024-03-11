@@ -47,6 +47,8 @@ import { GetBusinessDepositAddressResponse } from "../models";
 import { ListBusinessRecipientAddressesResponse } from "../models";
 // @ts-ignore
 import { NotAuthorized } from "../models";
+// @ts-ignore
+import { NotFound } from "../models";
 /**
  * AddressesApi - axios parameter creator
  * @export
@@ -153,6 +155,57 @@ export const AddressesApiAxiosParamCreator = function (
         localVarRequestOptions,
         configuration
       );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     *
+     * @summary Delete a recipient address
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteBusinessRecipientAddress: async (
+      id: string,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("deleteBusinessRecipientAddress", "id", id);
+      const localVarPath =
+        `/v1/businessAccount/wallets/addresses/recipient/{id}`.replace(
+          `{${"id"}}`,
+          encodeURIComponent(String(id))
+        );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "DELETE",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
 
       return {
         url: toPathString(localVarUrlObj),
@@ -346,6 +399,31 @@ export const AddressesApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @summary Delete a recipient address
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async deleteBusinessRecipientAddress(
+      id: string,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.deleteBusinessRecipientAddress(
+          id,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
      * @summary List all deposit addresses
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -456,6 +534,21 @@ export const AddressesApiFactory = function (
     },
     /**
      *
+     * @summary Delete a recipient address
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteBusinessRecipientAddress(
+      id: string,
+      options?: any
+    ): AxiosPromise<void> {
+      return localVarFp
+        .deleteBusinessRecipientAddress(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
      * @summary List all deposit addresses
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -541,6 +634,23 @@ export class AddressesApi extends BaseAPI {
         businessRecipientAddressCreationRequest,
         options
       )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @summary Delete a recipient address
+   * @param {string} id Universally unique identifier (UUID v4) of a resource.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof AddressesApi
+   */
+  public deleteBusinessRecipientAddress(
+    id: string,
+    options?: AxiosRequestConfig
+  ) {
+    return AddressesApiFp(this.configuration)
+      .deleteBusinessRecipientAddress(id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
