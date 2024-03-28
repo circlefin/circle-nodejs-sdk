@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.8.0",
+    "version": "2.9.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -1731,7 +1731,8 @@
                         "addressTag": "123456789",
                         "chain": "ALGO",
                         "currency": "USD",
-                        "description": "My USDC address at a cryptocurrency exchange"
+                        "description": "My USDC address at a cryptocurrency exchange",
+                        "status": "active"
                       }
                     }
                   }
@@ -1771,7 +1772,7 @@
           }
         ],
         "summary": "List all recipient addresses",
-        "description": "Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending verification are not included in the response.\n",
+        "description": "Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending administrator verification are not included in the response.\n",
         "operationId": "listBusinessRecipientAddresses",
         "tags": ["Addresses"],
         "responses": {
@@ -1805,7 +1806,8 @@
                           "addressTag": "123456789",
                           "chain": "ALGO",
                           "currency": "USD",
-                          "description": "My USDC address at a cryptocurrency exchange"
+                          "description": "My USDC address at a cryptocurrency exchange",
+                          "status": "active"
                         }
                       ]
                     }
@@ -1833,6 +1835,7 @@
           }
         ],
         "summary": "Delete a recipient address",
+        "description": "Deletes an external blockchain address. The recipient address must be in an 'active' or 'pending' state in order to be deleted successfully.\n",
         "operationId": "deleteBusinessRecipientAddress",
         "tags": ["Addresses"],
         "responses": {
@@ -8401,6 +8404,10 @@
           },
           "description": {
             "$ref": "#/components/schemas/AddressDescription"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "pending_verification", "verification_succeeded"]
           }
         }
       },
