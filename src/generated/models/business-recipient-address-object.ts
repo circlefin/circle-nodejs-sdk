@@ -55,4 +55,19 @@ export interface BusinessRecipientAddressObject {
    * @memberof BusinessRecipientAddressObject
    */
   description?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof BusinessRecipientAddressObject
+   */
+  status?: BusinessRecipientAddressObjectStatusEnum;
 }
+
+export const BusinessRecipientAddressObjectStatusEnum = {
+  Active: "active",
+  PendingVerification: "pending_verification",
+  VerificationSucceeded: "verification_succeeded"
+} as const;
+
+export type BusinessRecipientAddressObjectStatusEnum =
+  typeof BusinessRecipientAddressObjectStatusEnum[keyof typeof BusinessRecipientAddressObjectStatusEnum];

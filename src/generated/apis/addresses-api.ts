@@ -162,7 +162,7 @@ export const AddressesApiAxiosParamCreator = function (
       };
     },
     /**
-     *
+     * Deletes an external blockchain address. The recipient address must be in an \'active\' or \'pending\' state in order to be deleted successfully.
      * @summary Delete a recipient address
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
@@ -256,7 +256,7 @@ export const AddressesApiAxiosParamCreator = function (
       };
     },
     /**
-     * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending verification are not included in the response.
+     * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending administrator verification are not included in the response.
      * @summary List all recipient addresses
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -398,7 +398,7 @@ export const AddressesApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     *
+     * Deletes an external blockchain address. The recipient address must be in an \'active\' or \'pending\' state in order to be deleted successfully.
      * @summary Delete a recipient address
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
@@ -446,7 +446,7 @@ export const AddressesApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending verification are not included in the response.
+     * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending administrator verification are not included in the response.
      * @summary List all recipient addresses
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -533,7 +533,7 @@ export const AddressesApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     *
+     * Deletes an external blockchain address. The recipient address must be in an \'active\' or \'pending\' state in order to be deleted successfully.
      * @summary Delete a recipient address
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
@@ -561,7 +561,7 @@ export const AddressesApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending verification are not included in the response.
+     * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending administrator verification are not included in the response.
      * @summary List all recipient addresses
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -638,7 +638,7 @@ export class AddressesApi extends BaseAPI {
   }
 
   /**
-   *
+   * Deletes an external blockchain address. The recipient address must be in an \'active\' or \'pending\' state in order to be deleted successfully.
    * @summary Delete a recipient address
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
@@ -668,7 +668,7 @@ export class AddressesApi extends BaseAPI {
   }
 
   /**
-   * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending verification are not included in the response.
+   * Returns a list of recipient addresses that have each been verified and are eligible for transfers. Any recipient addresses pending administrator verification are not included in the response.
    * @summary List all recipient addresses
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
