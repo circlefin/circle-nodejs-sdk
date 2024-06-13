@@ -13,8 +13,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 16
       - run: yarn install --frozen-lockfile
@@ -24,8 +24,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 16
           registry-url: https://registry.npmjs.com/
@@ -33,15 +33,15 @@ jobs:
       - run: yarn run build
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: us-east-1
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID_PAY }}:role/github-actions-service-role
 
       - name: Read secrets from AWS Secrets Manager into environment variables
-        uses: abhilash1in/aws-secrets-manager-action@v2.1.0
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2.0.5
         with:
-          secrets: |
+          secret-ids: |
             /prod/circle-nodejs-sdk/npm/automation-token
 
       - run: npm publish --access public
