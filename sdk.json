@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.9.0",
+    "version": "2.10.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -5439,6 +5439,144 @@
         }
       }
     },
+    "/v1/exchange/quotes": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Fetch exchange rate",
+        "operationId": "exchangeRate",
+        "description": "Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.\n\nNote: The current market exchange rate will be applied when Circle receives the deposit.\n",
+        "tags": ["Payments"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExchangeRateRequest"
+              },
+              "examples": {
+                "Null amounts": {
+                  "value": {
+                    "from": {
+                      "currency": "MXN"
+                    },
+                    "to": {
+                      "currency": "USD"
+                    }
+                  }
+                },
+                "Non-null from amount": {
+                  "value": {
+                    "from": {
+                      "amount": 5.05,
+                      "currency": "MXN"
+                    },
+                    "to": {
+                      "currency": "USD"
+                    }
+                  }
+                },
+                "Non-null to amount": {
+                  "value": {
+                    "from": {
+                      "currency": "MXN"
+                    },
+                    "to": {
+                      "amount": 5.05,
+                      "currency": "USD"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully fetched exchange rate.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "FetchExchangeRateResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/ExchangeRateResponse"
+                    }
+                  }
+                },
+                "examples": {
+                  "Null amounts": {
+                    "value": {
+                      "data": {
+                        "id": "8755d0ea-14f9-4259-b092-de23c14b6568",
+                        "rate": 17.0531,
+                        "from": {
+                          "currency": "MXN"
+                        },
+                        "to": {
+                          "currency": "USD"
+                        },
+                        "timestamp": "2022-07-21T20:13:35.578678Z"
+                      }
+                    }
+                  },
+                  "Non-null from amount": {
+                    "value": {
+                      "data": {
+                        "id": "8755d0ea-14f9-4259-b092-de23c14b6568",
+                        "rate": 17.0531,
+                        "from": {
+                          "amount": 5.05,
+                          "currency": "MXN"
+                        },
+                        "to": {
+                          "amount": 0.29,
+                          "currency": "USD"
+                        },
+                        "timestamp": "2022-07-21T20:13:35.578678Z"
+                      }
+                    }
+                  },
+                  "Non-null to amount": {
+                    "value": {
+                      "data": {
+                        "id": "8755d0ea-14f9-4259-b092-de23c14b6568",
+                        "rate": 17.0531,
+                        "from": {
+                          "amount": 96.12,
+                          "currency": "MXN"
+                        },
+                        "to": {
+                          "amount": 5.05,
+                          "currency": "USD"
+                        },
+                        "timestamp": "2022-07-21T20:13:35.578678Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/v1/wallets": {
       "post": {
         "security": [
@@ -10751,6 +10889,72 @@
             "items": {
               "$ref": "#/components/schemas/BasicChargebackHistory"
             }
+          }
+        }
+      },
+      "FiatCurrency": {
+        "type": "string",
+        "description": "Currency code.",
+        "title": "Currency",
+        "enum": ["USD", "EUR", "MXN", "SGD"]
+      },
+      "FiatOptionalAmountMoney": {
+        "type": "object",
+        "title": "OptionalAmountMoney",
+        "required": ["currency"],
+        "properties": {
+          "amount": {
+            "description": "Magnitude of the amount, in units of the currency, with a `.`.",
+            "type": "string",
+            "example": "3.14"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/FiatCurrency"
+          }
+        }
+      },
+      "ExchangeRateRequest": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FiatOptionalAmountMoney"
+              }
+            ],
+            "description": "Amount (Optional) and currency to convert from. If an amount is provided here, then the amount in the \"to\" field must be null."
+          },
+          "to": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FiatOptionalAmountMoney"
+              }
+            ],
+            "description": "Amount (Optional) and currency to convert to. If an amount is provided here, then the amount in the \"from\" field must be null."
+          }
+        }
+      },
+      "ExchangeRateResponse": {
+        "type": "object",
+        "required": ["id", "rate", "from", "to", "timestamp"],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "rate": {
+            "description": "Exchange rate",
+            "type": "number",
+            "format": "float"
+          },
+          "from": {
+            "$ref": "#/components/schemas/FiatOptionalAmountMoney"
+          },
+          "to": {
+            "$ref": "#/components/schemas/FiatOptionalAmountMoney"
+          },
+          "timestamp": {
+            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
