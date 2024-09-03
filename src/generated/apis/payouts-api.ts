@@ -66,7 +66,7 @@ export const PayoutsApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     *
+     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -514,7 +514,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = PayoutsApiAxiosParamCreator(configuration);
   return {
     /**
-     *
+     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -768,7 +768,7 @@ export const PayoutsApiFactory = function (
   const localVarFp = PayoutsApiFp(configuration);
   return {
     /**
-     *
+     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -949,7 +949,7 @@ export const PayoutsApiFactory = function (
  */
 export class PayoutsApi extends BaseAPI {
   /**
-   *
+   *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
    * @summary Create a payout
    * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
    * @param {*} [options] Override http request option.

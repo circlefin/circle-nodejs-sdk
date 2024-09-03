@@ -8,81 +8,63 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { BankAddress } from "./bank-address";
-// May contain unused imports in some cases
-// @ts-ignore
-import { BillingDetails } from "./billing-details";
-// May contain unused imports in some cases
-// @ts-ignore
 import { ExternalFiatAccountStatus } from "./external-fiat-account-status";
 // May contain unused imports in some cases
 // @ts-ignore
-import { TransferTypeInfo } from "./transfer-type-info";
+import { RiskEvaluation } from "./risk-evaluation";
 
 /**
  *
  * @export
- * @interface Wire
+ * @interface PixFiatAccountResponse
  */
-export interface Wire {
+export interface PixFiatAccountResponse {
   /**
    * Unique system generated identifier for the entity.
    * @type {string}
-   * @memberof Wire
+   * @memberof PixFiatAccountResponse
    */
   id: string;
   /**
    *
    * @type {ExternalFiatAccountStatus}
-   * @memberof Wire
+   * @memberof PixFiatAccountResponse
    */
   status: ExternalFiatAccountStatus;
   /**
-   * Bank name plus last four digits of the bank account number or IBAN.
+   * Bank name plus last four digits of the PIX account number.
    * @type {string}
-   * @memberof Wire
+   * @memberof PixFiatAccountResponse
    */
   description: string;
   /**
    * Wire tracking ref that needs to be set in the wire reference to beneficiary field.
    * @type {string}
-   * @memberof Wire
+   * @memberof PixFiatAccountResponse
    */
   trackingRef: string;
   /**
-   * A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each.
-   * @type {{ [key: string]: TransferTypeInfo; }}
-   * @memberof Wire
+   *
+   * @type {RiskEvaluation}
+   * @memberof PixFiatAccountResponse
    */
-  transferTypesInfo: { [key: string]: TransferTypeInfo };
+  riskEvaluation?: RiskEvaluation | null;
   /**
    * A UUID that uniquely identifies the account number. If the same account is used more than once, each card object will have a different id, but the fingerprint will stay the same.
    * @type {string}
-   * @memberof Wire
+   * @memberof PixFiatAccountResponse
    */
   fingerprint: string;
   /**
-   *
-   * @type {BillingDetails}
-   * @memberof Wire
-   */
-  billingDetails: BillingDetails;
-  /**
-   *
-   * @type {BankAddress}
-   * @memberof Wire
-   */
-  bankAddress?: BankAddress;
-  /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof Wire
+   * @memberof PixFiatAccountResponse
    */
   createDate: string;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof Wire
+   * @memberof PixFiatAccountResponse
    */
   updateDate: string;
 }
