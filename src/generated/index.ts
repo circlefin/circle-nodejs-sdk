@@ -21,6 +21,7 @@ import {
   EncryptionApi,
   HealthApi,
   ManagementApi,
+  PIXApi,
   PaymentTokensApi,
   PaymentsApi,
   PayoutsApi,
@@ -51,6 +52,7 @@ export class Circle {
   public encryption: EncryptionApi;
   public health: HealthApi;
   public management: ManagementApi;
+  public pix: PIXApi;
   public paymentTokens: PaymentTokensApi;
   public payments: PaymentsApi;
   public payouts: PayoutsApi;
@@ -78,6 +80,7 @@ export class Circle {
     this.encryption = new EncryptionApi(configuration);
     this.health = new HealthApi(configuration);
     this.management = new ManagementApi(configuration);
+    this.pix = new PIXApi(configuration);
     this.paymentTokens = new PaymentTokensApi(configuration);
     this.payments = new PaymentsApi(configuration);
     this.payouts = new PayoutsApi(configuration);

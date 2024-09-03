@@ -13,19 +13,19 @@ import { FiatCurrency } from "./fiat-currency";
 /**
  *
  * @export
- * @interface FiatMoney
+ * @interface FiatPayoutToMoney
  */
-export interface FiatMoney {
+export interface FiatPayoutToMoney {
   /**
    * Magnitude of the amount, in units of the currency, with a `.`.
    * @type {string}
-   * @memberof FiatMoney
+   * @memberof FiatPayoutToMoney
    */
-  amount: string;
+  amount?: string;
   /**
    *
    * @type {FiatCurrency}
-   * @memberof FiatMoney
+   * @memberof FiatPayoutToMoney
    */
   currency: FiatCurrency;
 }
