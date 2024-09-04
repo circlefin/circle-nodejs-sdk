@@ -17,6 +17,9 @@ import { FiatMoney } from "./fiat-money";
 import { FiatMoneyUsd } from "./fiat-money-usd";
 // May contain unused imports in some cases
 // @ts-ignore
+import { FiatPayoutToMoney } from "./fiat-payout-to-money";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FinalAdjustments } from "./final-adjustments";
 // May contain unused imports in some cases
 // @ts-ignore
@@ -61,6 +64,12 @@ export interface BusinessPayout {
    * @memberof BusinessPayout
    */
   amount?: FiatMoney;
+  /**
+   *
+   * @type {FiatPayoutToMoney}
+   * @memberof BusinessPayout
+   */
+  toAmount?: FiatPayoutToMoney;
   /**
    *
    * @type {FiatMoneyUsd}
