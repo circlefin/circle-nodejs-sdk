@@ -45,7 +45,7 @@ export interface PixFiatAccountCreationRequest {
    * @type {string}
    * @memberof PixFiatAccountCreationRequest
    */
-  branchCode?: string;
+  branchCode: string;
   /**
    * Beneficiary Tax ID.
    * @type {string}
