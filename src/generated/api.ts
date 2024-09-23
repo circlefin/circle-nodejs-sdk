@@ -20,6 +20,7 @@ export * from "./apis/deposits-api";
 export * from "./apis/encryption-api";
 export * from "./apis/health-api";
 export * from "./apis/management-api";
+export * from "./apis/pixapi";
 export * from "./apis/payment-tokens-api";
 export * from "./apis/payments-api";
 export * from "./apis/payouts-api";

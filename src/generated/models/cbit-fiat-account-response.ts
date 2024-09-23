@@ -9,6 +9,9 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import { ExternalFiatAccountStatus } from "./external-fiat-account-status";
+// May contain unused imports in some cases
+// @ts-ignore
+import { TransferTypeInfo } from "./transfer-type-info";
 
 /**
  *
@@ -40,6 +43,12 @@ export interface CbitFiatAccountResponse {
    * @memberof CbitFiatAccountResponse
    */
   walletAddress: string;
+  /**
+   * A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each. For CBIT accounts this will always only show information for CBIT transfers.
+   * @type {{ [key: string]: TransferTypeInfo; }}
+   * @memberof CbitFiatAccountResponse
+   */
+  transferTypesInfo: { [key: string]: TransferTypeInfo };
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}

@@ -46,6 +46,8 @@ import { GetBusinessPayoutResponse } from "../models";
 // @ts-ignore
 import { GetPayoutResponse } from "../models";
 // @ts-ignore
+import { ListBurnFeeCalculationsResponse } from "../models";
+// @ts-ignore
 import { ListBusinessPayoutsResponse } from "../models";
 // @ts-ignore
 import { ListPayoutsResponse } from "../models";
@@ -66,7 +68,7 @@ export const PayoutsApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     *
+     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -363,6 +365,93 @@ export const PayoutsApiAxiosParamCreator = function (
       };
     },
     /**
+     * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
+     * @summary List all NET burn daily fee calculations
+     * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+     * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+     * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listNetBurnFeeDailyCalculations: async (
+      minimumFeeAmount?: string,
+      currency?: "USD" | "EUR",
+      from?: string,
+      to?: string,
+      pageBefore?: string,
+      pageAfter?: string,
+      pageSize?: number,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/v1/fees/redemption/net/dailyReports`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (minimumFeeAmount !== undefined) {
+        localVarQueryParameter["minimumFeeAmount"] = minimumFeeAmount;
+      }
+
+      if (currency !== undefined) {
+        localVarQueryParameter["currency"] = currency;
+      }
+
+      if (from !== undefined) {
+        localVarQueryParameter["from"] =
+          (from as any) instanceof Date ? (from as any).toISOString() : from;
+      }
+
+      if (to !== undefined) {
+        localVarQueryParameter["to"] =
+          (to as any) instanceof Date ? (to as any).toISOString() : to;
+      }
+
+      if (pageBefore !== undefined) {
+        localVarQueryParameter["pageBefore"] = pageBefore;
+      }
+
+      if (pageAfter !== undefined) {
+        localVarQueryParameter["pageAfter"] = pageAfter;
+      }
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter["pageSize"] = pageSize;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
+    },
+    /**
      *
      * @summary List all payouts
      * @param {string} [source] Identifier for the source wallet. Filters the fetched payout results to only be from a specific source wallet. If not provided, payouts from all wallets will be returned.
@@ -514,7 +603,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = PayoutsApiAxiosParamCreator(configuration);
   return {
     /**
-     *
+     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -670,6 +759,52 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
+     * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
+     * @summary List all NET burn daily fee calculations
+     * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+     * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+     * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async listNetBurnFeeDailyCalculations(
+      minimumFeeAmount?: string,
+      currency?: "USD" | "EUR",
+      from?: string,
+      to?: string,
+      pageBefore?: string,
+      pageAfter?: string,
+      pageSize?: number,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<ListBurnFeeCalculationsResponse>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.listNetBurnFeeDailyCalculations(
+          minimumFeeAmount,
+          currency,
+          from,
+          to,
+          pageBefore,
+          pageAfter,
+          pageSize,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
      *
      * @summary List all payouts
      * @param {string} [source] Identifier for the source wallet. Filters the fetched payout results to only be from a specific source wallet. If not provided, payouts from all wallets will be returned.
@@ -768,7 +903,7 @@ export const PayoutsApiFactory = function (
   const localVarFp = PayoutsApiFp(configuration);
   return {
     /**
-     *
+     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -864,6 +999,42 @@ export const PayoutsApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
+     * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
+     * @summary List all NET burn daily fee calculations
+     * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+     * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+     * @param {string} [from] Queries items created since the specified date-time (inclusive).
+     * @param {string} [to] Queries items created before the specified date-time (inclusive).
+     * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+     * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+     * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listNetBurnFeeDailyCalculations(
+      minimumFeeAmount?: string,
+      currency?: "USD" | "EUR",
+      from?: string,
+      to?: string,
+      pageBefore?: string,
+      pageAfter?: string,
+      pageSize?: number,
+      options?: any
+    ): AxiosPromise<ListBurnFeeCalculationsResponse> {
+      return localVarFp
+        .listNetBurnFeeDailyCalculations(
+          minimumFeeAmount,
+          currency,
+          from,
+          to,
+          pageBefore,
+          pageAfter,
+          pageSize,
+          options
+        )
+        .then((request) => request(axios, basePath));
+    },
+    /**
      *
      * @summary List all payouts
      * @param {string} [source] Identifier for the source wallet. Filters the fetched payout results to only be from a specific source wallet. If not provided, payouts from all wallets will be returned.
@@ -949,7 +1120,7 @@ export const PayoutsApiFactory = function (
  */
 export class PayoutsApi extends BaseAPI {
   /**
-   *
+   *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
    * @summary Create a payout
    * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
    * @param {*} [options] Override http request option.
@@ -1041,6 +1212,44 @@ export class PayoutsApi extends BaseAPI {
         destination,
         type,
         status,
+        from,
+        to,
+        pageBefore,
+        pageAfter,
+        pageSize,
+        options
+      )
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
+   * @summary List all NET burn daily fee calculations
+   * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+   * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+   * @param {string} [from] Queries items created since the specified date-time (inclusive).
+   * @param {string} [to] Queries items created before the specified date-time (inclusive).
+   * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
+   * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
+   * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PayoutsApi
+   */
+  public listNetBurnFeeDailyCalculations(
+    minimumFeeAmount?: string,
+    currency?: "USD" | "EUR",
+    from?: string,
+    to?: string,
+    pageBefore?: string,
+    pageAfter?: string,
+    pageSize?: number,
+    options?: AxiosRequestConfig
+  ) {
+    return PayoutsApiFp(this.configuration)
+      .listNetBurnFeeDailyCalculations(
+        minimumFeeAmount,
+        currency,
         from,
         to,
         pageBefore,

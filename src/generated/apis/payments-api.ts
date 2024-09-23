@@ -44,6 +44,10 @@ import { CreatePaymentResponse } from "../models";
 // @ts-ignore
 import { CreateWirePaymentResponse } from "../models";
 // @ts-ignore
+import { ExchangeRateRequest } from "../models";
+// @ts-ignore
+import { FetchExchangeRateResponse } from "../models";
+// @ts-ignore
 import { GetPaymentResponse } from "../models";
 // @ts-ignore
 import { ListPaymentsResponse } from "../models";
@@ -280,6 +284,58 @@ export const PaymentsApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         paymentCreationRequest,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
+     * @summary Fetch exchange rate
+     * @param {ExchangeRateRequest} [exchangeRateRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    exchangeRate: async (
+      exchangeRateRequest?: ExchangeRateRequest,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      const localVarPath = `/v1/exchange/quotes`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "POST",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        exchangeRateRequest,
         localVarRequestOptions,
         configuration
       );
@@ -626,6 +682,33 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
+     * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
+     * @summary Fetch exchange rate
+     * @param {ExchangeRateRequest} [exchangeRateRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async exchangeRate(
+      exchangeRateRequest?: ExchangeRateRequest,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<FetchExchangeRateResponse>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.exchangeRate(
+        exchangeRateRequest,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
      *
      * @summary Get a payment
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
@@ -815,6 +898,21 @@ export const PaymentsApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
+     * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
+     * @summary Fetch exchange rate
+     * @param {ExchangeRateRequest} [exchangeRateRequest]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    exchangeRate(
+      exchangeRateRequest?: ExchangeRateRequest,
+      options?: any
+    ): AxiosPromise<FetchExchangeRateResponse> {
+      return localVarFp
+        .exchangeRate(exchangeRateRequest, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
      *
      * @summary Get a payment
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
@@ -967,6 +1065,23 @@ export class PaymentsApi extends BaseAPI {
   ) {
     return PaymentsApiFp(this.configuration)
       .createPayment(paymentCreationRequest, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
+   * @summary Fetch exchange rate
+   * @param {ExchangeRateRequest} [exchangeRateRequest]
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof PaymentsApi
+   */
+  public exchangeRate(
+    exchangeRateRequest?: ExchangeRateRequest,
+    options?: AxiosRequestConfig
+  ) {
+    return PaymentsApiFp(this.configuration)
+      .exchangeRate(exchangeRateRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
