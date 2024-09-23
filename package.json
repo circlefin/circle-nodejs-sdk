@@ -33,7 +33,7 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "axios": "1.6.0"
+    "axios": "1.7.4"
   },
   "homepage": "https://github.com/circlefin/circle-nodejs-sdk#readme",
   "publishConfig": {
