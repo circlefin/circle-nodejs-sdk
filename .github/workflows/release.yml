@@ -5,22 +5,15 @@ on:
 name: release-please
 jobs:
   release-please:
-    runs-on: ubuntu-latest
-    outputs:
-      did-create-release: ${{ steps.release.outputs.release_created }}
-      release-tag: ${{ steps.release.outputs.tag_name }}
-    steps:
-      - uses: google-github-actions/release-please-action@v3
-        id: release
-        with:
-          release-type: node
-          package-name: "@circle-fin/circle-sdk"
-          changelog-types: |
-            [
-              {"type":"feat","section":"New Features","hidden":false},
-              {"type":"fix","section":"Fixes","hidden":false},
-              {"type":"chore","section":"Miscellaneous","hidden":true}
-            ]
+    uses: circlefin/github-shared-pipelines/.github/workflows/conventional-commit-release.yaml@v1
+    if: ${{ github.repository_owner == 'circlefin' }}
+    with:
+      release_type: node
+      changelog_types: |
+        [
+          {"type":"feat","section":"New Features","hidden":false},
+          {"type":"fix","section":"Fixes","hidden":false},
+          {"type":"chore","section":"Miscellaneous","hidden":true}
 
   npm-publish:
     needs: release-please
@@ -30,7 +23,7 @@ jobs:
 
   release-sbom:
     needs: release-please
-    if: needs.release-please.outputs.did-create-release
+    if: needs.release-please.outputs.release_created
     uses: circlefin/circle-public-github-workflows/.github/workflows/attach-release-assets.yaml@v1
     with:
       release_tag: ${{ needs.release-please.outputs.release-tag }}
