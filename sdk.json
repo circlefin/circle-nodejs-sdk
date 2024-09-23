@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.11.1",
+    "version": "2.12.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -5882,6 +5882,108 @@
         }
       }
     },
+    "/v1/fees/redemption/net/dailyReports": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "minimumFeeAmount",
+            "description": "Filters out NET burn daily fee calculations below minimumFeeAmount value.",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "3.14"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Currency"
+          },
+          {
+            "$ref": "#/components/parameters/From"
+          },
+          {
+            "$ref": "#/components/parameters/To"
+          },
+          {
+            "$ref": "#/components/parameters/PageBefore"
+          },
+          {
+            "$ref": "#/components/parameters/PageAfter"
+          },
+          {
+            "$ref": "#/components/parameters/PageSize"
+          }
+        ],
+        "summary": "List all NET burn daily fee calculations",
+        "description": "Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.",
+        "operationId": "listNetBurnFeeDailyCalculations",
+        "tags": ["Payouts"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved a list of NET burn fee calculations.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ListBurnFeeCalculationsResponse",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/RedemptionFeeCalculation"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": [
+                        {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "fee": {
+                            "amount": "3.14",
+                            "currency": "USD"
+                          },
+                          "cumulatedPayoutAmount": {
+                            "amount": "64.54",
+                            "currency": "USD"
+                          },
+                          "cumulatedPaymentAmount": {
+                            "amount": "34.54",
+                            "currency": "USD"
+                          },
+                          "cumulatedNetAmount": {
+                            "amount": "30.00",
+                            "currency": "USD"
+                          },
+                          "valueDate": "2023-05-23",
+                          "status": "paid",
+                          "thresholdResetTimestamp": "2023-05-23T23:59:59.999Z",
+                          "createDate": "2024-04-10T02:13:30.000Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
+    },
     "/v1/wallets": {
       "post": {
         "security": [
@@ -8876,6 +8978,7 @@
           "name",
           "accountNumber",
           "ispb",
+          "branchCode",
           "taxId",
           "accountType"
         ],
@@ -11452,6 +11555,89 @@
           },
           "timestamp": {
             "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        }
+      },
+      "BurnFeePayoutAmount": {
+        "type": "object",
+        "required": ["amount", "currency"],
+        "properties": {
+          "amount": {
+            "description": "Sum of all initiated payouts, in units of the currency, with a `.`.",
+            "type": "string",
+            "example": "3.14"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/FiatCurrency"
+          }
+        }
+      },
+      "BurnFeePaymentAmount": {
+        "type": "object",
+        "required": ["amount", "currency"],
+        "properties": {
+          "amount": {
+            "description": "Sum of all push payments received, in units of the currency, with a `.`.",
+            "type": "string",
+            "example": "3.14"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/FiatCurrency"
+          }
+        }
+      },
+      "BurnFeeNetAmount": {
+        "type": "object",
+        "required": ["amount", "currency"],
+        "properties": {
+          "amount": {
+            "description": "Sum of all initiated payouts minus sum of all received push payments, in units of the currency, with a `.`.",
+            "type": "string",
+            "example": "3.14"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/FiatCurrency"
+          }
+        }
+      },
+      "RedemptionFeeCalculation": {
+        "type": "object",
+        "description": "A NET burn fee calculation for a day.",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "fee": {
+            "$ref": "#/components/schemas/FiatMoney"
+          },
+          "cumulatedPayoutAmount": {
+            "$ref": "#/components/schemas/BurnFeePayoutAmount"
+          },
+          "cumulatedPaymentAmount": {
+            "$ref": "#/components/schemas/BurnFeePaymentAmount"
+          },
+          "cumulatedNetAmount": {
+            "$ref": "#/components/schemas/BurnFeeNetAmount"
+          },
+          "valueDate": {
+            "description": "A date representing a day for which a fee is calculated.",
+            "type": "string",
+            "example": "2023-05-23"
+          },
+          "status": {
+            "description": "Fee collection status",
+            "type": "string",
+            "enum": ["scheduled", "pending", "paid"]
+          },
+          "thresholdResetTimestamp": {
+            "description": "Fee calculation reset timestamp.",
+            "type": "string",
+            "example": "2023-05-23T23:59:59.999Z"
+          },
+          "createDate": {
+            "description": "The create date of the NET burn daily fee calculation.",
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

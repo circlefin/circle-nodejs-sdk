@@ -47,6 +47,9 @@ models/bank-destination.ts
 models/basic-chargeback-history.ts
 models/basic-chargeback.ts
 models/billing-details.ts
+models/burn-fee-net-amount.ts
+models/burn-fee-payment-amount.ts
+models/burn-fee-payout-amount.ts
 models/business-account-payout-destination-type.ts
 models/business-deposit.ts
 models/business-destination-request.ts
@@ -180,6 +183,7 @@ models/limit-exceeded.ts
 models/list-address-book-recipients-response.ts
 models/list-addresses-response.ts
 models/list-balances-response.ts
+models/list-burn-fee-calculations-response.ts
 models/list-business-balances-response.ts
 models/list-business-cbit-account-instructions-response.ts
 models/list-business-cbit-accounts-response.ts
@@ -245,6 +249,7 @@ models/presign-response-typed-data.ts
 models/presign-response.ts
 models/public-key.ts
 models/rate.ts
+models/redemption-fee-calculation.ts
 models/refund-creation-request.ts
 models/refund-payment-response.ts
 models/required-action.ts
