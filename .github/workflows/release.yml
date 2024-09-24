@@ -5,7 +5,7 @@ on:
 name: release-please
 jobs:
   release-please:
-    uses: circlefin/github-shared-pipelines/.github/workflows/conventional-commit-release.yaml@v1
+    uses: circlefin/circle-public-github-workflows/.github/workflows/conventional-commit-release.yaml@v1
     if: ${{ github.repository_owner == 'circlefin' }}
     with:
       release_type: node
