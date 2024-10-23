@@ -9,6 +9,7 @@ apis/checkout-sessions-api.ts
 apis/crypto-address-book-api.ts
 apis/crypto-exchange-rates-api.ts
 apis/crypto-payment-intents-api.ts
+apis/cubixapi.ts
 apis/deposits-api.ts
 apis/encryption-api.ts
 apis/health-api.ts
@@ -84,6 +85,7 @@ models/continuous-payment-intent-creation-request.ts
 models/continuous-payment-intent.ts
 models/create-address-book-recipient-response.ts
 models/create-business-cbit-account-response.ts
+models/create-business-cubix-account-response.ts
 models/create-business-deposit-address-response.ts
 models/create-business-payout-response.ts
 models/create-business-pix-account-response.ts
@@ -123,6 +125,9 @@ models/crypto-refund-creation-request-amount.ts
 models/crypto-refund-creation-request-to-amount.ts
 models/crypto-refund-creation-request.ts
 models/crypto-refund-destination.ts
+models/cubix-fiat-account-creation-request.ts
+models/cubix-fiat-account-response.ts
+models/cubix-instruction.ts
 models/currency.ts
 models/cvv-results.ts
 models/delete-subscription-response.ts
@@ -155,6 +160,7 @@ models/generate-address-request.ts
 models/generate-address-response.ts
 models/get-address-book-recipient-response.ts
 models/get-business-cbit-account-response.ts
+models/get-business-cubix-account-response.ts
 models/get-business-deposit-address-response.ts
 models/get-business-payout-response.ts
 models/get-business-pix-account-response.ts
@@ -187,6 +193,8 @@ models/list-burn-fee-calculations-response.ts
 models/list-business-balances-response.ts
 models/list-business-cbit-account-instructions-response.ts
 models/list-business-cbit-accounts-response.ts
+models/list-business-cubix-account-instructions-response.ts
+models/list-business-cubix-accounts-response.ts
 models/list-business-deposits-response.ts
 models/list-business-payouts-response.ts
 models/list-business-pix-accounts-response.ts
