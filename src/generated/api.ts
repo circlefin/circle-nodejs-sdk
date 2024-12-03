@@ -9,6 +9,7 @@
 export * from "./apis/addresses-api";
 export * from "./apis/balances-api";
 export * from "./apis/cbitapi";
+export * from "./apis/cubixapi";
 export * from "./apis/cards-api";
 export * from "./apis/channels-api";
 export * from "./apis/chargebacks-api";
@@ -29,5 +30,4 @@ export * from "./apis/settlements-api";
 export * from "./apis/stablecoins-api";
 export * from "./apis/subscriptions-api";
 export * from "./apis/transfers-api";
-export * from "./apis/wallets-api";
 export * from "./apis/wires-api";

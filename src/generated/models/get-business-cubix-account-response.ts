@@ -8,18 +8,18 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Transfer } from "./transfer";
+import { CubixFiatAccountResponse } from "./cubix-fiat-account-response";
 
 /**
  *
  * @export
- * @interface CreateTransferResponse
+ * @interface GetBusinessCubixAccountResponse
  */
-export interface CreateTransferResponse {
+export interface GetBusinessCubixAccountResponse {
   /**
    *
-   * @type {Transfer}
-   * @memberof CreateTransferResponse
+   * @type {CubixFiatAccountResponse}
+   * @memberof GetBusinessCubixAccountResponse
    */
-  data?: Transfer;
+  data?: CubixFiatAccountResponse;
 }

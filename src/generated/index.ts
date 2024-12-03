@@ -10,6 +10,7 @@ import {
   AddressesApi,
   BalancesApi,
   CBITApi,
+  CUBIXApi,
   CardsApi,
   ChannelsApi,
   ChargebacksApi,
@@ -30,7 +31,6 @@ import {
   StablecoinsApi,
   SubscriptionsApi,
   TransfersApi,
-  WalletsApi,
   WiresApi
 } from "./api";
 
@@ -41,6 +41,7 @@ export class Circle {
   public addresses: AddressesApi;
   public balances: BalancesApi;
   public cbit: CBITApi;
+  public cubix: CUBIXApi;
   public cards: CardsApi;
   public channels: ChannelsApi;
   public chargebacks: ChargebacksApi;
@@ -61,7 +62,6 @@ export class Circle {
   public stablecoins: StablecoinsApi;
   public subscriptions: SubscriptionsApi;
   public transfers: TransfersApi;
-  public wallets: WalletsApi;
   public wires: WiresApi;
 
   constructor(apiKey: string, baseUrl: string) {
@@ -69,6 +69,7 @@ export class Circle {
     this.addresses = new AddressesApi(configuration);
     this.balances = new BalancesApi(configuration);
     this.cbit = new CBITApi(configuration);
+    this.cubix = new CUBIXApi(configuration);
     this.cards = new CardsApi(configuration);
     this.channels = new ChannelsApi(configuration);
     this.chargebacks = new ChargebacksApi(configuration);
@@ -89,7 +90,6 @@ export class Circle {
     this.stablecoins = new StablecoinsApi(configuration);
     this.subscriptions = new SubscriptionsApi(configuration);
     this.transfers = new TransfersApi(configuration);
-    this.wallets = new WalletsApi(configuration);
     this.wires = new WiresApi(configuration);
   }
 }
