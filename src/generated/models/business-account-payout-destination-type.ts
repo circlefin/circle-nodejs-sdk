@@ -14,7 +14,8 @@
 
 export const BusinessAccountPayoutDestinationType = {
   Wire: "wire",
-  Cbit: "cbit"
+  Cbit: "cbit",
+  Cubix: "cubix"
 } as const;
 
 export type BusinessAccountPayoutDestinationType =

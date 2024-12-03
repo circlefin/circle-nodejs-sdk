@@ -8,18 +8,18 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Wallet } from "./wallet";
+import { CubixFiatAccountResponse } from "./cubix-fiat-account-response";
 
 /**
  *
  * @export
- * @interface CreateWalletResponse
+ * @interface ListBusinessCubixAccountsResponse
  */
-export interface CreateWalletResponse {
+export interface ListBusinessCubixAccountsResponse {
   /**
    *
-   * @type {Wallet}
-   * @memberof CreateWalletResponse
+   * @type {Array<CubixFiatAccountResponse>}
+   * @memberof ListBusinessCubixAccountsResponse
    */
-  data?: Wallet;
+  data?: Array<CubixFiatAccountResponse>;
 }

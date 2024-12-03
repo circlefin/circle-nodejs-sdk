@@ -6,7 +6,7 @@
     }
   ],
   "info": {
-    "version": "2.12.0",
+    "version": "2.14.0",
     "title": "All Circle APIs",
     "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
   },
@@ -82,6 +82,10 @@
     {
       "name": "CBIT",
       "description": "Create and get information on CBIT accounts."
+    },
+    {
+      "name": "CUBIX",
+      "description": "Create and get information on CUBIX accounts."
     },
     {
       "name": "PIX",
@@ -1084,9 +1088,11 @@
                         "description": "WELLS FARGO BANK, NA ****0010",
                         "trackingRef": "CIR13FB13A",
                         "transferTypesInfo": {
-                          "currencies": ["USD"],
-                          "additionalProperties": {
-                            "transactionLimits": 100000
+                          "wire": {
+                            "currencies": ["USD", "EUR"]
+                          },
+                          "rtgs": {
+                            "currencies": ["USD"]
                           }
                         },
                         "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
@@ -1164,9 +1170,11 @@
                           "description": "WELLS FARGO BANK, NA ****0010",
                           "trackingRef": "CIR13FB13A",
                           "transferTypesInfo": {
-                            "currencies": ["USD"],
-                            "additionalProperties": {
-                              "transactionLimits": 100000
+                            "wire": {
+                              "currencies": ["USD", "EUR"]
+                            },
+                            "rtgs": {
+                              "currencies": ["USD"]
                             }
                           },
                           "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
@@ -1245,9 +1253,11 @@
                         "description": "WELLS FARGO BANK, NA ****0010",
                         "trackingRef": "CIR13FB13A",
                         "transferTypesInfo": {
-                          "currencies": ["USD"],
-                          "additionalProperties": {
-                            "transactionLimits": 100000
+                          "wire": {
+                            "currencies": ["USD", "EUR"]
+                          },
+                          "rtgs": {
+                            "currencies": ["USD"]
                           }
                         },
                         "fingerprint": "eb170539-9e1c-4e92-bf4f-1d09534fdca2",
@@ -1406,9 +1416,8 @@
                         "trackingRef": "CIR25XSXT8",
                         "walletAddress": "0x7d8da35e03ef3a5ec5d5edbb961ef399dfb42d1e",
                         "transferTypesInfo": {
-                          "currencies": ["USD"],
-                          "additionalProperties": {
-                            "transactionLimits": 100000
+                          "cbit": {
+                            "currencies": ["USD"]
                           }
                         },
                         "createDate": "2020-04-10T02:13:30.000Z",
@@ -1468,9 +1477,8 @@
                           "trackingRef": "CIR25XSXT8",
                           "walletAddress": "0x7d8da35e03ef3a5ec5d5edbb961ef399dfb42d1e",
                           "transferTypesInfo": {
-                            "currencies": ["USD"],
-                            "additionalProperties": {
-                              "transactionLimits": 100000
+                            "cbit": {
+                              "currencies": ["USD"]
                             }
                           },
                           "createDate": "2020-04-10T02:13:30.000Z",
@@ -1531,9 +1539,8 @@
                         "trackingRef": "CIR25XSXT8",
                         "walletAddress": "0x7d8da35e03ef3a5ec5d5edbb961ef399dfb42d1e",
                         "transferTypesInfo": {
-                          "currencies": ["USD"],
-                          "additionalProperties": {
-                            "transactionLimits": 100000
+                          "cbit": {
+                            "currencies": ["USD"]
                           }
                         },
                         "createDate": "2020-04-10T02:13:30.000Z",
@@ -1610,6 +1617,253 @@
         }
       }
     },
+    "/v1/businessAccount/banks/cubix": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create a CUBIX bank account",
+        "operationId": "createBusinessCubixAccount",
+        "tags": ["CUBIX"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CubixFiatAccountCreationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created a bank account for CUBIX transfers.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "CreateBusinessCubixAccountResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CubixFiatAccountResponse"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "status": "pending",
+                        "trackingRef": "CIR25XSXT8",
+                        "accountId": "ff2212d7-8476-4d1e-9d95-eda6455f4f54",
+                        "transferTypesInfo": {
+                          "cubix": {
+                            "currencies": ["USD"]
+                          }
+                        },
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      },
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List all CUBIX bank accounts.",
+        "operationId": "listBusinessCubixAccounts",
+        "tags": ["CUBIX"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all bank accounts for CUBIX transfers.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ListBusinessCubixAccountsResponse",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/CubixFiatAccountResponse"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": [
+                        {
+                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                          "status": "pending",
+                          "trackingRef": "CIR25XSXT8",
+                          "accountId": "ff2212d7-8476-4d1e-9d95-eda6455f4f54",
+                          "transferTypesInfo": {
+                            "cubix": {
+                              "currencies": ["USD"]
+                            }
+                          },
+                          "createDate": "2020-04-10T02:13:30.000Z",
+                          "updateDate": "2020-04-10T02:13:30.000Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
+    },
+    "/v1/businessAccount/banks/cubix/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get a CUBIX bank account",
+        "operationId": "getBusinessCubixAccount",
+        "tags": ["CUBIX"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved a bank account for CUBIX transfers.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "GetBusinessCubixAccountResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CubixFiatAccountResponse"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
+                        "status": "pending",
+                        "trackingRef": "CIR25XSXT8",
+                        "accountId": "ff2212d7-8476-4d1e-9d95-eda6455f4f54",
+                        "transferTypesInfo": {
+                          "cubix": {
+                            "currencies": ["USD"]
+                          }
+                        },
+                        "createDate": "2020-04-10T02:13:30.000Z",
+                        "updateDate": "2020-04-10T02:13:30.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v1/businessAccount/banks/cubix/{id}/instructions": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdPath"
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get CUBIX instructions",
+        "description": "Get the CUBIX transfer instructions into the Circle bank account given your fiat account id.",
+        "operationId": "getBusinessCubixAccountInstructions",
+        "tags": ["CUBIX"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved CUBIX transfer instructions for the fiat account.",
+            "headers": {
+              "X-Request-Id": {
+                "$ref": "#/components/headers/XRequestId"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "ListBusinessCubixAccountInstructionsResponse",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/CubixInstruction"
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "data": {
+                        "trackingRef": "CIR25XSXT8",
+                        "accountId": "ff2212d7-8476-4d1e-9d95-eda6455f4f54"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
     "/v1/businessAccount/banks/pix": {
       "post": {
         "security": [
@@ -1655,6 +1909,11 @@
                         "status": "pending",
                         "description": "BTG Pactual ****0010",
                         "trackingRef": "CIR13FB13A",
+                        "transferTypesInfo": {
+                          "pix": {
+                            "currencies": ["BRL"]
+                          }
+                        },
                         "riskEvaluation": {
                           "decision": "approved",
                           "reason": "3000"
@@ -1716,6 +1975,11 @@
                           "status": "pending",
                           "description": "BTG Pactual ****0010",
                           "trackingRef": "CIR13FB13A",
+                          "transferTypesInfo": {
+                            "pix": {
+                              "currencies": ["BRL"]
+                            }
+                          },
                           "riskEvaluation": {
                             "decision": "approved",
                             "reason": "3000"
@@ -1778,6 +2042,11 @@
                         "status": "pending",
                         "description": "BTG Pactual ****0010",
                         "trackingRef": "CIR13FB13A",
+                        "transferTypesInfo": {
+                          "pix": {
+                            "currencies": ["BRL"]
+                          }
+                        },
                         "riskEvaluation": {
                           "decision": "approved",
                           "reason": "3000"
@@ -4776,7 +5045,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["wire", "cbit"]
+              "enum": ["wire", "cbit", "cubix"]
             }
           },
           {
@@ -5984,350 +6253,6 @@
         }
       }
     },
-    "/v1/wallets": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a wallet",
-        "description": "Creates an end user wallet.",
-        "operationId": "createWallet",
-        "tags": ["Wallets"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WalletCreationRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "description": "Successfully created a wallet.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateWalletResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Wallet"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "walletId": "434000",
-                        "entityId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                        "type": "end_user_wallet",
-                        "description": "Treasury Wallet",
-                        "balances": [
-                          {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/From"
-          },
-          {
-            "$ref": "#/components/parameters/To"
-          },
-          {
-            "$ref": "#/components/parameters/PageBefore"
-          },
-          {
-            "$ref": "#/components/parameters/PageAfter"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "summary": "List all wallets",
-        "description": "Retrieves a list of a user's wallets.",
-        "operationId": "listWallets",
-        "tags": ["Wallets"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a list of wallets.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListWalletsResponse",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Wallet"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": [
-                        {
-                          "walletId": "434000",
-                          "entityId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                          "type": "end_user_wallet",
-                          "description": "Treasury Wallet",
-                          "balances": [
-                            {
-                              "amount": "3.14",
-                              "currency": "USD"
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          }
-        }
-      }
-    },
-    "/v1/wallets/{walletId}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/WalletId"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get a wallet",
-        "operationId": "getWallet",
-        "tags": ["Wallets"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a wallet.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetWalletResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Wallet"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "walletId": "434000",
-                        "entityId": "fc988ed5-c129-4f70-a064-e5beb7eb8e32",
-                        "type": "end_user_wallet",
-                        "description": "Treasury Wallet",
-                        "balances": [
-                          {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
-    "/v1/wallets/{walletId}/addresses": {
-      "post": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/WalletId"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a blockchain address",
-        "description": "Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you're requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit.\n",
-        "operationId": "generateAddress",
-        "tags": ["Wallets"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GenerateAddressRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully generated a new address.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GenerateAddressResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/AddressObject"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                        "addressTag": "123456789",
-                        "currency": "USD",
-                        "chain": "ALGO"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "409": {
-            "$ref": "#/components/responses/Conflict"
-          }
-        }
-      },
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/WalletId"
-          },
-          {
-            "$ref": "#/components/parameters/From"
-          },
-          {
-            "$ref": "#/components/parameters/To"
-          },
-          {
-            "$ref": "#/components/parameters/PageBefore"
-          },
-          {
-            "$ref": "#/components/parameters/PageAfter"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "summary": "List all addresses",
-        "description": "Retrieves a list of addresses associated with a wallet.",
-        "operationId": "listAddresses",
-        "tags": ["Wallets"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a list of addresses.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListAddressesResponse",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/AddressObject"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": [
-                        {
-                          "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                          "addressTag": "123456789",
-                          "currency": "USD",
-                          "chain": "ALGO"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          }
-        }
-      }
-    },
     "/v1/businessAccount/transfers": {
       "post": {
         "security": [
@@ -6608,433 +6533,6 @@
                         "transactionHash": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63",
                         "status": "pending",
                         "errorCode": "transfer_failed",
-                        "createDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/transfers": {
-      "post": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Create a transfer",
-        "description": "A transfer can be made from an existing funded wallet to a blockchain address or another wallet.",
-        "operationId": "createTransfer",
-        "tags": ["Transfers"],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TransferCreationRequest"
-              },
-              "examples": {
-                "request": {
-                  "value": {
-                    "idempotencyKey": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                    "source": {
-                      "type": "wallet",
-                      "id": "12345"
-                    },
-                    "destination": {
-                      "type": "blockchain",
-                      "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                      "chain": "ETH"
-                    },
-                    "amount": {
-                      "amount": "3.14",
-                      "currency": "USD"
-                    }
-                  }
-                },
-                "travel rule": {
-                  "value": {
-                    "idempotencyKey": "ba943ff1-ca16-49b2-ba55-1057e70ca5c7",
-                    "source": {
-                      "type": "wallet",
-                      "id": "12345",
-                      "identities": [
-                        {
-                          "type": "individual",
-                          "name": "Satoshi Nakamoto",
-                          "addresses": [
-                            {
-                              "line1": "100 Money Street",
-                              "line2": "Suite 1",
-                              "city": "Boston",
-                              "district": "MA",
-                              "postalCode": "01234",
-                              "country": "US"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    "destination": {
-                      "type": "blockchain",
-                      "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                      "chain": "ETH"
-                    },
-                    "amount": {
-                      "amount": "3000.00",
-                      "currency": "USD"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "description": "Successfully created a transfer.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "CreateTransferResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/Transfer"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "source": {
-                          "type": "wallet",
-                          "id": "12345"
-                        },
-                        "destination": {
-                          "type": "blockchain",
-                          "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                          "chain": "ETH"
-                        },
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "transactionHash": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63",
-                        "status": "pending",
-                        "createDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  },
-                  "travel rule": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "source": {
-                          "type": "wallet",
-                          "id": "12345",
-                          "identities": [
-                            {
-                              "type": "individual",
-                              "name": "Satoshi Nakamoto",
-                              "addresses": [
-                                {
-                                  "line1": "100 Money Street",
-                                  "line2": "Suite 1",
-                                  "city": "Boston",
-                                  "district": "MA",
-                                  "postalCode": "01234",
-                                  "country": "US"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        "destination": {
-                          "type": "blockchain",
-                          "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                          "chain": "ETH"
-                        },
-                        "amount": {
-                          "amount": "3000.00",
-                          "currency": "USD"
-                        },
-                        "transactionHash": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63",
-                        "status": "pending",
-                        "createDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "walletId",
-            "description": "Unique identifier for the source or destination wallet of transfers, if any. May not be used in conjunction with destinationWalletId or sourceWalletId. Useful for fetching all transfers related to a wallet.",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "12345"
-            }
-          },
-          {
-            "name": "sourceWalletId",
-            "description": "Unique identifier for the source wallet of transfers, if any.",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "12345"
-            }
-          },
-          {
-            "name": "destinationWalletId",
-            "description": "Unique identifier for the destination wallet of transfers, if any.",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "example": "12345"
-            }
-          },
-          {
-            "$ref": "#/components/parameters/ReturnIdentities"
-          },
-          {
-            "$ref": "#/components/parameters/From"
-          },
-          {
-            "$ref": "#/components/parameters/To"
-          },
-          {
-            "$ref": "#/components/parameters/PageBefore"
-          },
-          {
-            "$ref": "#/components/parameters/PageAfter"
-          },
-          {
-            "$ref": "#/components/parameters/PageSize"
-          }
-        ],
-        "summary": "List all transfers",
-        "description": "Searches for transfers involving the provided wallets. If no wallet ids are provided, searches all wallets associated with your Circle API account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.",
-        "operationId": "listTransfers",
-        "tags": ["Transfers"],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved a list of transfers.",
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "ListTransfersResponse",
-                  "properties": {
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Transfer"
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": [
-                        {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "source": {
-                            "type": "wallet",
-                            "id": "12345"
-                          },
-                          "destination": {
-                            "type": "blockchain",
-                            "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                            "addressTag": "123456789",
-                            "chain": "ALGO"
-                          },
-                          "amount": {
-                            "amount": "3.14",
-                            "currency": "USD"
-                          },
-                          "transactionHash": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63",
-                          "status": "pending",
-                          "createDate": "2020-04-10T02:13:30.000Z"
-                        }
-                      ]
-                    }
-                  },
-                  "travel rule": {
-                    "value": {
-                      "data": [
-                        {
-                          "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                          "source": {
-                            "type": "wallet",
-                            "id": "12345",
-                            "identities": [
-                              {
-                                "type": "individual",
-                                "name": "Satoshi Nakamoto",
-                                "addresses": [
-                                  {
-                                    "line1": "100 Money Street",
-                                    "line2": "Suite 1",
-                                    "city": "Boston",
-                                    "district": "MA",
-                                    "postalCode": "01234",
-                                    "country": "US"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          "destination": {
-                            "type": "blockchain",
-                            "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                            "addressTag": "123456789",
-                            "chain": "ALGO"
-                          },
-                          "amount": {
-                            "amount": "3000.00",
-                            "currency": "USD"
-                          },
-                          "transactionHash": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63",
-                          "status": "pending",
-                          "createDate": "2020-04-10T02:13:30.000Z"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/NotAuthorized"
-          }
-        }
-      }
-    },
-    "/v1/transfers/{id}": {
-      "get": {
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/IdPath"
-          },
-          {
-            "$ref": "#/components/parameters/ReturnIdentities"
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Get a transfer",
-        "operationId": "getTransfer",
-        "tags": ["Transfers"],
-        "responses": {
-          "200": {
-            "headers": {
-              "X-Request-Id": {
-                "$ref": "#/components/headers/XRequestId"
-              }
-            },
-            "description": "Successfully retrieved a transfer.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "GetTransferResponse",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/TransferDetailedTransfer"
-                    }
-                  }
-                },
-                "examples": {
-                  "response": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "source": {
-                          "type": "wallet",
-                          "id": "12345"
-                        },
-                        "destination": {
-                          "type": "blockchain",
-                          "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                          "chain": "ETH"
-                        },
-                        "amount": {
-                          "amount": "3.14",
-                          "currency": "USD"
-                        },
-                        "transactionHash": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63",
-                        "status": "pending",
-                        "createDate": "2020-04-10T02:13:30.000Z"
-                      }
-                    }
-                  },
-                  "travel rule": {
-                    "value": {
-                      "data": {
-                        "id": "b8627ae8-732b-4d25-b947-1df8f4007a29",
-                        "source": {
-                          "type": "wallet",
-                          "id": "12345",
-                          "identities": [
-                            {
-                              "type": "individual",
-                              "name": "Satoshi Nakamoto",
-                              "addresses": [
-                                {
-                                  "line1": "100 Money Street",
-                                  "line2": "Suite 1",
-                                  "city": "Boston",
-                                  "district": "MA",
-                                  "postalCode": "01234",
-                                  "country": "US"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        "destination": {
-                          "type": "blockchain",
-                          "address": "0x8381470ED67C3802402dbbFa0058E8871F017A6F",
-                          "chain": "ETH"
-                        },
-                        "amount": {
-                          "amount": "3000.00",
-                          "currency": "USD"
-                        },
-                        "transactionHash": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63",
-                        "status": "pending",
                         "createDate": "2020-04-10T02:13:30.000Z"
                       }
                     }
@@ -8552,6 +8050,14 @@
             "description": "A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each.",
             "additionalProperties": {
               "$ref": "#/components/schemas/TransferTypeInfo"
+            },
+            "example": {
+              "wire": {
+                "currencies": ["USD", "EUR"]
+              },
+              "rtgs": {
+                "currencies": ["USD"]
+              }
             }
           },
           "fingerprint": {
@@ -8883,6 +8389,11 @@
             "description": "A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each. For CBIT accounts this will always only show information for CBIT transfers.",
             "additionalProperties": {
               "$ref": "#/components/schemas/TransferTypeInfo"
+            },
+            "example": {
+              "cbit": {
+                "currencies": ["USD"]
+              }
             }
           },
           "createDate": {
@@ -8922,6 +8433,86 @@
           }
         }
       },
+      "CubixFiatAccountResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "trackingRef",
+          "accountId",
+          "createDate",
+          "updateDate",
+          "transferTypesInfo"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ExternalFiatAccountStatus"
+          },
+          "trackingRef": {
+            "type": "string",
+            "description": "Tracking ref that needs to be set in the public description field when you send the funds to Circle's CUBIX account.",
+            "example": "CIR25XSXT8"
+          },
+          "accountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Your CUBIX Account ID.",
+            "example": "ff2212d7-8476-4d1e-9d95-eda6455f4f54"
+          },
+          "transferTypesInfo": {
+            "type": "object",
+            "description": "A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each. For CUBIX accounts this will always only show information for CUBIX transfers.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TransferTypeInfo"
+            },
+            "example": {
+              "cubix": {
+                "currencies": ["USD"]
+              }
+            }
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/UtcTimestamp"
+          }
+        }
+      },
+      "CubixFiatAccountCreationRequest": {
+        "type": "object",
+        "required": ["idempotencyKey", "accountId"],
+        "properties": {
+          "idempotencyKey": {
+            "$ref": "#/components/schemas/IdempotencyKey"
+          },
+          "accountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Cubix Account ID.",
+            "example": "ff2212d7-8476-4d1e-9d95-eda6455f4f54"
+          }
+        }
+      },
+      "CubixInstruction": {
+        "type": "object",
+        "properties": {
+          "trackingRef": {
+            "type": "string",
+            "description": "Circle tracking reference that needs to be set in the CUBIX public memo field.",
+            "example": "CIR25XSXT8"
+          },
+          "accountId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Circle account ID that needs to be set in the CUBIX account ID field.",
+            "example": "ff2212d7-8476-4d1e-9d95-eda6455f4f54"
+          }
+        }
+      },
       "PixFiatAccountResponse": {
         "type": "object",
         "required": [
@@ -8931,7 +8522,8 @@
           "trackingRef",
           "fingerprint",
           "createDate",
-          "updateDate"
+          "updateDate",
+          "transferTypesInfo"
         ],
         "properties": {
           "id": {
@@ -8949,6 +8541,18 @@
             "type": "string",
             "description": "Wire tracking ref that needs to be set in the wire reference to beneficiary field.",
             "example": "CIR13FB13A"
+          },
+          "transferTypesInfo": {
+            "type": "object",
+            "description": "A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each. For PIX accounts this will always only show information for PIX transfers.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TransferTypeInfo"
+            },
+            "example": {
+              "pix": {
+                "currencies": ["BRL"]
+              }
+            }
           },
           "riskEvaluation": {
             "$ref": "#/components/schemas/RiskEvaluation"
@@ -10940,7 +10544,7 @@
       "BusinessAccountPayoutDestinationType": {
         "type": "string",
         "description": "The destination bank account type.",
-        "enum": ["wire", "cbit"]
+        "enum": ["wire", "cbit", "cubix"]
       },
       "BankDestination": {
         "type": "object",
@@ -11104,7 +10708,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["wire", "cbit", "pix", "sepa", "sepa_instant"]
+            "enum": ["wire", "cbit", "cubix", "pix", "sepa", "sepa_instant"]
           },
           "id": {
             "$ref": "#/components/schemas/Id"
@@ -11641,69 +11245,6 @@
           }
         }
       },
-      "Wallet": {
-        "type": "object",
-        "properties": {
-          "walletId": {
-            "type": "string",
-            "description": "Wallet identifier. Numeric value but should be treated as a string as format may change in the future'",
-            "example": "434000"
-          },
-          "entityId": {
-            "type": "string",
-            "description": "Universally unique identifier (UUID v4) of the entity that owns the wallet.",
-            "example": "fc988ed5-c129-4f70-a064-e5beb7eb8e32"
-          },
-          "type": {
-            "type": "string",
-            "description": "Wallet type.",
-            "enum": ["end_user_wallet"]
-          },
-          "description": {
-            "type": "string",
-            "description": "A human-friendly, non-unique identifier for a wallet.",
-            "example": "Treasury Wallet",
-            "maxLength": 255
-          },
-          "balances": {
-            "description": "A list of balances for currencies owned by the wallet.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Money"
-            }
-          }
-        }
-      },
-      "WalletCreationRequest": {
-        "type": "object",
-        "required": ["idempotencyKey"],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "description": {
-            "type": "string",
-            "description": "A human-friendly, non-unique identifier for a wallet.",
-            "example": "Treasury Wallet",
-            "maxLength": 255
-          }
-        }
-      },
-      "GenerateAddressRequest": {
-        "type": "object",
-        "required": ["idempotencyKey", "currency", "chain"],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "currency": {
-            "$ref": "#/components/schemas/Currency"
-          },
-          "chain": {
-            "$ref": "#/components/schemas/Chain"
-          }
-        }
-      },
       "TransferSourceBlockchainLocation": {
         "description": "A source blockchain address.",
         "type": "object",
@@ -11894,118 +11435,6 @@
           },
           "amount": {
             "$ref": "#/components/schemas/Money"
-          }
-        }
-      },
-      "TransferRequestSourceWalletLocation": {
-        "type": "object",
-        "required": ["type", "id"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": ["wallet"]
-          },
-          "id": {
-            "type": "string",
-            "description": "The id of the wallet.",
-            "example": "12345"
-          },
-          "identities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Identity"
-            }
-          }
-        }
-      },
-      "TransferRequestBlockchainLocation": {
-        "type": "object",
-        "required": ["type", "address", "chain"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": ["blockchain"]
-          },
-          "address": {
-            "type": "string",
-            "description": "The blockchain address.",
-            "example": "0x8381470ED67C3802402dbbFa0058E8871F017A6F"
-          },
-          "addressTag": {
-            "$ref": "#/components/schemas/AddressTag"
-          },
-          "chain": {
-            "$ref": "#/components/schemas/Chain"
-          }
-        }
-      },
-      "TransferCreationRequest": {
-        "type": "object",
-        "required": ["idempotencyKey", "source", "destination", "amount"],
-        "properties": {
-          "idempotencyKey": {
-            "$ref": "#/components/schemas/IdempotencyKey"
-          },
-          "source": {
-            "$ref": "#/components/schemas/TransferRequestSourceWalletLocation"
-          },
-          "destination": {
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/TransferRequestBlockchainLocation"
-              },
-              {
-                "$ref": "#/components/schemas/WalletLocation"
-              }
-            ]
-          },
-          "amount": {
-            "$ref": "#/components/schemas/Money"
-          }
-        }
-      },
-      "TransferDetailedTransfer": {
-        "type": "object",
-        "description": "A transfer of funds.",
-        "required": ["id", "source", "destination", "amount", "status"],
-        "properties": {
-          "id": {
-            "$ref": "#/components/schemas/Id"
-          },
-          "source": {
-            "$ref": "#/components/schemas/TransferSourceLocation"
-          },
-          "destination": {
-            "$ref": "#/components/schemas/TransferDestinationLocation"
-          },
-          "amount": {
-            "$ref": "#/components/schemas/Money"
-          },
-          "fees": {
-            "description": "An array of fees applied to a transaction. This is only available when there is at least one non-zero fee.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Fee"
-            }
-          },
-          "transactionHash": {
-            "type": "string",
-            "description": "A hash that uniquely identifies the onchain transaction. This is only available where either source or destination are of type blockchain.",
-            "example": "0x4cebf8f90c9243a23c77e4ae20df691469e4b933b295a73376292843968f7a63"
-          },
-          "status": {
-            "type": "string",
-            "description": "Status of the transfer. Status `pending` indicates that the transfer is in the process of running; `complete` indicates it finished successfully; `failed` indicates it failed.",
-            "enum": ["failed", "pending", "complete"]
-          },
-          "errorCode": {
-            "$ref": "#/components/schemas/TransferErrorCode"
-          },
-          "riskEvaluation": {
-            "$ref": "#/components/schemas/RiskEvaluation"
-          },
-          "createDate": {
-            "$ref": "#/components/schemas/UtcTimestamp"
           }
         }
       },
@@ -12609,27 +12038,6 @@
           "type": "string",
           "format": "uuid",
           "example": "202ad9ce-974c-49ca-8d34-3afb7d7247ae"
-        }
-      },
-      "WalletId": {
-        "name": "walletId",
-        "description": "Identifier for the wallet.",
-        "in": "path",
-        "required": true,
-        "schema": {
-          "type": "string",
-          "example": "0123456789"
-        }
-      },
-      "ReturnIdentities": {
-        "name": "returnIdentities",
-        "description": "Specify if you would like to see identities in the response. Restricts maximum returned items to 5. By default returnIdentities is false, resulting in the response not returning `data.source.identities`.",
-        "in": "query",
-        "required": false,
-        "schema": {
-          "type": "boolean",
-          "example": "true",
-          "default": false
         }
       }
     }

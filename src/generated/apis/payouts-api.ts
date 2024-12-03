@@ -275,7 +275,7 @@ export const PayoutsApiAxiosParamCreator = function (
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -287,7 +287,7 @@ export const PayoutsApiAxiosParamCreator = function (
      */
     listBusinessPayouts: async (
       destination?: string,
-      type?: "wire" | "cbit",
+      type?: "wire" | "cbit" | "cubix",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -713,7 +713,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -725,7 +725,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      */
     async listBusinessPayouts(
       destination?: string,
-      type?: "wire" | "cbit",
+      type?: "wire" | "cbit" | "cubix",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -963,7 +963,7 @@ export const PayoutsApiFactory = function (
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -975,7 +975,7 @@ export const PayoutsApiFactory = function (
      */
     listBusinessPayouts(
       destination?: string,
-      type?: "wire" | "cbit",
+      type?: "wire" | "cbit" | "cubix",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -1185,7 +1185,7 @@ export class PayoutsApi extends BaseAPI {
    *
    * @summary List all payouts
    * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-   * @param {'wire' | 'cbit'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+   * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
    * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -1198,7 +1198,7 @@ export class PayoutsApi extends BaseAPI {
    */
   public listBusinessPayouts(
     destination?: string,
-    type?: "wire" | "cbit",
+    type?: "wire" | "cbit" | "cubix",
     status?: Set<PayoutStatus>,
     from?: string,
     to?: string,

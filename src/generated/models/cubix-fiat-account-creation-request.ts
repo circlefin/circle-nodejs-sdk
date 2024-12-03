@@ -9,19 +9,19 @@
 /**
  *
  * @export
- * @interface WalletCreationRequest
+ * @interface CubixFiatAccountCreationRequest
  */
-export interface WalletCreationRequest {
+export interface CubixFiatAccountCreationRequest {
   /**
    * Universally unique identifier (UUID v4) idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.
    * @type {string}
-   * @memberof WalletCreationRequest
+   * @memberof CubixFiatAccountCreationRequest
    */
   idempotencyKey: string;
   /**
-   * A human-friendly, non-unique identifier for a wallet.
+   * Cubix Account ID.
    * @type {string}
-   * @memberof WalletCreationRequest
+   * @memberof CubixFiatAccountCreationRequest
    */
-  description?: string;
+  accountId: string;
 }
