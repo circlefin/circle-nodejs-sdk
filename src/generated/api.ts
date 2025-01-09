@@ -8,7 +8,6 @@
 
 export * from "./apis/addresses-api";
 export * from "./apis/balances-api";
-export * from "./apis/cbitapi";
 export * from "./apis/cubixapi";
 export * from "./apis/cards-api";
 export * from "./apis/channels-api";

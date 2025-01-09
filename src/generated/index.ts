@@ -9,7 +9,6 @@
 import {
   AddressesApi,
   BalancesApi,
-  CBITApi,
   CUBIXApi,
   CardsApi,
   ChannelsApi,
@@ -40,7 +39,6 @@ export * from "./models";
 export class Circle {
   public addresses: AddressesApi;
   public balances: BalancesApi;
-  public cbit: CBITApi;
   public cubix: CUBIXApi;
   public cards: CardsApi;
   public channels: ChannelsApi;
@@ -68,7 +66,6 @@ export class Circle {
     const configuration = new Configuration({ basePath: baseUrl, apiKey });
     this.addresses = new AddressesApi(configuration);
     this.balances = new BalancesApi(configuration);
-    this.cbit = new CBITApi(configuration);
     this.cubix = new CUBIXApi(configuration);
     this.cards = new CardsApi(configuration);
     this.channels = new ChannelsApi(configuration);
