@@ -7067,14 +7067,14 @@
         "required": ["from", "to"],
         "properties": {
           "from": {
-            "$ref": "#/components/schemas/CpsFromCurrency"
+            "$ref": "#/components/schemas/OptionalAmountMoney"
           },
           "to": {
-            "$ref": "#/components/schemas/CpsToAmount"
+            "$ref": "#/components/schemas/OptionalAmountMoney"
           }
         }
       },
-      "CpsFromCurrency": {
+      "OptionalAmountMoney": {
         "type": "object",
         "required": ["currency"],
         "properties": {
@@ -7085,28 +7085,13 @@
             "example": 100.0
           },
           "currency": {
-            "$ref": "#/components/schemas/CpsCurrency"
+            "$ref": "#/components/schemas/CpsToken"
           }
         }
       },
-      "CpsToAmount": {
-        "type": "object",
-        "required": ["currency"],
-        "properties": {
-          "amount": {
-            "type": "number",
-            "nullable": true,
-            "description": "Target amount (optional)",
-            "example": 1000
-          },
-          "currency": {
-            "$ref": "#/components/schemas/CpsCurrency"
-          }
-        }
-      },
-      "CpsCurrency": {
+      "CpsToken": {
         "type": "string",
-        "description": "Supported stablecoin currency codes",
+        "description": "Supported stablecoin tokens",
         "enum": ["USDC", "EURC"],
         "example": "USDC"
       },
@@ -7132,33 +7117,19 @@
             "example": "0.9132"
           },
           "from": {
-            "$ref": "#/components/schemas/CpsMoney"
+            "$ref": "#/components/schemas/OptionalAmountMoney"
           },
           "to": {
-            "$ref": "#/components/schemas/CpsMoney"
+            "$ref": "#/components/schemas/OptionalAmountMoney"
           },
           "fee": {
-            "$ref": "#/components/schemas/CpsMoney"
+            "$ref": "#/components/schemas/OptionalAmountMoney"
           },
           "expiry": {
             "type": "string",
             "format": "date-time",
             "description": "Quote expiration time in ISO-8601 format",
             "example": "2025-09-10T17:48:12.237Z"
-          }
-        }
-      },
-      "CpsMoney": {
-        "type": "object",
-        "required": ["amount", "currency"],
-        "properties": {
-          "amount": {
-            "type": "string",
-            "description": "Magnitude of the amount with high precision",
-            "example": "913.390000000000000000000000000000000000000000000000000000000000000000000000000000"
-          },
-          "currency": {
-            "$ref": "#/components/schemas/CpsCurrency"
           }
         }
       },

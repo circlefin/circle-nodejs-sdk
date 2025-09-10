@@ -8,7 +8,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CpsMoney } from "./cps-money";
+import { OptionalAmountMoney } from "./optional-amount-money";
 
 /**
  *
@@ -30,22 +30,22 @@ export interface CpsQuote {
   rate?: string;
   /**
    *
-   * @type {CpsMoney}
+   * @type {OptionalAmountMoney}
    * @memberof CpsQuote
    */
-  from?: CpsMoney;
+  from?: OptionalAmountMoney;
   /**
    *
-   * @type {CpsMoney}
+   * @type {OptionalAmountMoney}
    * @memberof CpsQuote
    */
-  to?: CpsMoney;
+  to?: OptionalAmountMoney;
   /**
    *
-   * @type {CpsMoney}
+   * @type {OptionalAmountMoney}
    * @memberof CpsQuote
    */
-  fee?: CpsMoney;
+  fee?: OptionalAmountMoney;
   /**
    * Quote expiration time in ISO-8601 format
    * @type {string}

@@ -8,24 +8,24 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CpsCurrency } from "./cps-currency";
+import { CpsToken } from "./cps-token";
 
 /**
  *
  * @export
- * @interface CpsMoney
+ * @interface OptionalAmountMoney
  */
-export interface CpsMoney {
+export interface OptionalAmountMoney {
   /**
-   * Magnitude of the amount with high precision
-   * @type {string}
-   * @memberof CpsMoney
+   * Source amount (optional)
+   * @type {number}
+   * @memberof OptionalAmountMoney
    */
-  amount: string;
+  amount?: number | null;
   /**
    *
-   * @type {CpsCurrency}
-   * @memberof CpsMoney
+   * @type {CpsToken}
+   * @memberof OptionalAmountMoney
    */
-  currency: CpsCurrency;
+  currency: CpsToken;
 }

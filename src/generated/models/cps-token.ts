@@ -7,14 +7,14 @@
  */
 
 /**
- * Supported stablecoin currency codes
+ * Supported stablecoin tokens
  * @export
  * @enum {string}
  */
 
-export const CpsCurrency = {
+export const CpsToken = {
   Usdc: "USDC",
   Eurc: "EURC"
 } as const;
 
-export type CpsCurrency = typeof CpsCurrency[keyof typeof CpsCurrency];
+export type CpsToken = typeof CpsToken[keyof typeof CpsToken];

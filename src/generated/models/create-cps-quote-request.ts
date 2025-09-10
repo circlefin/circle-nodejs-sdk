@@ -8,10 +8,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CpsFromCurrency } from "./cps-from-currency";
-// May contain unused imports in some cases
-// @ts-ignore
-import { CpsToAmount } from "./cps-to-amount";
+import { OptionalAmountMoney } from "./optional-amount-money";
 
 /**
  *
@@ -21,14 +18,14 @@ import { CpsToAmount } from "./cps-to-amount";
 export interface CreateCpsQuoteRequest {
   /**
    *
-   * @type {CpsFromCurrency}
+   * @type {OptionalAmountMoney}
    * @memberof CreateCpsQuoteRequest
    */
-  from: CpsFromCurrency;
+  from: OptionalAmountMoney;
   /**
    *
-   * @type {CpsToAmount}
+   * @type {OptionalAmountMoney}
    * @memberof CreateCpsQuoteRequest
    */
-  to: CpsToAmount;
+  to: OptionalAmountMoney;
 }
