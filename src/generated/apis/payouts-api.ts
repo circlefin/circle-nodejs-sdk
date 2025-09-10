@@ -275,7 +275,7 @@ export const PayoutsApiAxiosParamCreator = function (
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -287,7 +287,7 @@ export const PayoutsApiAxiosParamCreator = function (
      */
     listBusinessPayouts: async (
       destination?: string,
-      type?: "wire" | "cbit" | "cubix",
+      type?: "wire" | "cubix",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -460,7 +460,7 @@ export const PayoutsApiAxiosParamCreator = function (
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -491,7 +491,6 @@ export const PayoutsApiAxiosParamCreator = function (
         | "BTC"
         | "CELO"
         | "ETH"
-        | "FLOW"
         | "HBAR"
         | "NEAR"
         | "NOBLE"
@@ -499,8 +498,9 @@ export const PayoutsApiAxiosParamCreator = function (
         | "PAH"
         | "POLY"
         | "SOL"
-        | "TRX"
-        | "XLM",
+        | "SUI"
+        | "XLM"
+        | "ZKS",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -713,7 +713,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -725,7 +725,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      */
     async listBusinessPayouts(
       destination?: string,
-      type?: "wire" | "cbit" | "cubix",
+      type?: "wire" | "cubix",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -813,7 +813,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -844,7 +844,6 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
         | "BTC"
         | "CELO"
         | "ETH"
-        | "FLOW"
         | "HBAR"
         | "NEAR"
         | "NOBLE"
@@ -852,8 +851,9 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
         | "PAH"
         | "POLY"
         | "SOL"
-        | "TRX"
-        | "XLM",
+        | "SUI"
+        | "XLM"
+        | "ZKS",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -963,7 +963,7 @@ export const PayoutsApiFactory = function (
      *
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-     * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+     * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -975,7 +975,7 @@ export const PayoutsApiFactory = function (
      */
     listBusinessPayouts(
       destination?: string,
-      type?: "wire" | "cbit" | "cubix",
+      type?: "wire" | "cubix",
       status?: Set<PayoutStatus>,
       from?: string,
       to?: string,
@@ -1043,7 +1043,7 @@ export const PayoutsApiFactory = function (
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -1074,7 +1074,6 @@ export const PayoutsApiFactory = function (
         | "BTC"
         | "CELO"
         | "ETH"
-        | "FLOW"
         | "HBAR"
         | "NEAR"
         | "NOBLE"
@@ -1082,8 +1081,9 @@ export const PayoutsApiFactory = function (
         | "PAH"
         | "POLY"
         | "SOL"
-        | "TRX"
-        | "XLM",
+        | "SUI"
+        | "XLM"
+        | "ZKS",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -1185,7 +1185,7 @@ export class PayoutsApi extends BaseAPI {
    *
    * @summary List all payouts
    * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
-   * @param {'wire' | 'cbit' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
+   * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
    * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -1198,7 +1198,7 @@ export class PayoutsApi extends BaseAPI {
    */
   public listBusinessPayouts(
     destination?: string,
-    type?: "wire" | "cbit" | "cubix",
+    type?: "wire" | "cubix",
     status?: Set<PayoutStatus>,
     from?: string,
     to?: string,
@@ -1269,7 +1269,7 @@ export class PayoutsApi extends BaseAPI {
    * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
    * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-   * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'FLOW' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'TRX' | 'XLM'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+   * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -1294,7 +1294,6 @@ export class PayoutsApi extends BaseAPI {
       | "BTC"
       | "CELO"
       | "ETH"
-      | "FLOW"
       | "HBAR"
       | "NEAR"
       | "NOBLE"
@@ -1302,8 +1301,9 @@ export class PayoutsApi extends BaseAPI {
       | "PAH"
       | "POLY"
       | "SOL"
-      | "TRX"
-      | "XLM",
+      | "SUI"
+      | "XLM"
+      | "ZKS",
     from?: string,
     to?: string,
     pageBefore?: string,

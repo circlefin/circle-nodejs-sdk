@@ -84,10 +84,10 @@ export interface BusinessPayout {
   status?: PayoutStatus;
   /**
    * A payout tracking reference. Will be present once known.
-   * @type {any}
+   * @type {string}
    * @memberof BusinessPayout
    */
-  trackingRef?: any | null;
+  trackingRef?: string | null;
   /**
    *
    * @type {PayoutErrorCode}
