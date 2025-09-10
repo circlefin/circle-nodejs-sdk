@@ -7067,14 +7067,14 @@
         "required": ["from", "to"],
         "properties": {
           "from": {
-            "$ref": "#/components/schemas/OptionalAmountMoney"
+            "$ref": "#/components/schemas/CpsOptionalAmountMoney"
           },
           "to": {
-            "$ref": "#/components/schemas/OptionalAmountMoney"
+            "$ref": "#/components/schemas/CpsOptionalAmountMoney"
           }
         }
       },
-      "OptionalAmountMoney": {
+      "CpsOptionalAmountMoney": {
         "type": "object",
         "required": ["currency"],
         "properties": {
@@ -7091,7 +7091,7 @@
       },
       "CpsToken": {
         "type": "string",
-        "description": "Supported stablecoin tokens",
+        "description": "Supported stablecoin tokens for CPS",
         "enum": ["USDC", "EURC"],
         "example": "USDC"
       },
@@ -7117,13 +7117,13 @@
             "example": "0.9132"
           },
           "from": {
-            "$ref": "#/components/schemas/OptionalAmountMoney"
+            "$ref": "#/components/schemas/CpsOptionalAmountMoney"
           },
           "to": {
-            "$ref": "#/components/schemas/OptionalAmountMoney"
+            "$ref": "#/components/schemas/CpsOptionalAmountMoney"
           },
           "fee": {
-            "$ref": "#/components/schemas/OptionalAmountMoney"
+            "$ref": "#/components/schemas/CpsOptionalAmountMoney"
           },
           "expiry": {
             "type": "string",

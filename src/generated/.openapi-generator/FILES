@@ -83,6 +83,7 @@ models/checkout-session.ts
 models/conflict.ts
 models/continuous-payment-intent-creation-request.ts
 models/continuous-payment-intent.ts
+models/cps-optional-amount-money.ts
 models/cps-quote.ts
 models/cps-token.ts
 models/create-address-book-recipient-response.ts
@@ -222,7 +223,6 @@ models/money.ts
 models/network-fee-quote.ts
 models/not-authorized.ts
 models/not-found.ts
-models/optional-amount-money.ts
 models/payment-creation-request.ts
 models/payment-error-code.ts
 models/payment-info-cancel.ts

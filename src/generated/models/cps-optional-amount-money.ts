@@ -13,19 +13,19 @@ import { CpsToken } from "./cps-token";
 /**
  *
  * @export
- * @interface OptionalAmountMoney
+ * @interface CpsOptionalAmountMoney
  */
-export interface OptionalAmountMoney {
+export interface CpsOptionalAmountMoney {
   /**
    * Source amount (optional)
    * @type {number}
-   * @memberof OptionalAmountMoney
+   * @memberof CpsOptionalAmountMoney
    */
   amount?: number | null;
   /**
    *
    * @type {CpsToken}
-   * @memberof OptionalAmountMoney
+   * @memberof CpsOptionalAmountMoney
    */
   currency: CpsToken;
 }

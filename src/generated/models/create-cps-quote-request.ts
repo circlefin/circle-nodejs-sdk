@@ -8,7 +8,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { OptionalAmountMoney } from "./optional-amount-money";
+import { CpsOptionalAmountMoney } from "./cps-optional-amount-money";
 
 /**
  *
@@ -18,14 +18,14 @@ import { OptionalAmountMoney } from "./optional-amount-money";
 export interface CreateCpsQuoteRequest {
   /**
    *
-   * @type {OptionalAmountMoney}
+   * @type {CpsOptionalAmountMoney}
    * @memberof CreateCpsQuoteRequest
    */
-  from: OptionalAmountMoney;
+  from: CpsOptionalAmountMoney;
   /**
    *
-   * @type {OptionalAmountMoney}
+   * @type {CpsOptionalAmountMoney}
    * @memberof CreateCpsQuoteRequest
    */
-  to: OptionalAmountMoney;
+  to: CpsOptionalAmountMoney;
 }
