@@ -12,6 +12,7 @@ apis/crypto-payment-intents-api.ts
 apis/cubixapi.ts
 apis/deposits-api.ts
 apis/encryption-api.ts
+apis/exchange-api.ts
 apis/health-api.ts
 apis/management-api.ts
 apis/payment-tokens-api.ts
@@ -82,6 +83,11 @@ models/checkout-session.ts
 models/conflict.ts
 models/continuous-payment-intent-creation-request.ts
 models/continuous-payment-intent.ts
+models/cps-currency.ts
+models/cps-from-currency.ts
+models/cps-money.ts
+models/cps-quote.ts
+models/cps-to-amount.ts
 models/create-address-book-recipient-response.ts
 models/create-business-cbit-account-response.ts
 models/create-business-cubix-account-response.ts
@@ -93,6 +99,8 @@ models/create-business-transfer-response.ts
 models/create-business-wire-account-response.ts
 models/create-card-response.ts
 models/create-checkout-session-response.ts
+models/create-cps-quote-request.ts
+models/create-cps-quote-response.ts
 models/create-crypto-payment-response.ts
 models/create-crypto-payment-response1.ts
 models/create-crypto-refund-response.ts

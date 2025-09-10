@@ -8,7 +8,7 @@
   "info": {
     "version": "2.14.0",
     "title": "All Circle APIs",
-    "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, and Crypto Payments APIs bundled into one OpenAPI Specification."
+    "description": "Circle's General, Core Functionality, Payments, Payouts, Accounts, Crypto Payments, and Exchange APIs bundled into one OpenAPI Specification."
   },
   "tags": [
     {
@@ -114,6 +114,10 @@
     {
       "name": "Checkout Sessions",
       "description": "Create, get, extend a checkout session."
+    },
+    {
+      "name": "Exchange",
+      "description": "Exchange between two currencies."
     }
   ],
   "paths": {
@@ -6998,6 +7002,46 @@
           }
         }
       }
+    },
+    "/v1/exchange/cps/quotes": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Create CPS Quote",
+        "description": "Create a quote for exchanging between two stablecoins.",
+        "operationId": "createCpsQuote",
+        "tags": ["Exchange"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCpsQuoteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created CPS quote.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCpsQuoteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/NotAuthorized"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -7015,6 +7059,106 @@
           "message": {
             "type": "string",
             "example": "pong"
+          }
+        }
+      },
+      "CreateCpsQuoteRequest": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": {
+            "$ref": "#/components/schemas/CpsFromCurrency"
+          },
+          "to": {
+            "$ref": "#/components/schemas/CpsToAmount"
+          }
+        }
+      },
+      "CpsFromCurrency": {
+        "type": "object",
+        "required": ["currency"],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "nullable": true,
+            "description": "Source amount (optional)",
+            "example": 100.0
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CpsCurrency"
+          }
+        }
+      },
+      "CpsToAmount": {
+        "type": "object",
+        "required": ["currency"],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "nullable": true,
+            "description": "Target amount (optional)",
+            "example": 1000
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CpsCurrency"
+          }
+        }
+      },
+      "CpsCurrency": {
+        "type": "string",
+        "description": "Supported stablecoin currency codes",
+        "enum": ["USDC", "EURC"],
+        "example": "USDC"
+      },
+      "CreateCpsQuoteResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/CpsQuote"
+          }
+        }
+      },
+      "CpsQuote": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the CPS quote",
+            "example": "825a494f-83a7-4e1f-bb6c-e01f0766f420"
+          },
+          "rate": {
+            "type": "string",
+            "description": "Exchange rate",
+            "example": "0.9132"
+          },
+          "from": {
+            "$ref": "#/components/schemas/CpsMoney"
+          },
+          "to": {
+            "$ref": "#/components/schemas/CpsMoney"
+          },
+          "fee": {
+            "$ref": "#/components/schemas/CpsMoney"
+          },
+          "expiry": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Quote expiration time in ISO-8601 format",
+            "example": "2025-09-10T17:48:12.237Z"
+          }
+        }
+      },
+      "CpsMoney": {
+        "type": "object",
+        "required": ["amount", "currency"],
+        "properties": {
+          "amount": {
+            "type": "string",
+            "description": "Magnitude of the amount with high precision",
+            "example": "913.390000000000000000000000000000000000000000000000000000000000000000000000000000"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CpsCurrency"
           }
         }
       },

@@ -19,6 +19,7 @@ export * from "./apis/crypto-exchange-rates-api";
 export * from "./apis/crypto-payment-intents-api";
 export * from "./apis/deposits-api";
 export * from "./apis/encryption-api";
+export * from "./apis/exchange-api";
 export * from "./apis/health-api";
 export * from "./apis/management-api";
 export * from "./apis/pixapi";

@@ -20,6 +20,7 @@ import {
   CryptoPaymentIntentsApi,
   DepositsApi,
   EncryptionApi,
+  ExchangeApi,
   HealthApi,
   ManagementApi,
   PIXApi,
@@ -51,6 +52,7 @@ export class Circle {
   public cryptoPaymentIntents: CryptoPaymentIntentsApi;
   public deposits: DepositsApi;
   public encryption: EncryptionApi;
+  public exchange: ExchangeApi;
   public health: HealthApi;
   public management: ManagementApi;
   public pix: PIXApi;
@@ -79,6 +81,7 @@ export class Circle {
     this.cryptoPaymentIntents = new CryptoPaymentIntentsApi(configuration);
     this.deposits = new DepositsApi(configuration);
     this.encryption = new EncryptionApi(configuration);
+    this.exchange = new ExchangeApi(configuration);
     this.health = new HealthApi(configuration);
     this.management = new ManagementApi(configuration);
     this.pix = new PIXApi(configuration);
