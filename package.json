@@ -33,7 +33,12 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "axios": "1.7.4"
+    "@circle-fin/circle-sdk": "^2.9.0",
+    "@circle-fin/developer-controlled-wallets": "^9.4.0",
+    "axios": "1.7.4",
+    "dotenv": "^17.2.3",
+    "ethers": "^6.15.0",
+    "uuid": "^13.0.0"
   },
   "homepage": "https://github.com/circlefin/circle-nodejs-sdk#readme",
   "publishConfig": {
