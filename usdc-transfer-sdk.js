@@ -2,6 +2,7 @@
 
 require('dotenv').config();
 const { initiateDeveloperControlledWalletsClient } = require('@circle-fin/developer-controlled-wallets');
+const { get } = require('http');
 const { v4: uuidv4 } = require('uuid'); // Required for idempotency key
 
 // --- Configuration from .env ---
@@ -12,7 +13,7 @@ const RECIPIENT_ADDRESS = process.env.RECIPIENT_ADDRESS;
 const USDC_TOKEN_ID = process.env.USDC_TOKEN_ID; // Example: "228945d9-43c7-57ce-9b0d-b10857317c2a"
 
 // --- Transfer Details ---
-const AMOUNT_USDC = "1.00"; 
+const AMOUNT_USDC = ".01"; 
 const BLOCKCHAIN = "MATIC-AMOY"; // Circle's identifier for the Amoy testnet
 
 /**
@@ -25,18 +26,13 @@ async function sendUsdcTransfer() {
         console.error("Missing one or more required environment variables in .env file.");
         return;
     }
-
     try {
         // 1. Initialize the Circle Developer-Controlled Wallets Client
         const circleClient = initiateDeveloperControlledWalletsClient({
             apiKey:"TEST_API_KEY:a4c20122aeb5c8600299da79c3ba1a95:0bccb52ac8d8fc127abcaa067c1b61be" ,
             entitySecret: "e262785a20bfc1edc87f8c41db906eb871256bb448184786621bd30e5d14a003",
-            // Use CircleEnvironments.sandbox for testing
-            // baseUrl: 'https://api.circle.com/v1/w3s', // default for production
         });
-        console.log(JSON.stringify(circleClient));
-        console.log(`Attempting to transfer ${AMOUNT_USDC} USDC from Wallet ID ${SENDER_WALLET_ID} to ${RECIPIENT_ADDRESS} on ${BLOCKCHAIN}...`);
-
+        // console.log(JSON.stringify(circleClient));
         // 2. Prepare the transfer request payload
         let transferPayload = {
             idempotencyKey: uuidv4(), // Ensures the request is processed only once
@@ -44,47 +40,27 @@ async function sendUsdcTransfer() {
             destinationAddress: RECIPIENT_ADDRESS,
             tokenAddress: "0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582",
             blockchain:'MATIC-AMOY',
-            amounts:["0.01"],
+            amounts:[AMOUNT_USDC],
             fee: { type: "level", config: { feeLevel: "LOW" }}
         };
-        console.log(JSON.stringify(transferPayload));
         // 3. Execute the transfer API call
         const response = await circleClient.createTransaction(transferPayload);
+        console.log(`Attempting to transfer ${AMOUNT_USDC} USDC from Wallet ID ${SENDER_WALLET_ID} to ${RECIPIENT_ADDRESS} on ${BLOCKCHAIN}...`);
 
         // 4. Process the response
         if (response.data && response.data.id) {
             const transfer = response.data;
+            console.log(transfer);
             const transactionId = response.data.id;
             console.log("\n--- Transfer Initiated Successfully ---");
             console.log("Transaction ID:", transactionId);
-            await circleClient.getTransaction({"id":transactionId}).then(function(transaction){
-                console.log(transaction.data);
-                let transId = transaction.data.transaction.id;
-                console.log(transId.toString());
-                setInterval(getTransfer(transId.toString()), 5000); // Poll every 5 seconds
-            })
-            // console.log(transaction.data);
-            // let transId = transaction.data.transaction.id;
-            // console.log(transId);
-            // while(transfer.state==="INITIATED"){
-            //     console.log("...");
-            //     transaction = await circleClient.getTransaction({"id":transferId});
-            //     console.log(transfer.id);
-            //     console.log(transfer.state);
-            // }
-            // console.log("Status:", transfer.status);
-            // console.log("Source Wallet ID:", transfer.source.id);
-            // console.log("Destination Address:", transfer.destination.address);
-            // console.log("Expected Amount:", transfer.amount.amount, transfer.amount.currency);
-            
-            // Note: The transactionHash will only be available once the transfer status changes to 'complete'
-            if (transfer.transactionHash) {
-                console.log(`Transaction Hash: ${transfer.transactionHash}`);
+            if (transfer.txHash) {
+                console.log(`Transaction Hash: ${transfer.txHash}`);
                 console.log(`View on AmoyScan: https://amoy.polygonscan.com/tx/${transfer.transactionHash}`);
             } else {
                 console.log("Transaction is processing. Check transfer status later for the hash.");
+                getTransfer(transactionId);
             }
-            
             return transfer;
         } else {
             console.error("Transfer failed or returned an unexpected response structure:", response.data);
@@ -99,22 +75,41 @@ async function sendUsdcTransfer() {
         }
     }
 }
-async function getTransfer(id){
+  async function getTransfer(id){
+    console.log("Checking transaction state for transaction ID:", id);
     const circleClient = initiateDeveloperControlledWalletsClient({
     apiKey:"TEST_API_KEY:a4c20122aeb5c8600299da79c3ba1a95:0bccb52ac8d8fc127abcaa067c1b61be" ,
     entitySecret: "e262785a20bfc1edc87f8c41db906eb871256bb448184786621bd30e5d14a003",
-    // Use CircleEnvironments.sandbox for testing
-    // baseUrl: 'https://api.circle.com/v1/w3s', // default for production
     });
-    let transaction = await circleClient.getTransaction({"id":id});
-    console.log(transaction.state);
-    if (transaction.state!="INITIATED"){
-        console.log("Status:", transaction.state);
-        console.log("Source Wallet ID:", transaction.source.id);
-        console.log("Destination Address:", transaction.destination.address);
-        console.log("Expected Amount:", transaction.amount.amount, transfer.amount.currency);
+    let transaction =  await circleClient.getTransaction({"id":id});
+    // if (transaction.data.transaction.txHash){
+    //     console.log("Hash:", transaction.data.transaction.txHash);
+    //     console.log("Status:", transaction.data.transaction.state);
+    //     console.log("Source Wallet ID:", transaction.data.transaction.id);
+    //     console.log("Destination Address:", transaction.data.transaction.destinationAddress);
+    //     console.log("Expected Amount:", transaction.data.transaction.amounts);
+    //     return true;
+    // }else{
+    //     console.log('INCOMPLETE STATE, retrying...');
+    //     setTimeout(5000,getTransfer(id));
+    //     console.log(transaction);
+    //     return false;
+    // }
+    while (transaction.data.transaction.state != "COMPLETE") {
+        console.log("Condition not met, waiting and polling again...");
+        console.log(transaction.data.transaction.state);
+        await wait(9000);
+        result = await getTransfer(id);
     }
+    console.log(transaction.data.transaction.state);
+    console.log(transaction.data.transaction);
+    console.log("Transaction COMPLETE!!!");
     return true;
 }
+const wait = (ms = 1000) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+};
 // Execute the function
 sendUsdcTransfer();
