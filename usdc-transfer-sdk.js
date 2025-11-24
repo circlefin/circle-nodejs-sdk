@@ -98,11 +98,13 @@ async function sendUsdcTransfer() {
     while (transaction.data.transaction.state != "COMPLETE") {
         console.log("Condition not met, waiting and polling again...");
         console.log(transaction.data.transaction.state);
+        console.log(transaction.data.transaction);
         await wait(9000);
         result = await getTransfer(id);
+        if(result){
+            break;
+        }
     }
-    console.log(transaction.data.transaction.state);
-    console.log(transaction.data.transaction);
     console.log("Transaction COMPLETE!!!");
     return true;
 }
