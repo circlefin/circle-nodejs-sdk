@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle SDK Web App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Circle SDK Web App</h1>
+    <p>A simple app to demonstrate the Circle Developer-Controlled Wallets SDK.</p>
+
+    <!-- Wallet Creation -->
+    <div class="card">
+      <h2>1. Wallet Management</h2>
+      <button id="createWalletBtn">Create New Wallet</button>
+      <div id="walletInfo" class="hidden">
+        <h3>Wallet Details:</h3>
+        <p><strong>ID:</strong> <code id="walletId"></code></p>
+        <p><strong>Address:</strong> <code id="walletAddress"></code></p>
+        <p><strong>Blockchain:</strong> <code id="walletBlockchain"></code></p>
+        <hr>
+        <h3>USDC Balance:</h3>
+        <p class="balance"><span id="walletBalance">0.00</span> USDC</p>
+        <button id="refreshBalanceBtn">Refresh Balance</button>
+        <p class="note">
+          To get testnet USDC on Polygon Amoy, use the <a href="https://faucet.circle.com/" target="_blank" rel="noopener noreferrer">Circle Faucet</a>.
+        </p>
+      </div>
+    </div>
+
+    <!-- Transfer -->
+    <div id="transferSection" class="card hidden">
+      <h2>2. Transfer USDC</h2>
+      <form id="transferForm">
+        <div class="form-group">
+          <label for="destinationAddress">Destination Address:</label>
+          <input type="text" id="destinationAddress" required placeholder="0x...">
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount (USDC):</label>
+          <input type="text" id="amount" required placeholder="e.g., 1.5">
+        </div>
+        <button type="submit">Initiate Transfer</button>
+      </form>
+    </div>
+
+    <!-- Status/Logs -->
+    <div class="card">
+      <h2>Activity Log</h2>
+      <pre id="log"></pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
