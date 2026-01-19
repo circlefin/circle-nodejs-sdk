@@ -38,6 +38,7 @@
     "axios": "1.7.4",
     "dotenv": "^17.2.3",
     "ethers": "^6.15.0",
+    "express": "^5.2.1",
     "uuid": "^13.0.0"
   },
   "homepage": "https://github.com/circlefin/circle-nodejs-sdk#readme",

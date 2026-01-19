@@ -1,23 +1,34 @@
 import express from 'express';
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config();
 import { v4 as uuidv4 } from 'uuid';
 import { initiateDeveloperControlledWalletsClient } from '@circle-fin/developer-controlled-wallets';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// --- Serve Frontend ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const publicPath = __dirname; // The root directory contains our static files
+
+app.use(express.static(publicPath));
+
 // --- Circle SDK Initialization ---
-if (!process.env.CIRCLE_API_KEY || !process.env.ENTITY_SECRET) {
-  throw new Error('CIRCLE_API_KEY and ENTITY_SECRET must be set in your .env file.');
+if (!process.env.CIRCLE_API_KEY || !process.env.CIRCLE_ENTITY_SECRET) {
+  throw new Error('CIRCLE_API_KEY and CIRCLE_ENTITY_SECRET must be set in your .env file.');
 }
+console.log(process.env.CIRCLE_API_KEY);
+console.log(process.env.CIRCLE_ENTITY_SECRET);
 
 const circleClient = initiateDeveloperControlledWalletsClient({
   apiKey: process.env.CIRCLE_API_KEY,
-  entitySecret: process.env.ENTITY_SECRET,
+  entitySecret: process.env.CIRCLE_ENTITY_SECRET,
 });
 
 // --- In-memory "database" for simplicity ---
@@ -104,13 +115,7 @@ app.post('/api/transfer', async (req, res) => {
   }
 });
 
-// --- Serve Frontend ---
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const publicPath = path.join(__dirname, 'public');
-
-app.use(express.static(publicPath));
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
 });
 
