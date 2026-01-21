@@ -74,13 +74,12 @@ app.get('/api/balance/:walletId', async (req, res) => {
   try {
     const balanceRes = await circleClient.getWalletTokenBalance({ id: walletId });
     // Find the USDC balance (Polygon Amoy USDC token ID)
-    const usdcTokenId = '1b235c88-22b9-503a-a56a-3d07a1532e36';
-    const usdcBalance = balanceRes.data?.tokenBalances?.find(
-      (token) => token.token.id === usdcTokenId
-    );
-
+    const usdcTokenId = '0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582';
+    let usdcBalance = balanceRes.data.tokenBalances[0].amount;
+    console.log(usdcBalance);
     res.json({
-      balance: usdcBalance ? usdcBalance.amount : '0.00',
+      // balance: usdcBalance ? usdcBalance.amount : '0.00',
+      balance:usdcBalance
     });
   } catch (error) {
     console.error('Error fetching balance:', error.response?.data || error.message);
