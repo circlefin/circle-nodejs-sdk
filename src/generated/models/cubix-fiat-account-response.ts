@@ -16,49 +16,49 @@ import { TransferTypeInfo } from "./transfer-type-info";
 /**
  *
  * @export
- * @interface CbitFiatAccountResponse
+ * @interface CubixFiatAccountResponse
  */
-export interface CbitFiatAccountResponse {
+export interface CubixFiatAccountResponse {
   /**
    * Unique system generated identifier for the entity.
    * @type {string}
-   * @memberof CbitFiatAccountResponse
+   * @memberof CubixFiatAccountResponse
    */
   id: string;
   /**
    *
    * @type {ExternalFiatAccountStatus}
-   * @memberof CbitFiatAccountResponse
+   * @memberof CubixFiatAccountResponse
    */
   status: ExternalFiatAccountStatus;
   /**
-   * Tracking ref that needs to be set in the public description field when you send the funds to Circle CBIT wallet.
+   * Tracking ref that needs to be set in the public description field when you send the funds to Circle\'s CUBIX account.
    * @type {string}
-   * @memberof CbitFiatAccountResponse
+   * @memberof CubixFiatAccountResponse
    */
   trackingRef: string;
   /**
-   * Your CBIT wallet address.
+   * Your CUBIX Account ID.
    * @type {string}
-   * @memberof CbitFiatAccountResponse
+   * @memberof CubixFiatAccountResponse
    */
-  walletAddress: string;
+  accountId: string;
   /**
-   * A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each. For CBIT accounts this will always only show information for CBIT transfers.
+   * A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each. For CUBIX accounts this will always only show information for CUBIX transfers.
    * @type {{ [key: string]: TransferTypeInfo; }}
-   * @memberof CbitFiatAccountResponse
+   * @memberof CubixFiatAccountResponse
    */
   transferTypesInfo: { [key: string]: TransferTypeInfo };
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof CbitFiatAccountResponse
+   * @memberof CubixFiatAccountResponse
    */
   createDate: string;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
-   * @memberof CbitFiatAccountResponse
+   * @memberof CubixFiatAccountResponse
    */
   updateDate: string;
 }

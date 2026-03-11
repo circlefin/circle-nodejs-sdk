@@ -12,6 +12,9 @@ import { ExternalFiatAccountStatus } from "./external-fiat-account-status";
 // May contain unused imports in some cases
 // @ts-ignore
 import { RiskEvaluation } from "./risk-evaluation";
+// May contain unused imports in some cases
+// @ts-ignore
+import { TransferTypeInfo } from "./transfer-type-info";
 
 /**
  *
@@ -43,6 +46,12 @@ export interface PixFiatAccountResponse {
    * @memberof PixFiatAccountResponse
    */
   trackingRef: string;
+  /**
+   * A <TransferType, TransferTypeInfo> map which shows transfer types supported on this account as well as additional information for each. For PIX accounts this will always only show information for PIX transfers.
+   * @type {{ [key: string]: TransferTypeInfo; }}
+   * @memberof PixFiatAccountResponse
+   */
+  transferTypesInfo: { [key: string]: TransferTypeInfo };
   /**
    *
    * @type {RiskEvaluation}

@@ -8,18 +8,18 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AddressObject } from "./address-object";
+import { CubixFiatAccountResponse } from "./cubix-fiat-account-response";
 
 /**
  *
  * @export
- * @interface GenerateAddressResponse
+ * @interface CreateBusinessCubixAccountResponse
  */
-export interface GenerateAddressResponse {
+export interface CreateBusinessCubixAccountResponse {
   /**
    *
-   * @type {AddressObject}
-   * @memberof GenerateAddressResponse
+   * @type {CubixFiatAccountResponse}
+   * @memberof CreateBusinessCubixAccountResponse
    */
-  data?: AddressObject;
+  data?: CubixFiatAccountResponse;
 }

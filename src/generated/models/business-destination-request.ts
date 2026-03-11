@@ -28,7 +28,7 @@ export interface BusinessDestinationRequest {
 
 export const BusinessDestinationRequestTypeEnum = {
   Wire: "wire",
-  Cbit: "cbit",
+  Cubix: "cubix",
   Pix: "pix",
   Sepa: "sepa",
   SepaInstant: "sepa_instant"

@@ -34,39 +34,39 @@ import {
 // @ts-ignore
 import { BadRequest } from "../models";
 // @ts-ignore
-import { CbitFiatAccountCreationRequest } from "../models";
+import { CreateBusinessCubixAccountResponse } from "../models";
 // @ts-ignore
-import { CreateBusinessCbitAccountResponse } from "../models";
+import { CubixFiatAccountCreationRequest } from "../models";
 // @ts-ignore
-import { GetBusinessCbitAccountResponse } from "../models";
+import { GetBusinessCubixAccountResponse } from "../models";
 // @ts-ignore
-import { ListBusinessCbitAccountInstructionsResponse } from "../models";
+import { ListBusinessCubixAccountInstructionsResponse } from "../models";
 // @ts-ignore
-import { ListBusinessCbitAccountsResponse } from "../models";
+import { ListBusinessCubixAccountsResponse } from "../models";
 // @ts-ignore
 import { NotAuthorized } from "../models";
 // @ts-ignore
 import { NotFound } from "../models";
 /**
- * CBITApi - axios parameter creator
+ * CUBIXApi - axios parameter creator
  * @export
  */
-export const CBITApiAxiosParamCreator = function (
+export const CUBIXApiAxiosParamCreator = function (
   configuration?: Configuration
 ) {
   return {
     /**
      *
-     * @summary Create a CBIT bank account
-     * @param {CbitFiatAccountCreationRequest} [cbitFiatAccountCreationRequest]
+     * @summary Create a CUBIX bank account
+     * @param {CubixFiatAccountCreationRequest} [cubixFiatAccountCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createBusinessCbitAccount: async (
-      cbitFiatAccountCreationRequest?: CbitFiatAccountCreationRequest,
+    createBusinessCubixAccount: async (
+      cubixFiatAccountCreationRequest?: CubixFiatAccountCreationRequest,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/businessAccount/banks/cbit`;
+      const localVarPath = `/v1/businessAccount/banks/cubix`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -97,7 +97,7 @@ export const CBITApiAxiosParamCreator = function (
         ...options.headers
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        cbitFiatAccountCreationRequest,
+        cubixFiatAccountCreationRequest,
         localVarRequestOptions,
         configuration
       );
@@ -109,18 +109,18 @@ export const CBITApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary Get a CBIT bank account
+     * @summary Get a CUBIX bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getBusinessCbitAccount: async (
+    getBusinessCubixAccount: async (
       id: string,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
-      assertParamExists("getBusinessCbitAccount", "id", id);
-      const localVarPath = `/v1/businessAccount/banks/cbit/{id}`.replace(
+      assertParamExists("getBusinessCubixAccount", "id", id);
+      const localVarPath = `/v1/businessAccount/banks/cubix/{id}`.replace(
         `{${"id"}}`,
         encodeURIComponent(String(id))
       );
@@ -158,20 +158,20 @@ export const CBITApiAxiosParamCreator = function (
       };
     },
     /**
-     * Get the CBIT transfer instructions into the Circle bank account given your bank account id.
-     * @summary Get CBIT instructions
+     * Get the CUBIX transfer instructions into the Circle bank account given your fiat account id.
+     * @summary Get CUBIX instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getBusinessCbitAccountInstructions: async (
+    getBusinessCubixAccountInstructions: async (
       id: string,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
-      assertParamExists("getBusinessCbitAccountInstructions", "id", id);
+      assertParamExists("getBusinessCubixAccountInstructions", "id", id);
       const localVarPath =
-        `/v1/businessAccount/banks/cbit/{id}/instructions`.replace(
+        `/v1/businessAccount/banks/cubix/{id}/instructions`.replace(
           `{${"id"}}`,
           encodeURIComponent(String(id))
         );
@@ -210,14 +210,14 @@ export const CBITApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary List all CBIT bank accounts.
+     * @summary List all CUBIX bank accounts.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    listBusinessCbitAccounts: async (
+    listBusinessCubixAccounts: async (
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/businessAccount/banks/cbit`;
+      const localVarPath = `/v1/businessAccount/banks/cubix`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -255,31 +255,31 @@ export const CBITApiAxiosParamCreator = function (
 };
 
 /**
- * CBITApi - functional programming interface
+ * CUBIXApi - functional programming interface
  * @export
  */
-export const CBITApiFp = function (configuration?: Configuration) {
-  const localVarAxiosParamCreator = CBITApiAxiosParamCreator(configuration);
+export const CUBIXApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = CUBIXApiAxiosParamCreator(configuration);
   return {
     /**
      *
-     * @summary Create a CBIT bank account
-     * @param {CbitFiatAccountCreationRequest} [cbitFiatAccountCreationRequest]
+     * @summary Create a CUBIX bank account
+     * @param {CubixFiatAccountCreationRequest} [cubixFiatAccountCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async createBusinessCbitAccount(
-      cbitFiatAccountCreationRequest?: CbitFiatAccountCreationRequest,
+    async createBusinessCubixAccount(
+      cubixFiatAccountCreationRequest?: CubixFiatAccountCreationRequest,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<CreateBusinessCbitAccountResponse>
+      ) => AxiosPromise<CreateBusinessCubixAccountResponse>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.createBusinessCbitAccount(
-          cbitFiatAccountCreationRequest,
+        await localVarAxiosParamCreator.createBusinessCubixAccount(
+          cubixFiatAccountCreationRequest,
           options
         );
       return createRequestFunction(
@@ -291,22 +291,22 @@ export const CBITApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary Get a CBIT bank account
+     * @summary Get a CUBIX bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getBusinessCbitAccount(
+    async getBusinessCubixAccount(
       id: string,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<GetBusinessCbitAccountResponse>
+      ) => AxiosPromise<GetBusinessCubixAccountResponse>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getBusinessCbitAccount(id, options);
+        await localVarAxiosParamCreator.getBusinessCubixAccount(id, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -315,23 +315,23 @@ export const CBITApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Get the CBIT transfer instructions into the Circle bank account given your bank account id.
-     * @summary Get CBIT instructions
+     * Get the CUBIX transfer instructions into the Circle bank account given your fiat account id.
+     * @summary Get CUBIX instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getBusinessCbitAccountInstructions(
+    async getBusinessCubixAccountInstructions(
       id: string,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<ListBusinessCbitAccountInstructionsResponse>
+      ) => AxiosPromise<ListBusinessCubixAccountInstructionsResponse>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getBusinessCbitAccountInstructions(
+        await localVarAxiosParamCreator.getBusinessCubixAccountInstructions(
           id,
           options
         );
@@ -344,20 +344,20 @@ export const CBITApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary List all CBIT bank accounts.
+     * @summary List all CUBIX bank accounts.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async listBusinessCbitAccounts(
+    async listBusinessCubixAccounts(
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<ListBusinessCbitAccountsResponse>
+      ) => AxiosPromise<ListBusinessCubixAccountsResponse>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.listBusinessCbitAccounts(options);
+        await localVarAxiosParamCreator.listBusinessCubixAccounts(options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -369,142 +369,142 @@ export const CBITApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * CBITApi - factory interface
+ * CUBIXApi - factory interface
  * @export
  */
-export const CBITApiFactory = function (
+export const CUBIXApiFactory = function (
   configuration?: Configuration,
   basePath?: string,
   axios?: AxiosInstance
 ) {
-  const localVarFp = CBITApiFp(configuration);
+  const localVarFp = CUBIXApiFp(configuration);
   return {
     /**
      *
-     * @summary Create a CBIT bank account
-     * @param {CbitFiatAccountCreationRequest} [cbitFiatAccountCreationRequest]
+     * @summary Create a CUBIX bank account
+     * @param {CubixFiatAccountCreationRequest} [cubixFiatAccountCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createBusinessCbitAccount(
-      cbitFiatAccountCreationRequest?: CbitFiatAccountCreationRequest,
+    createBusinessCubixAccount(
+      cubixFiatAccountCreationRequest?: CubixFiatAccountCreationRequest,
       options?: any
-    ): AxiosPromise<CreateBusinessCbitAccountResponse> {
+    ): AxiosPromise<CreateBusinessCubixAccountResponse> {
       return localVarFp
-        .createBusinessCbitAccount(cbitFiatAccountCreationRequest, options)
+        .createBusinessCubixAccount(cubixFiatAccountCreationRequest, options)
         .then((request) => request(axios, basePath));
     },
     /**
      *
-     * @summary Get a CBIT bank account
+     * @summary Get a CUBIX bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getBusinessCbitAccount(
+    getBusinessCubixAccount(
       id: string,
       options?: any
-    ): AxiosPromise<GetBusinessCbitAccountResponse> {
+    ): AxiosPromise<GetBusinessCubixAccountResponse> {
       return localVarFp
-        .getBusinessCbitAccount(id, options)
+        .getBusinessCubixAccount(id, options)
         .then((request) => request(axios, basePath));
     },
     /**
-     * Get the CBIT transfer instructions into the Circle bank account given your bank account id.
-     * @summary Get CBIT instructions
+     * Get the CUBIX transfer instructions into the Circle bank account given your fiat account id.
+     * @summary Get CUBIX instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getBusinessCbitAccountInstructions(
+    getBusinessCubixAccountInstructions(
       id: string,
       options?: any
-    ): AxiosPromise<ListBusinessCbitAccountInstructionsResponse> {
+    ): AxiosPromise<ListBusinessCubixAccountInstructionsResponse> {
       return localVarFp
-        .getBusinessCbitAccountInstructions(id, options)
+        .getBusinessCubixAccountInstructions(id, options)
         .then((request) => request(axios, basePath));
     },
     /**
      *
-     * @summary List all CBIT bank accounts.
+     * @summary List all CUBIX bank accounts.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    listBusinessCbitAccounts(
+    listBusinessCubixAccounts(
       options?: any
-    ): AxiosPromise<ListBusinessCbitAccountsResponse> {
+    ): AxiosPromise<ListBusinessCubixAccountsResponse> {
       return localVarFp
-        .listBusinessCbitAccounts(options)
+        .listBusinessCubixAccounts(options)
         .then((request) => request(axios, basePath));
     }
   };
 };
 
 /**
- * CBITApi - object-oriented interface
+ * CUBIXApi - object-oriented interface
  * @export
- * @class CBITApi
+ * @class CUBIXApi
  * @extends {BaseAPI}
  */
-export class CBITApi extends BaseAPI {
+export class CUBIXApi extends BaseAPI {
   /**
    *
-   * @summary Create a CBIT bank account
-   * @param {CbitFiatAccountCreationRequest} [cbitFiatAccountCreationRequest]
+   * @summary Create a CUBIX bank account
+   * @param {CubixFiatAccountCreationRequest} [cubixFiatAccountCreationRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof CBITApi
+   * @memberof CUBIXApi
    */
-  public createBusinessCbitAccount(
-    cbitFiatAccountCreationRequest?: CbitFiatAccountCreationRequest,
+  public createBusinessCubixAccount(
+    cubixFiatAccountCreationRequest?: CubixFiatAccountCreationRequest,
     options?: AxiosRequestConfig
   ) {
-    return CBITApiFp(this.configuration)
-      .createBusinessCbitAccount(cbitFiatAccountCreationRequest, options)
+    return CUBIXApiFp(this.configuration)
+      .createBusinessCubixAccount(cubixFiatAccountCreationRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    *
-   * @summary Get a CBIT bank account
+   * @summary Get a CUBIX bank account
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof CBITApi
+   * @memberof CUBIXApi
    */
-  public getBusinessCbitAccount(id: string, options?: AxiosRequestConfig) {
-    return CBITApiFp(this.configuration)
-      .getBusinessCbitAccount(id, options)
+  public getBusinessCubixAccount(id: string, options?: AxiosRequestConfig) {
+    return CUBIXApiFp(this.configuration)
+      .getBusinessCubixAccount(id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
-   * Get the CBIT transfer instructions into the Circle bank account given your bank account id.
-   * @summary Get CBIT instructions
+   * Get the CUBIX transfer instructions into the Circle bank account given your fiat account id.
+   * @summary Get CUBIX instructions
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof CBITApi
+   * @memberof CUBIXApi
    */
-  public getBusinessCbitAccountInstructions(
+  public getBusinessCubixAccountInstructions(
     id: string,
     options?: AxiosRequestConfig
   ) {
-    return CBITApiFp(this.configuration)
-      .getBusinessCbitAccountInstructions(id, options)
+    return CUBIXApiFp(this.configuration)
+      .getBusinessCubixAccountInstructions(id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    *
-   * @summary List all CBIT bank accounts.
+   * @summary List all CUBIX bank accounts.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof CBITApi
+   * @memberof CUBIXApi
    */
-  public listBusinessCbitAccounts(options?: AxiosRequestConfig) {
-    return CBITApiFp(this.configuration)
-      .listBusinessCbitAccounts(options)
+  public listBusinessCubixAccounts(options?: AxiosRequestConfig) {
+    return CUBIXApiFp(this.configuration)
+      .listBusinessCubixAccounts(options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

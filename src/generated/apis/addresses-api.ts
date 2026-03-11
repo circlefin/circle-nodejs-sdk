@@ -110,7 +110,7 @@ export const AddressesApiAxiosParamCreator = function (
       };
     },
     /**
-     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
+     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.   **For France customers:**  Circle Mint France customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in pending status. Please see Help Center articles below for details: - [Circle Mint France Travel Rule](https://help.circle.com/s/article/Circle-Mint-France-Travel-Rule) - [Circle Mint France wallet verification](https://help.circle.com/s/article/Circle-Mint-France-wallet-verification)
      * @summary Create a recipient address
      * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
      * @param {*} [options] Override http request option.
@@ -370,7 +370,7 @@ export const AddressesApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
+     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.   **For France customers:**  Circle Mint France customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in pending status. Please see Help Center articles below for details: - [Circle Mint France Travel Rule](https://help.circle.com/s/article/Circle-Mint-France-Travel-Rule) - [Circle Mint France wallet verification](https://help.circle.com/s/article/Circle-Mint-France-wallet-verification)
      * @summary Create a recipient address
      * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
      * @param {*} [options] Override http request option.
@@ -515,7 +515,7 @@ export const AddressesApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
+     * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.   **For France customers:**  Circle Mint France customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in pending status. Please see Help Center articles below for details: - [Circle Mint France Travel Rule](https://help.circle.com/s/article/Circle-Mint-France-Travel-Rule) - [Circle Mint France wallet verification](https://help.circle.com/s/article/Circle-Mint-France-wallet-verification)
      * @summary Create a recipient address
      * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
      * @param {*} [options] Override http request option.
@@ -618,7 +618,7 @@ export class AddressesApi extends BaseAPI {
   }
 
   /**
-   * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
+   * Stores an external blockchain address. Once added, the recipient address must be verified to ensure that you know and trust each new address.   **For France customers:**  Circle Mint France customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in pending status. Please see Help Center articles below for details: - [Circle Mint France Travel Rule](https://help.circle.com/s/article/Circle-Mint-France-Travel-Rule) - [Circle Mint France wallet verification](https://help.circle.com/s/article/Circle-Mint-France-wallet-verification)
    * @summary Create a recipient address
    * @param {BusinessRecipientAddressCreationRequest} [businessRecipientAddressCreationRequest]
    * @param {*} [options] Override http request option.
