@@ -7,7 +7,11 @@ jobs:
   release-please:
     uses: circlefin/circle-public-github-workflows/.github/workflows/conventional-commit-release.yaml@v1
     if: ${{ github.repository_owner == 'circlefin' }}
-    secrets: inherit
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.PUBLIC_RELEASES_TOKEN }}
+      RELEASE_ACTOR_GPG_PRIVATE_KEY: ${{ secrets.PUBLIC_RELEASES_GPG_PRIVATE_KEY }}
+      RELEASE_ACTOR_GPG_PASSPHRASE: ${{ secrets.PUBLIC_RELEASES_GPG_PASSPHRASE }}
+      RELEASE_ACTOR_GPG_KEY_FINGERPRINT: ${{ secrets.PUBLIC_RELEASES_GPG_FINGERPRINT }}
     with:
       release_type: node
       changelog_types: |
