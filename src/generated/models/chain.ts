@@ -20,7 +20,6 @@ export const Chain = {
   Btc: "BTC",
   Celo: "CELO",
   Eth: "ETH",
-  Flow: "FLOW",
   Hbar: "HBAR",
   Near: "NEAR",
   Noble: "NOBLE",
@@ -28,8 +27,9 @@ export const Chain = {
   Pah: "PAH",
   Poly: "POLY",
   Sol: "SOL",
-  Trx: "TRX",
-  Xlm: "XLM"
+  Sui: "SUI",
+  Xlm: "XLM",
+  Zks: "ZKS"
 } as const;
 
 export type Chain = typeof Chain[keyof typeof Chain];

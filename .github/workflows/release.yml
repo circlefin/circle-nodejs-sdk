@@ -7,6 +7,7 @@ jobs:
   release-please:
     uses: circlefin/circle-public-github-workflows/.github/workflows/conventional-commit-release.yaml@v1
     if: ${{ github.repository_owner == 'circlefin' }}
+    secrets: inherit
     with:
       release_type: node
       changelog_types: |
@@ -14,6 +15,7 @@ jobs:
           {"type":"feat","section":"New Features","hidden":false},
           {"type":"fix","section":"Fixes","hidden":false},
           {"type":"chore","section":"Miscellaneous","hidden":true}
+        ]
 
   npm-publish:
     needs: release-please
