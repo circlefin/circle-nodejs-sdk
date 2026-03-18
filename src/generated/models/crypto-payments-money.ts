@@ -28,6 +28,7 @@ export interface CryptoPaymentsMoney {
 
 export const CryptoPaymentsMoneyCurrencyEnum = {
   Usd: "USD",
+  Eur: "EUR",
   Eth: "ETH",
   Btc: "BTC"
 } as const;

@@ -13,7 +13,7 @@
  */
 export interface MockWirePaymentBeneficiaryBankInstruction {
   /**
-   * Virtual account number or Circle corporate Silvergate Wire account number that needs to be set as destination.
+   * Virtual account number or Circle corporate Wells Fargo wire account number that needs to be set as destination.
    * @type {string}
    * @memberof MockWirePaymentBeneficiaryBankInstruction
    */

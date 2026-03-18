@@ -8,7 +8,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FiatMoneyUsd } from "./fiat-money-usd";
+import { SettlementDetailsInner } from "./settlement-details-inner";
+// May contain unused imports in some cases
+// @ts-ignore
+import { SettlementStatus } from "./settlement-status";
 
 /**
  *
@@ -23,41 +26,17 @@ export interface Settlement {
    */
   id?: string;
   /**
-   * Unique system generated identifier for the wallet of the merchant.
+   * Unique system generated identifier for the entity.
    * @type {string}
    * @memberof Settlement
    */
-  merchantWalletId?: string;
-  /**
-   * If this settlement was used for a marketplace payment, the wallet involved in the settlement. Not included for standard merchant settlements.
-   * @type {string}
-   * @memberof Settlement
-   */
-  walletId?: string;
+  entityId?: string;
   /**
    *
-   * @type {FiatMoneyUsd}
+   * @type {SettlementStatus}
    * @memberof Settlement
    */
-  totalDebits?: FiatMoneyUsd;
-  /**
-   *
-   * @type {FiatMoneyUsd}
-   * @memberof Settlement
-   */
-  totalCredits?: FiatMoneyUsd;
-  /**
-   *
-   * @type {FiatMoneyUsd}
-   * @memberof Settlement
-   */
-  paymentFees?: FiatMoneyUsd;
-  /**
-   *
-   * @type {FiatMoneyUsd}
-   * @memberof Settlement
-   */
-  chargebackFees?: FiatMoneyUsd;
+  status?: SettlementStatus;
   /**
    * ISO-8601 UTC date/time format.
    * @type {string}
@@ -70,4 +49,10 @@ export interface Settlement {
    * @memberof Settlement
    */
   updateDate?: string;
+  /**
+   *
+   * @type {Array<SettlementDetailsInner>}
+   * @memberof Settlement
+   */
+  details?: Array<SettlementDetailsInner>;
 }

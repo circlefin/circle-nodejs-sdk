@@ -32,13 +32,17 @@ import {
   RequiredError
 } from "../base";
 // @ts-ignore
-import { GetSettlementResponse } from "../models";
+import { GetSettlementIdResponse } from "../models";
+// @ts-ignore
+import { GetSettlementInstructionsResponse } from "../models";
 // @ts-ignore
 import { GetSettlementsResponse } from "../models";
 // @ts-ignore
 import { NotAuthorized } from "../models";
 // @ts-ignore
 import { NotFound } from "../models";
+// @ts-ignore
+import { SettlementStatus } from "../models";
 /**
  * SettlementsApi - axios parameter creator
  * @export
@@ -48,19 +52,19 @@ export const SettlementsApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     *
-     * @summary Get a settlement
+     * Returns a settlement by ID.
+     * @summary Get settlement
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getSettlement: async (
+    getSettlementId: async (
       id: string,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
-      assertParamExists("getSettlement", "id", id);
-      const localVarPath = `/v1/settlements/{id}`.replace(
+      assertParamExists("getSettlementId", "id", id);
+      const localVarPath = `/v1/exchange/trades/settlements/{id}`.replace(
         `{${"id"}}`,
         encodeURIComponent(String(id))
       );
@@ -98,25 +102,82 @@ export const SettlementsApiAxiosParamCreator = function (
       };
     },
     /**
-     *
-     * @summary List all settlements
+     * Returns settlement instructions for a specific currency.
+     * @summary Get settlement instructions
+     * @param {'BRL' | 'MXN'} currency Fiat currency name.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getSettlementInstructions: async (
+      currency: "BRL" | "MXN",
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'currency' is not null or undefined
+      assertParamExists("getSettlementInstructions", "currency", currency);
+      const localVarPath =
+        `/v1/exchange/trades/settlements/instructions/{currency}`.replace(
+          `{${"currency"}}`,
+          encodeURIComponent(String(currency))
+        );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     * Returns all settlements.
+     * @summary Get all settlements
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
      * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
      * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {'account_payable' | 'account_receivable'} [type] The type of settlement.
+     * @param {SettlementStatus} [status] Status of the settlement.
+     * @param {'MXN' | 'BRL'} [currency] Currency of the settlement
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    listSettlements: async (
+    getSettlements: async (
       from?: string,
       to?: string,
       pageBefore?: string,
       pageAfter?: string,
       pageSize?: number,
+      type?: "account_payable" | "account_receivable",
+      status?: SettlementStatus,
+      currency?: "MXN" | "BRL",
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/settlements`;
+      const localVarPath = `/v1/exchange/trades/settlements`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -158,6 +219,18 @@ export const SettlementsApiAxiosParamCreator = function (
         localVarQueryParameter["pageSize"] = pageSize;
       }
 
+      if (type !== undefined) {
+        localVarQueryParameter["type"] = type;
+      }
+
+      if (status !== undefined) {
+        localVarQueryParameter["status"] = status;
+      }
+
+      if (currency !== undefined) {
+        localVarQueryParameter["currency"] = currency;
+      }
+
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
         baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -184,22 +257,22 @@ export const SettlementsApiFp = function (configuration?: Configuration) {
     SettlementsApiAxiosParamCreator(configuration);
   return {
     /**
-     *
-     * @summary Get a settlement
+     * Returns a settlement by ID.
+     * @summary Get settlement
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getSettlement(
+    async getSettlementId(
       id: string,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<GetSettlementResponse>
+      ) => AxiosPromise<GetSettlementIdResponse>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getSettlement(
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getSettlementId(
         id,
         options
       );
@@ -211,22 +284,56 @@ export const SettlementsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     *
-     * @summary List all settlements
+     * Returns settlement instructions for a specific currency.
+     * @summary Get settlement instructions
+     * @param {'BRL' | 'MXN'} currency Fiat currency name.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getSettlementInstructions(
+      currency: "BRL" | "MXN",
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<GetSettlementInstructionsResponse>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getSettlementInstructions(
+          currency,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     * Returns all settlements.
+     * @summary Get all settlements
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
      * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
      * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {'account_payable' | 'account_receivable'} [type] The type of settlement.
+     * @param {SettlementStatus} [status] Status of the settlement.
+     * @param {'MXN' | 'BRL'} [currency] Currency of the settlement
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async listSettlements(
+    async getSettlements(
       from?: string,
       to?: string,
       pageBefore?: string,
       pageAfter?: string,
       pageSize?: number,
+      type?: "account_payable" | "account_receivable",
+      status?: SettlementStatus,
+      currency?: "MXN" | "BRL",
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -234,12 +341,15 @@ export const SettlementsApiFp = function (configuration?: Configuration) {
         basePath?: string
       ) => AxiosPromise<GetSettlementsResponse>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.listSettlements(
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getSettlements(
         from,
         to,
         pageBefore,
         pageAfter,
         pageSize,
+        type,
+        status,
+        currency,
         options
       );
       return createRequestFunction(
@@ -264,41 +374,72 @@ export const SettlementsApiFactory = function (
   const localVarFp = SettlementsApiFp(configuration);
   return {
     /**
-     *
-     * @summary Get a settlement
+     * Returns a settlement by ID.
+     * @summary Get settlement
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getSettlement(
+    getSettlementId(
       id: string,
       options?: any
-    ): AxiosPromise<GetSettlementResponse> {
+    ): AxiosPromise<GetSettlementIdResponse> {
       return localVarFp
-        .getSettlement(id, options)
+        .getSettlementId(id, options)
         .then((request) => request(axios, basePath));
     },
     /**
-     *
-     * @summary List all settlements
+     * Returns settlement instructions for a specific currency.
+     * @summary Get settlement instructions
+     * @param {'BRL' | 'MXN'} currency Fiat currency name.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getSettlementInstructions(
+      currency: "BRL" | "MXN",
+      options?: any
+    ): AxiosPromise<GetSettlementInstructionsResponse> {
+      return localVarFp
+        .getSettlementInstructions(currency, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     * Returns all settlements.
+     * @summary Get all settlements
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
      * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
      * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+     * @param {'account_payable' | 'account_receivable'} [type] The type of settlement.
+     * @param {SettlementStatus} [status] Status of the settlement.
+     * @param {'MXN' | 'BRL'} [currency] Currency of the settlement
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    listSettlements(
+    getSettlements(
       from?: string,
       to?: string,
       pageBefore?: string,
       pageAfter?: string,
       pageSize?: number,
+      type?: "account_payable" | "account_receivable",
+      status?: SettlementStatus,
+      currency?: "MXN" | "BRL",
       options?: any
     ): AxiosPromise<GetSettlementsResponse> {
       return localVarFp
-        .listSettlements(from, to, pageBefore, pageAfter, pageSize, options)
+        .getSettlements(
+          from,
+          to,
+          pageBefore,
+          pageAfter,
+          pageSize,
+          type,
+          status,
+          currency,
+          options
+        )
         .then((request) => request(axios, basePath));
     }
   };
@@ -312,41 +453,74 @@ export const SettlementsApiFactory = function (
  */
 export class SettlementsApi extends BaseAPI {
   /**
-   *
-   * @summary Get a settlement
+   * Returns a settlement by ID.
+   * @summary Get settlement
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof SettlementsApi
    */
-  public getSettlement(id: string, options?: AxiosRequestConfig) {
+  public getSettlementId(id: string, options?: AxiosRequestConfig) {
     return SettlementsApiFp(this.configuration)
-      .getSettlement(id, options)
+      .getSettlementId(id, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
-   *
-   * @summary List all settlements
+   * Returns settlement instructions for a specific currency.
+   * @summary Get settlement instructions
+   * @param {'BRL' | 'MXN'} currency Fiat currency name.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof SettlementsApi
+   */
+  public getSettlementInstructions(
+    currency: "BRL" | "MXN",
+    options?: AxiosRequestConfig
+  ) {
+    return SettlementsApiFp(this.configuration)
+      .getSettlementInstructions(currency, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   * Returns all settlements.
+   * @summary Get all settlements
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
    * @param {string} [pageAfter] A collection ID value used for pagination.  It marks the exclusive begin of a page. When provided, the collection resource will return the next &#x60;n&#x60; items after the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageBefore.
    * @param {number} [pageSize] Limits the number of items to be returned.  Some collections have a strict upper bound that will disregard this value. In case the specified value is higher than the allowed limit, the collection limit will be used.  If avoided, the collection will determine the page size itself.
+   * @param {'account_payable' | 'account_receivable'} [type] The type of settlement.
+   * @param {SettlementStatus} [status] Status of the settlement.
+   * @param {'MXN' | 'BRL'} [currency] Currency of the settlement
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof SettlementsApi
    */
-  public listSettlements(
+  public getSettlements(
     from?: string,
     to?: string,
     pageBefore?: string,
     pageAfter?: string,
     pageSize?: number,
+    type?: "account_payable" | "account_receivable",
+    status?: SettlementStatus,
+    currency?: "MXN" | "BRL",
     options?: AxiosRequestConfig
   ) {
     return SettlementsApiFp(this.configuration)
-      .listSettlements(from, to, pageBefore, pageAfter, pageSize, options)
+      .getSettlements(
+        from,
+        to,
+        pageBefore,
+        pageAfter,
+        pageSize,
+        type,
+        status,
+        currency,
+        options
+      )
       .then((request) => request(this.axios, this.basePath));
   }
 }

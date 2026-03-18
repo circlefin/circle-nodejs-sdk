@@ -60,11 +60,13 @@ export const AddressesApiAxiosParamCreator = function (
     /**
      * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a deposit address
+     * @param {string} [walletId] The wallet ID to be credited when deposits are made to this address. If not provided, deposits default to the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     createBusinessDepositAddress: async (
+      walletId?: string,
       businessGenerateAddressRequest?: BusinessGenerateAddressRequest,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
@@ -87,6 +89,10 @@ export const AddressesApiAxiosParamCreator = function (
       // authentication bearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (walletId !== undefined) {
+        localVarQueryParameter["walletId"] = walletId;
+      }
 
       localVarHeaderParameter["Content-Type"] = "application/json";
 
@@ -213,12 +219,14 @@ export const AddressesApiAxiosParamCreator = function (
       };
     },
     /**
-     *
+     * Returns a list of deposit addresses for a given wallet.
      * @summary List all deposit addresses
+     * @param {string} [walletId] The wallet ID for which the deposit addresses were generated. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     getBusinessDepositAddress: async (
+      walletId?: string,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       const localVarPath = `/v1/businessAccount/wallets/addresses/deposit`;
@@ -240,6 +248,10 @@ export const AddressesApiAxiosParamCreator = function (
       // authentication bearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (walletId !== undefined) {
+        localVarQueryParameter["walletId"] = walletId;
+      }
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
@@ -344,11 +356,13 @@ export const AddressesApiFp = function (configuration?: Configuration) {
     /**
      * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a deposit address
+     * @param {string} [walletId] The wallet ID to be credited when deposits are made to this address. If not provided, deposits default to the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async createBusinessDepositAddress(
+      walletId?: string,
       businessGenerateAddressRequest?: BusinessGenerateAddressRequest,
       options?: AxiosRequestConfig
     ): Promise<
@@ -359,6 +373,7 @@ export const AddressesApiFp = function (configuration?: Configuration) {
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.createBusinessDepositAddress(
+          walletId,
           businessGenerateAddressRequest,
           options
         );
@@ -423,12 +438,14 @@ export const AddressesApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     *
+     * Returns a list of deposit addresses for a given wallet.
      * @summary List all deposit addresses
+     * @param {string} [walletId] The wallet ID for which the deposit addresses were generated. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async getBusinessDepositAddress(
+      walletId?: string,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -437,7 +454,10 @@ export const AddressesApiFp = function (configuration?: Configuration) {
       ) => AxiosPromise<GetBusinessDepositAddressResponse>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.getBusinessDepositAddress(options);
+        await localVarAxiosParamCreator.getBusinessDepositAddress(
+          walletId,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -502,16 +522,22 @@ export const AddressesApiFactory = function (
     /**
      * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
      * @summary Create a deposit address
+     * @param {string} [walletId] The wallet ID to be credited when deposits are made to this address. If not provided, deposits default to the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     createBusinessDepositAddress(
+      walletId?: string,
       businessGenerateAddressRequest?: BusinessGenerateAddressRequest,
       options?: any
     ): AxiosPromise<CreateBusinessDepositAddressResponse> {
       return localVarFp
-        .createBusinessDepositAddress(businessGenerateAddressRequest, options)
+        .createBusinessDepositAddress(
+          walletId,
+          businessGenerateAddressRequest,
+          options
+        )
         .then((request) => request(axios, basePath));
     },
     /**
@@ -548,16 +574,18 @@ export const AddressesApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     *
+     * Returns a list of deposit addresses for a given wallet.
      * @summary List all deposit addresses
+     * @param {string} [walletId] The wallet ID for which the deposit addresses were generated. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     getBusinessDepositAddress(
+      walletId?: string,
       options?: any
     ): AxiosPromise<GetBusinessDepositAddressResponse> {
       return localVarFp
-        .getBusinessDepositAddress(options)
+        .getBusinessDepositAddress(walletId, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -603,17 +631,23 @@ export class AddressesApi extends BaseAPI {
   /**
    * Generates a new blockchain address for a wallet for a given currency/chain pair. Circle may reuse addresses on blockchains that support reuse. For example, if you\'re requesting two addresses for depositing USD and ETH, both on Ethereum, you may see the same Ethereum address returned. Depositing cryptocurrency to a generated address will credit the associated wallet with the value of the deposit. Note: Circle Mint Singapore customers must verify all transfer recipients using the UI in the Circle Console, as transfers from unverified addresses will be held in `pending` status.
    * @summary Create a deposit address
+   * @param {string} [walletId] The wallet ID to be credited when deposits are made to this address. If not provided, deposits default to the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
    * @param {BusinessGenerateAddressRequest} [businessGenerateAddressRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof AddressesApi
    */
   public createBusinessDepositAddress(
+    walletId?: string,
     businessGenerateAddressRequest?: BusinessGenerateAddressRequest,
     options?: AxiosRequestConfig
   ) {
     return AddressesApiFp(this.configuration)
-      .createBusinessDepositAddress(businessGenerateAddressRequest, options)
+      .createBusinessDepositAddress(
+        walletId,
+        businessGenerateAddressRequest,
+        options
+      )
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -655,15 +689,19 @@ export class AddressesApi extends BaseAPI {
   }
 
   /**
-   *
+   * Returns a list of deposit addresses for a given wallet.
    * @summary List all deposit addresses
+   * @param {string} [walletId] The wallet ID for which the deposit addresses were generated. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof AddressesApi
    */
-  public getBusinessDepositAddress(options?: AxiosRequestConfig) {
+  public getBusinessDepositAddress(
+    walletId?: string,
+    options?: AxiosRequestConfig
+  ) {
     return AddressesApiFp(this.configuration)
-      .getBusinessDepositAddress(options)
+      .getBusinessDepositAddress(walletId, options)
       .then((request) => request(this.axios, this.basePath));
   }
 

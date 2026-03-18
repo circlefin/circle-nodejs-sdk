@@ -17,7 +17,7 @@ import { CryptoPaymentsMoney } from "./crypto-payments-money";
 import { PaymentIntentCreationRequest } from "./payment-intent-creation-request";
 // May contain unused imports in some cases
 // @ts-ignore
-import { PaymentMethodBlockchain } from "./payment-method-blockchain";
+import { PaymentMethodBlockchainRequest } from "./payment-method-blockchain-request";
 
 /**
  * @type CreatePaymentIntentRequest

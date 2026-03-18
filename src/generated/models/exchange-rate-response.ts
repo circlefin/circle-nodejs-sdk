@@ -8,6 +8,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import { ExchangeType } from "./exchange-type";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatOptionalAmountMoney } from "./fiat-optional-amount-money";
 
 /**
@@ -45,5 +48,17 @@ export interface ExchangeRateResponse {
    * @type {string}
    * @memberof ExchangeRateResponse
    */
-  timestamp: string;
+  expiry: string;
+  /**
+   *
+   * @type {ExchangeType}
+   * @memberof ExchangeRateResponse
+   */
+  type: ExchangeType;
+  /**
+   * Estimated settlement timestamp in ISO-8601 UTC date/time format.  Once funds are received, we aim to settle by the time shown. Settlement times are estimates and may vary due to processing delays.  Shown only for quotes where `type` = `tradable`.
+   * @type {string}
+   * @memberof ExchangeRateResponse
+   */
+  estimatedSettlementTime?: string;
 }

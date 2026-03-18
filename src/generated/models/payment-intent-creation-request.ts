@@ -32,7 +32,7 @@ export interface PaymentIntentCreationRequest {
    */
   amount: CryptoPaymentsMoney;
   /**
-   * Desired currency for the payments to settle in.
+   * Desired currency for the payments to settle in. This must match the currency used for the payment method.
    * @type {string}
    * @memberof PaymentIntentCreationRequest
    */
@@ -53,6 +53,7 @@ export interface PaymentIntentCreationRequest {
 
 export const PaymentIntentCreationRequestSettlementCurrencyEnum = {
   Usd: "USD",
+  Eur: "EUR",
   Btc: "BTC",
   Eth: "ETH"
 } as const;

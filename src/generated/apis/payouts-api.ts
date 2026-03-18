@@ -48,7 +48,7 @@ import { GetPayoutResponse } from "../models";
 // @ts-ignore
 import { ListBurnFeeCalculationsResponse } from "../models";
 // @ts-ignore
-import { ListBusinessPayoutsResponse } from "../models";
+import { ListBusinessPayout } from "../models";
 // @ts-ignore
 import { ListPayoutsResponse } from "../models";
 // @ts-ignore
@@ -68,7 +68,7 @@ export const PayoutsApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
+     * Create a redemption (offramp) payout. This payout converts a digital asset to fiat currency.
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -120,7 +120,7 @@ export const PayoutsApiAxiosParamCreator = function (
       };
     },
     /**
-     *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+     *  Create a crypto payout.    The following table includes the supported pairs of `amount.currency` and `toAmount.currency` for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ----------------- | | USD              | USD               | | EUR              | EUR               |
      * @summary Create a payout
      * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -272,11 +272,12 @@ export const PayoutsApiAxiosParamCreator = function (
       };
     },
     /**
-     *
+     * Lists all payouts for your account.  Note that this endpoint does not return the tracking reference number for the payouts in the response. If you need that information you must get each payout individually by ID.
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
      * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
+     * @param {string} [sourceWalletId] Filters for payouts created from a specific source wallet.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -289,6 +290,7 @@ export const PayoutsApiAxiosParamCreator = function (
       destination?: string,
       type?: "wire" | "cubix",
       status?: Set<PayoutStatus>,
+      sourceWalletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -328,6 +330,10 @@ export const PayoutsApiAxiosParamCreator = function (
         localVarQueryParameter["status"] = Array.from(status);
       }
 
+      if (sourceWalletId !== undefined) {
+        localVarQueryParameter["sourceWalletId"] = sourceWalletId;
+      }
+
       if (from !== undefined) {
         localVarQueryParameter["from"] =
           (from as any) instanceof Date ? (from as any).toISOString() : from;
@@ -365,9 +371,10 @@ export const PayoutsApiAxiosParamCreator = function (
       };
     },
     /**
-     * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
-     * @summary List all NET burn daily fee calculations
-     * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+     * Returns daily burn fee calculations. This endpoint returns up to 50 daily fee calculations in descending chronological order or `pageSize`, if provided.
+     * @summary List daily burn fee calculations
+     * @param {'gross' | 'net'} feeType Fee calculation type
+     * @param {string} [minimumFeeAmount] Burn fee calculations below this value are filtered.
      * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -378,6 +385,7 @@ export const PayoutsApiAxiosParamCreator = function (
      * @throws {RequiredError}
      */
     listNetBurnFeeDailyCalculations: async (
+      feeType: "gross" | "net",
       minimumFeeAmount?: string,
       currency?: "USD" | "EUR",
       from?: string,
@@ -387,7 +395,9 @@ export const PayoutsApiAxiosParamCreator = function (
       pageSize?: number,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/fees/redemption/net/dailyReports`;
+      // verify required parameter 'feeType' is not null or undefined
+      assertParamExists("listNetBurnFeeDailyCalculations", "feeType", feeType);
+      const localVarPath = `/v1/fees/redemption/dailyReports`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -409,6 +419,10 @@ export const PayoutsApiAxiosParamCreator = function (
 
       if (minimumFeeAmount !== undefined) {
         localVarQueryParameter["minimumFeeAmount"] = minimumFeeAmount;
+      }
+
+      if (feeType !== undefined) {
+        localVarQueryParameter["feeType"] = feeType;
       }
 
       if (currency !== undefined) {
@@ -460,7 +474,7 @@ export const PayoutsApiAxiosParamCreator = function (
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'APTOS' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'CODEX' | 'ETH' | 'HBAR' | 'HYPEREVM' | 'INK' | 'LINEA' | 'NEAR' | 'NOBLE' | 'OP' | 'PLUME' | 'PAH' | 'POLY' | 'SEI' | 'SOL' | 'SONIC' | 'SUI' | 'UNI' | 'WORLDCHAIN' | 'XDC' | 'XLM' | 'XRP' | 'ZKS' | 'ZKSYNC'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -485,22 +499,35 @@ export const PayoutsApiAxiosParamCreator = function (
         | "MAN",
       chain?:
         | "ALGO"
+        | "APTOS"
         | "ARB"
         | "AVAX"
         | "BASE"
         | "BTC"
         | "CELO"
+        | "CODEX"
         | "ETH"
         | "HBAR"
+        | "HYPEREVM"
+        | "INK"
+        | "LINEA"
         | "NEAR"
         | "NOBLE"
         | "OP"
+        | "PLUME"
         | "PAH"
         | "POLY"
+        | "SEI"
         | "SOL"
+        | "SONIC"
         | "SUI"
+        | "UNI"
+        | "WORLDCHAIN"
+        | "XDC"
         | "XLM"
-        | "ZKS",
+        | "XRP"
+        | "ZKS"
+        | "ZKSYNC",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -603,7 +630,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = PayoutsApiAxiosParamCreator(configuration);
   return {
     /**
-     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
+     * Create a redemption (offramp) payout. This payout converts a digital asset to fiat currency.
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -631,7 +658,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+     *  Create a crypto payout.    The following table includes the supported pairs of `amount.currency` and `toAmount.currency` for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ----------------- | | USD              | USD               | | EUR              | EUR               |
      * @summary Create a payout
      * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -710,11 +737,12 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     *
+     * Lists all payouts for your account.  Note that this endpoint does not return the tracking reference number for the payouts in the response. If you need that information you must get each payout individually by ID.
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
      * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
+     * @param {string} [sourceWalletId] Filters for payouts created from a specific source wallet.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -727,6 +755,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       destination?: string,
       type?: "wire" | "cubix",
       status?: Set<PayoutStatus>,
+      sourceWalletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -737,13 +766,14 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<ListBusinessPayoutsResponse>
+      ) => AxiosPromise<ListBusinessPayout>
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.listBusinessPayouts(
           destination,
           type,
           status,
+          sourceWalletId,
           from,
           to,
           pageBefore,
@@ -759,9 +789,10 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
-     * @summary List all NET burn daily fee calculations
-     * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+     * Returns daily burn fee calculations. This endpoint returns up to 50 daily fee calculations in descending chronological order or `pageSize`, if provided.
+     * @summary List daily burn fee calculations
+     * @param {'gross' | 'net'} feeType Fee calculation type
+     * @param {string} [minimumFeeAmount] Burn fee calculations below this value are filtered.
      * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -772,6 +803,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      * @throws {RequiredError}
      */
     async listNetBurnFeeDailyCalculations(
+      feeType: "gross" | "net",
       minimumFeeAmount?: string,
       currency?: "USD" | "EUR",
       from?: string,
@@ -788,6 +820,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.listNetBurnFeeDailyCalculations(
+          feeType,
           minimumFeeAmount,
           currency,
           from,
@@ -813,7 +846,7 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'APTOS' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'CODEX' | 'ETH' | 'HBAR' | 'HYPEREVM' | 'INK' | 'LINEA' | 'NEAR' | 'NOBLE' | 'OP' | 'PLUME' | 'PAH' | 'POLY' | 'SEI' | 'SOL' | 'SONIC' | 'SUI' | 'UNI' | 'WORLDCHAIN' | 'XDC' | 'XLM' | 'XRP' | 'ZKS' | 'ZKSYNC'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -838,22 +871,35 @@ export const PayoutsApiFp = function (configuration?: Configuration) {
         | "MAN",
       chain?:
         | "ALGO"
+        | "APTOS"
         | "ARB"
         | "AVAX"
         | "BASE"
         | "BTC"
         | "CELO"
+        | "CODEX"
         | "ETH"
         | "HBAR"
+        | "HYPEREVM"
+        | "INK"
+        | "LINEA"
         | "NEAR"
         | "NOBLE"
         | "OP"
+        | "PLUME"
         | "PAH"
         | "POLY"
+        | "SEI"
         | "SOL"
+        | "SONIC"
         | "SUI"
+        | "UNI"
+        | "WORLDCHAIN"
+        | "XDC"
         | "XLM"
-        | "ZKS",
+        | "XRP"
+        | "ZKS"
+        | "ZKSYNC",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -903,7 +949,7 @@ export const PayoutsApiFactory = function (
   const localVarFp = PayoutsApiFp(configuration);
   return {
     /**
-     *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
+     * Create a redemption (offramp) payout. This payout converts a digital asset to fiat currency.
      * @summary Create a payout
      * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -918,7 +964,7 @@ export const PayoutsApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+     *  Create a crypto payout.    The following table includes the supported pairs of `amount.currency` and `toAmount.currency` for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ----------------- | | USD              | USD               | | EUR              | EUR               |
      * @summary Create a payout
      * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
      * @param {*} [options] Override http request option.
@@ -960,11 +1006,12 @@ export const PayoutsApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     *
+     * Lists all payouts for your account.  Note that this endpoint does not return the tracking reference number for the payouts in the response. If you need that information you must get each payout individually by ID.
      * @summary List all payouts
      * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
      * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
+     * @param {string} [sourceWalletId] Filters for payouts created from a specific source wallet.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -977,18 +1024,20 @@ export const PayoutsApiFactory = function (
       destination?: string,
       type?: "wire" | "cubix",
       status?: Set<PayoutStatus>,
+      sourceWalletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
       pageAfter?: string,
       pageSize?: number,
       options?: any
-    ): AxiosPromise<ListBusinessPayoutsResponse> {
+    ): AxiosPromise<ListBusinessPayout> {
       return localVarFp
         .listBusinessPayouts(
           destination,
           type,
           status,
+          sourceWalletId,
           from,
           to,
           pageBefore,
@@ -999,9 +1048,10 @@ export const PayoutsApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
-     * @summary List all NET burn daily fee calculations
-     * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+     * Returns daily burn fee calculations. This endpoint returns up to 50 daily fee calculations in descending chronological order or `pageSize`, if provided.
+     * @summary List daily burn fee calculations
+     * @param {'gross' | 'net'} feeType Fee calculation type
+     * @param {string} [minimumFeeAmount] Burn fee calculations below this value are filtered.
      * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -1012,6 +1062,7 @@ export const PayoutsApiFactory = function (
      * @throws {RequiredError}
      */
     listNetBurnFeeDailyCalculations(
+      feeType: "gross" | "net",
       minimumFeeAmount?: string,
       currency?: "USD" | "EUR",
       from?: string,
@@ -1023,6 +1074,7 @@ export const PayoutsApiFactory = function (
     ): AxiosPromise<ListBurnFeeCalculationsResponse> {
       return localVarFp
         .listNetBurnFeeDailyCalculations(
+          feeType,
           minimumFeeAmount,
           currency,
           from,
@@ -1043,7 +1095,7 @@ export const PayoutsApiFactory = function (
      * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
      * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-     * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+     * @param {'ALGO' | 'APTOS' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'CODEX' | 'ETH' | 'HBAR' | 'HYPEREVM' | 'INK' | 'LINEA' | 'NEAR' | 'NOBLE' | 'OP' | 'PLUME' | 'PAH' | 'POLY' | 'SEI' | 'SOL' | 'SONIC' | 'SUI' | 'UNI' | 'WORLDCHAIN' | 'XDC' | 'XLM' | 'XRP' | 'ZKS' | 'ZKSYNC'} [chain] Queries items with the specified chain. Matches any chain if unspecified
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -1068,22 +1120,35 @@ export const PayoutsApiFactory = function (
         | "MAN",
       chain?:
         | "ALGO"
+        | "APTOS"
         | "ARB"
         | "AVAX"
         | "BASE"
         | "BTC"
         | "CELO"
+        | "CODEX"
         | "ETH"
         | "HBAR"
+        | "HYPEREVM"
+        | "INK"
+        | "LINEA"
         | "NEAR"
         | "NOBLE"
         | "OP"
+        | "PLUME"
         | "PAH"
         | "POLY"
+        | "SEI"
         | "SOL"
+        | "SONIC"
         | "SUI"
+        | "UNI"
+        | "WORLDCHAIN"
+        | "XDC"
         | "XLM"
-        | "ZKS",
+        | "XRP"
+        | "ZKS"
+        | "ZKSYNC",
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -1120,7 +1185,7 @@ export const PayoutsApiFactory = function (
  */
 export class PayoutsApi extends BaseAPI {
   /**
-   *  Create a payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for FX payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------ |  | USD | BRL |
+   * Create a redemption (offramp) payout. This payout converts a digital asset to fiat currency.
    * @summary Create a payout
    * @param {BusinessPayoutCreationRequest} [businessPayoutCreationRequest]
    * @param {*} [options] Override http request option.
@@ -1137,7 +1202,7 @@ export class PayoutsApi extends BaseAPI {
   }
 
   /**
-   *  Create a crypto payout.    The following table includes the supported pairs of amount.currency and toAmount.currency for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ------------      | | USD              | USD               | | USD              | BTC               | | USD              | ETH               | | USD              | MTC               | | EUR              | EUR               | | BTC              | USD               | | BTC              | BTC               | | ETH              | USD               | | ETH              | ETH               |
+   *  Create a crypto payout.    The following table includes the supported pairs of `amount.currency` and `toAmount.currency` for address book payouts:  | amount.currency  | toAmount.currency | | ---------------- | ----------------- | | USD              | USD               | | EUR              | EUR               |
    * @summary Create a payout
    * @param {CryptoPayoutCreationRequest} [cryptoPayoutCreationRequest]
    * @param {*} [options] Override http request option.
@@ -1182,11 +1247,12 @@ export class PayoutsApi extends BaseAPI {
   }
 
   /**
-   *
+   * Lists all payouts for your account.  Note that this endpoint does not return the tracking reference number for the payouts in the response. If you need that information you must get each payout individually by ID.
    * @summary List all payouts
    * @param {string} [destination] Universally unique identifier (UUID v4) for the destination bank account. Filters the results to fetch all payouts made to a destination bank account.
    * @param {'wire' | 'cubix'} [type] Destination bank account type. Filters the results to fetch all payouts made to a specified destination bank account type. This query parameter can be passed multiple times to fetch results matching multiple destination bank account types.
    * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
+   * @param {string} [sourceWalletId] Filters for payouts created from a specific source wallet.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -1200,6 +1266,7 @@ export class PayoutsApi extends BaseAPI {
     destination?: string,
     type?: "wire" | "cubix",
     status?: Set<PayoutStatus>,
+    sourceWalletId?: string,
     from?: string,
     to?: string,
     pageBefore?: string,
@@ -1212,6 +1279,7 @@ export class PayoutsApi extends BaseAPI {
         destination,
         type,
         status,
+        sourceWalletId,
         from,
         to,
         pageBefore,
@@ -1223,9 +1291,10 @@ export class PayoutsApi extends BaseAPI {
   }
 
   /**
-   * Searches for NET burn fee daily calculations. This endpoint returns up to 50 daily fee amount calculations in descending chronological order or pageSize, if provided.
-   * @summary List all NET burn daily fee calculations
-   * @param {string} [minimumFeeAmount] Filters out NET burn daily fee calculations below minimumFeeAmount value.
+   * Returns daily burn fee calculations. This endpoint returns up to 50 daily fee calculations in descending chronological order or `pageSize`, if provided.
+   * @summary List daily burn fee calculations
+   * @param {'gross' | 'net'} feeType Fee calculation type
+   * @param {string} [minimumFeeAmount] Burn fee calculations below this value are filtered.
    * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
@@ -1237,6 +1306,7 @@ export class PayoutsApi extends BaseAPI {
    * @memberof PayoutsApi
    */
   public listNetBurnFeeDailyCalculations(
+    feeType: "gross" | "net",
     minimumFeeAmount?: string,
     currency?: "USD" | "EUR",
     from?: string,
@@ -1248,6 +1318,7 @@ export class PayoutsApi extends BaseAPI {
   ) {
     return PayoutsApiFp(this.configuration)
       .listNetBurnFeeDailyCalculations(
+        feeType,
         minimumFeeAmount,
         currency,
         from,
@@ -1269,7 +1340,7 @@ export class PayoutsApi extends BaseAPI {
    * @param {Set<PayoutStatus>} [status] Queries items with the specified status. Matches any status if unspecified.
    * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [sourceCurrency] Queries items with the specified source currency &#x60;amount.currency&#x60;. Matches any source currency if unspecified.
    * @param {'USD' | 'EUR' | 'BTC' | 'ETH' | 'MTC' | 'FLW' | 'MAN'} [destinationCurrency] Queries items with the specified destination currency &#x60;toAmount.currency&#x60;. Matches any destination currency if unspecified.
-   * @param {'ALGO' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'ETH' | 'HBAR' | 'NEAR' | 'NOBLE' | 'OP' | 'PAH' | 'POLY' | 'SOL' | 'SUI' | 'XLM' | 'ZKS'} [chain] Queries items with the specified chain. Matches any chain if unspecified
+   * @param {'ALGO' | 'APTOS' | 'ARB' | 'AVAX' | 'BASE' | 'BTC' | 'CELO' | 'CODEX' | 'ETH' | 'HBAR' | 'HYPEREVM' | 'INK' | 'LINEA' | 'NEAR' | 'NOBLE' | 'OP' | 'PLUME' | 'PAH' | 'POLY' | 'SEI' | 'SOL' | 'SONIC' | 'SUI' | 'UNI' | 'WORLDCHAIN' | 'XDC' | 'XLM' | 'XRP' | 'ZKS' | 'ZKSYNC'} [chain] Queries items with the specified chain. Matches any chain if unspecified
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -1288,22 +1359,35 @@ export class PayoutsApi extends BaseAPI {
     destinationCurrency?: "USD" | "EUR" | "BTC" | "ETH" | "MTC" | "FLW" | "MAN",
     chain?:
       | "ALGO"
+      | "APTOS"
       | "ARB"
       | "AVAX"
       | "BASE"
       | "BTC"
       | "CELO"
+      | "CODEX"
       | "ETH"
       | "HBAR"
+      | "HYPEREVM"
+      | "INK"
+      | "LINEA"
       | "NEAR"
       | "NOBLE"
       | "OP"
+      | "PLUME"
       | "PAH"
       | "POLY"
+      | "SEI"
       | "SOL"
+      | "SONIC"
       | "SUI"
+      | "UNI"
+      | "WORLDCHAIN"
+      | "XDC"
       | "XLM"
-      | "ZKS",
+      | "XRP"
+      | "ZKS"
+      | "ZKSYNC",
     from?: string,
     to?: string,
     pageBefore?: string,

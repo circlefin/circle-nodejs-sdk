@@ -10,25 +10,20 @@ import {
   AddressesApi,
   BalancesApi,
   CUBIXApi,
-  CardsApi,
-  ChannelsApi,
-  ChargebacksApi,
-  CheckoutSessionsApi,
   CryptoAddressBookApi,
-  CryptoExchangeRatesApi,
   CryptoPaymentIntentsApi,
   DepositsApi,
-  EncryptionApi,
+  ExternalEntitiesApi,
   HealthApi,
   ManagementApi,
   PIXApi,
-  PaymentTokensApi,
   PaymentsApi,
   PayoutsApi,
-  PullCryptoPaymentsApi,
+  ReserveManagementApi,
   SettlementsApi,
   StablecoinsApi,
   SubscriptionsApi,
+  TradesApi,
   TransfersApi,
   WiresApi
 } from "./api";
@@ -40,25 +35,20 @@ export class Circle {
   public addresses: AddressesApi;
   public balances: BalancesApi;
   public cubix: CUBIXApi;
-  public cards: CardsApi;
-  public channels: ChannelsApi;
-  public chargebacks: ChargebacksApi;
-  public checkoutSessions: CheckoutSessionsApi;
   public cryptoAddressBook: CryptoAddressBookApi;
-  public cryptoExchangeRates: CryptoExchangeRatesApi;
   public cryptoPaymentIntents: CryptoPaymentIntentsApi;
   public deposits: DepositsApi;
-  public encryption: EncryptionApi;
+  public externalEntities: ExternalEntitiesApi;
   public health: HealthApi;
   public management: ManagementApi;
   public pix: PIXApi;
-  public paymentTokens: PaymentTokensApi;
   public payments: PaymentsApi;
   public payouts: PayoutsApi;
-  public pullCryptoPayments: PullCryptoPaymentsApi;
+  public reserveManagement: ReserveManagementApi;
   public settlements: SettlementsApi;
   public stablecoins: StablecoinsApi;
   public subscriptions: SubscriptionsApi;
+  public trades: TradesApi;
   public transfers: TransfersApi;
   public wires: WiresApi;
 
@@ -67,25 +57,20 @@ export class Circle {
     this.addresses = new AddressesApi(configuration);
     this.balances = new BalancesApi(configuration);
     this.cubix = new CUBIXApi(configuration);
-    this.cards = new CardsApi(configuration);
-    this.channels = new ChannelsApi(configuration);
-    this.chargebacks = new ChargebacksApi(configuration);
-    this.checkoutSessions = new CheckoutSessionsApi(configuration);
     this.cryptoAddressBook = new CryptoAddressBookApi(configuration);
-    this.cryptoExchangeRates = new CryptoExchangeRatesApi(configuration);
     this.cryptoPaymentIntents = new CryptoPaymentIntentsApi(configuration);
     this.deposits = new DepositsApi(configuration);
-    this.encryption = new EncryptionApi(configuration);
+    this.externalEntities = new ExternalEntitiesApi(configuration);
     this.health = new HealthApi(configuration);
     this.management = new ManagementApi(configuration);
     this.pix = new PIXApi(configuration);
-    this.paymentTokens = new PaymentTokensApi(configuration);
     this.payments = new PaymentsApi(configuration);
     this.payouts = new PayoutsApi(configuration);
-    this.pullCryptoPayments = new PullCryptoPaymentsApi(configuration);
+    this.reserveManagement = new ReserveManagementApi(configuration);
     this.settlements = new SettlementsApi(configuration);
     this.stablecoins = new StablecoinsApi(configuration);
     this.subscriptions = new SubscriptionsApi(configuration);
+    this.trades = new TradesApi(configuration);
     this.transfers = new TransfersApi(configuration);
     this.wires = new WiresApi(configuration);
   }
