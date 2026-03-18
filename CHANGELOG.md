@@ -1,5 +1,31 @@
 # Changelog
 
+## [2.10.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.9.0...v2.10.0) (2026-03-18)
+
+
+### Features
+
+* sync SDK to OpenAPI doc v2.11.1 ([#117](https://github.com/circlefin/circle-nodejs-sdk/issues/117)) ([d56319f](https://github.com/circlefin/circle-nodejs-sdk/commit/d56319f2237b4d3501bc38636a67d82c4c4abd91))
+* sync SDK to OpenAPI doc v2.12.0 ([#118](https://github.com/circlefin/circle-nodejs-sdk/issues/118)) ([d2dd9c1](https://github.com/circlefin/circle-nodejs-sdk/commit/d2dd9c1f420dc10e5b3776b387d15497eb833739))
+* sync SDK to OpenAPI doc v2.14.0 ([#124](https://github.com/circlefin/circle-nodejs-sdk/issues/124)) ([d64938e](https://github.com/circlefin/circle-nodejs-sdk/commit/d64938e28acaaf8613a127221eedb95931133f9c))
+* sync SDK to OpenAPI doc v2.15.0 ([#125](https://github.com/circlefin/circle-nodejs-sdk/issues/125)) ([5b34ebb](https://github.com/circlefin/circle-nodejs-sdk/commit/5b34ebb38a96a0ee2663836671afaaa878775557))
+* sync SDK to OpenAPI doc v2.16.0 ([#139](https://github.com/circlefin/circle-nodejs-sdk/issues/139)) ([0ceb254](https://github.com/circlefin/circle-nodejs-sdk/commit/0ceb25495ce27529ce8b88a8ed5d1d3f48a54625))
+
+
+### Miscellaneous Chores
+
+* apply security best practices and onboard stepsecurity ([#131](https://github.com/circlefin/circle-nodejs-sdk/issues/131)) ([357d2fe](https://github.com/circlefin/circle-nodejs-sdk/commit/357d2fedc5b72518c00059e316b612e510aec549))
+* **deps:** bump action versions to use node 20 ([#113](https://github.com/circlefin/circle-nodejs-sdk/issues/113)) ([fe5002d](https://github.com/circlefin/circle-nodejs-sdk/commit/fe5002dd5e83c4b3039af1abc275a60bfd398060))
+* **stepsecurity:** update workflows to use custom hosted runners with built-in StepSecurity ([#133](https://github.com/circlefin/circle-nodejs-sdk/issues/133)) ([40ee83f](https://github.com/circlefin/circle-nodejs-sdk/commit/40ee83f401692bfece44c34f4ad666ddff7d5751))
+
+
+### Continuous Integration
+
+* fix shared release-please workflow bug ([#136](https://github.com/circlefin/circle-nodejs-sdk/issues/136)) ([d23c2ec](https://github.com/circlefin/circle-nodejs-sdk/commit/d23c2ec9a34e8e04c4a27f33886253947024e118))
+* fix shared release-please workflow bug pt 2 ([#137](https://github.com/circlefin/circle-nodejs-sdk/issues/137)) ([12f2664](https://github.com/circlefin/circle-nodejs-sdk/commit/12f2664673b5d38748fb27673c592ac9c7c68498))
+* use public shared Circle workflows repo ([#121](https://github.com/circlefin/circle-nodejs-sdk/issues/121)) ([093fd41](https://github.com/circlefin/circle-nodejs-sdk/commit/093fd415056d73d316fd60e04828dee8588a3565))
+* use shared release-please workflow ([#120](https://github.com/circlefin/circle-nodejs-sdk/issues/120)) ([4bb61fb](https://github.com/circlefin/circle-nodejs-sdk/commit/4bb61fbc7ae0e9449b16d35c2a432aa988be570e))
+
 ## [2.9.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.8.0...v2.9.0) (2024-03-28)
 
 
