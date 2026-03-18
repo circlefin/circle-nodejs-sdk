@@ -57,7 +57,7 @@ export const WiresApiAxiosParamCreator = function (
   return {
     /**
      *
-     * @summary Create a Wire bank account
+     * @summary Create a wire bank account
      * @param {WireCreationRequest} [wireCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -109,7 +109,7 @@ export const WiresApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary Get a Wire bank account
+     * @summary Get a wire bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -158,16 +158,18 @@ export const WiresApiAxiosParamCreator = function (
       };
     },
     /**
-     * Get the wire transfer instructions into the Circle bank account given your bank account id.
-     * @summary Get Wire instructions
+     * Get the wire transfer instructions into the Circle bank account given your bank account ID.
+     * @summary Get wire instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+     * @param {string} [walletId] The wallet ID of the external entity. If not provided, the instructions will be for your default wallet.  You can create additional wallets using the [Core API for Institutions](/api-reference/circle-mint/institutional/create-external-entity).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     getBusinessWireAccountInstructions: async (
       id: string,
       currency?: "USD" | "EUR",
+      walletId?: string,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'id' is not null or undefined
@@ -200,6 +202,10 @@ export const WiresApiAxiosParamCreator = function (
         localVarQueryParameter["currency"] = currency;
       }
 
+      if (walletId !== undefined) {
+        localVarQueryParameter["walletId"] = walletId;
+      }
+
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
         baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -216,7 +222,7 @@ export const WiresApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary List all Wire bank accounts
+     * @summary List all wire bank accounts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -269,7 +275,7 @@ export const WiresApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
-     * @summary Create a Wire bank account
+     * @summary Create a wire bank account
      * @param {WireCreationRequest} [wireCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -297,7 +303,7 @@ export const WiresApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary Get a Wire bank account
+     * @summary Get a wire bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -321,16 +327,18 @@ export const WiresApiFp = function (configuration?: Configuration) {
       );
     },
     /**
-     * Get the wire transfer instructions into the Circle bank account given your bank account id.
-     * @summary Get Wire instructions
+     * Get the wire transfer instructions into the Circle bank account given your bank account ID.
+     * @summary Get wire instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+     * @param {string} [walletId] The wallet ID of the external entity. If not provided, the instructions will be for your default wallet.  You can create additional wallets using the [Core API for Institutions](/api-reference/circle-mint/institutional/create-external-entity).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async getBusinessWireAccountInstructions(
       id: string,
       currency?: "USD" | "EUR",
+      walletId?: string,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -342,6 +350,7 @@ export const WiresApiFp = function (configuration?: Configuration) {
         await localVarAxiosParamCreator.getBusinessWireAccountInstructions(
           id,
           currency,
+          walletId,
           options
         );
       return createRequestFunction(
@@ -353,7 +362,7 @@ export const WiresApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary List all Wire bank accounts
+     * @summary List all wire bank accounts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -390,7 +399,7 @@ export const WiresApiFactory = function (
   return {
     /**
      *
-     * @summary Create a Wire bank account
+     * @summary Create a wire bank account
      * @param {WireCreationRequest} [wireCreationRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -405,7 +414,7 @@ export const WiresApiFactory = function (
     },
     /**
      *
-     * @summary Get a Wire bank account
+     * @summary Get a wire bank account
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -419,25 +428,27 @@ export const WiresApiFactory = function (
         .then((request) => request(axios, basePath));
     },
     /**
-     * Get the wire transfer instructions into the Circle bank account given your bank account id.
-     * @summary Get Wire instructions
+     * Get the wire transfer instructions into the Circle bank account given your bank account ID.
+     * @summary Get wire instructions
      * @param {string} id Universally unique identifier (UUID v4) of a resource.
      * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+     * @param {string} [walletId] The wallet ID of the external entity. If not provided, the instructions will be for your default wallet.  You can create additional wallets using the [Core API for Institutions](/api-reference/circle-mint/institutional/create-external-entity).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     getBusinessWireAccountInstructions(
       id: string,
       currency?: "USD" | "EUR",
+      walletId?: string,
       options?: any
     ): AxiosPromise<GetBusinessWireAccountInstructionsResponse> {
       return localVarFp
-        .getBusinessWireAccountInstructions(id, currency, options)
+        .getBusinessWireAccountInstructions(id, currency, walletId, options)
         .then((request) => request(axios, basePath));
     },
     /**
      *
-     * @summary List all Wire bank accounts
+     * @summary List all wire bank accounts
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -460,7 +471,7 @@ export const WiresApiFactory = function (
 export class WiresApi extends BaseAPI {
   /**
    *
-   * @summary Create a Wire bank account
+   * @summary Create a wire bank account
    * @param {WireCreationRequest} [wireCreationRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -477,7 +488,7 @@ export class WiresApi extends BaseAPI {
 
   /**
    *
-   * @summary Get a Wire bank account
+   * @summary Get a wire bank account
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -490,10 +501,11 @@ export class WiresApi extends BaseAPI {
   }
 
   /**
-   * Get the wire transfer instructions into the Circle bank account given your bank account id.
-   * @summary Get Wire instructions
+   * Get the wire transfer instructions into the Circle bank account given your bank account ID.
+   * @summary Get wire instructions
    * @param {string} id Universally unique identifier (UUID v4) of a resource.
    * @param {'USD' | 'EUR'} [currency] Queries beneficiary bank account currency. Default is USD.
+   * @param {string} [walletId] The wallet ID of the external entity. If not provided, the instructions will be for your default wallet.  You can create additional wallets using the [Core API for Institutions](/api-reference/circle-mint/institutional/create-external-entity).
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WiresApi
@@ -501,16 +513,17 @@ export class WiresApi extends BaseAPI {
   public getBusinessWireAccountInstructions(
     id: string,
     currency?: "USD" | "EUR",
+    walletId?: string,
     options?: AxiosRequestConfig
   ) {
     return WiresApiFp(this.configuration)
-      .getBusinessWireAccountInstructions(id, currency, options)
+      .getBusinessWireAccountInstructions(id, currency, walletId, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
   /**
    *
-   * @summary List all Wire bank accounts
+   * @summary List all wire bank accounts
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof WiresApi

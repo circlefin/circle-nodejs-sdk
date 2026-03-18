@@ -8,7 +8,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { PaymentMethodBlockchain } from "./payment-method-blockchain";
+import { PaymentMethodBlockchainRequest } from "./payment-method-blockchain-request";
 
 /**
  *
@@ -29,23 +29,23 @@ export interface ContinuousPaymentIntentCreationRequest {
    */
   currency: ContinuousPaymentIntentCreationRequestCurrencyEnum;
   /**
-   * Desired currency for the payments to settle in.
+   * Desired currency for the payments to settle in. This must match the currency used for the payment.
    * @type {string}
    * @memberof ContinuousPaymentIntentCreationRequest
    */
   settlementCurrency: ContinuousPaymentIntentCreationRequestSettlementCurrencyEnum;
   /**
    *
-   * @type {Array<PaymentMethodBlockchain>}
+   * @type {Array<PaymentMethodBlockchainRequest>}
    * @memberof ContinuousPaymentIntentCreationRequest
    */
-  paymentMethods: Array<PaymentMethodBlockchain>;
+  paymentMethods: Array<PaymentMethodBlockchainRequest>;
   /**
    * Unique system generated identifier for the wallet of the merchant.
    * @type {string}
    * @memberof ContinuousPaymentIntentCreationRequest
    */
-  merchantWalletId?: string;
+  merchantWalletId: string;
   /**
    *
    * @type {string}
@@ -56,6 +56,7 @@ export interface ContinuousPaymentIntentCreationRequest {
 
 export const ContinuousPaymentIntentCreationRequestCurrencyEnum = {
   Usd: "USD",
+  Eur: "EUR",
   Btc: "BTC",
   Eth: "ETH"
 } as const;
@@ -64,6 +65,7 @@ export type ContinuousPaymentIntentCreationRequestCurrencyEnum =
   typeof ContinuousPaymentIntentCreationRequestCurrencyEnum[keyof typeof ContinuousPaymentIntentCreationRequestCurrencyEnum];
 export const ContinuousPaymentIntentCreationRequestSettlementCurrencyEnum = {
   Usd: "USD",
+  Eur: "EUR",
   Btc: "BTC",
   Eth: "ETH"
 } as const;

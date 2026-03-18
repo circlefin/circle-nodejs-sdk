@@ -20,7 +20,7 @@ import { BurnFeePayoutAmount } from "./burn-fee-payout-amount";
 import { FiatMoney } from "./fiat-money";
 
 /**
- * A NET burn fee calculation for a day.
+ * A burn fee calculation for a day.
  * @export
  * @interface RedemptionFeeCalculation
  */
@@ -74,11 +74,17 @@ export interface RedemptionFeeCalculation {
    */
   thresholdResetTimestamp?: string;
   /**
-   * The create date of the NET burn daily fee calculation.
+   * The create date of the burn fee calculation.
    * @type {string}
    * @memberof RedemptionFeeCalculation
    */
   createDate?: string;
+  /**
+   * The aggregation method used to calculate the fee.
+   * @type {string}
+   * @memberof RedemptionFeeCalculation
+   */
+  feeType?: RedemptionFeeCalculationFeeTypeEnum;
 }
 
 export const RedemptionFeeCalculationStatusEnum = {
@@ -89,3 +95,10 @@ export const RedemptionFeeCalculationStatusEnum = {
 
 export type RedemptionFeeCalculationStatusEnum =
   typeof RedemptionFeeCalculationStatusEnum[keyof typeof RedemptionFeeCalculationStatusEnum];
+export const RedemptionFeeCalculationFeeTypeEnum = {
+  Gross: "gross",
+  Net: "net"
+} as const;
+
+export type RedemptionFeeCalculationFeeTypeEnum =
+  typeof RedemptionFeeCalculationFeeTypeEnum[keyof typeof RedemptionFeeCalculationFeeTypeEnum];

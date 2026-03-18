@@ -32,9 +32,13 @@ import {
   RequiredError
 } from "../base";
 // @ts-ignore
+import { BusinessDeposit } from "../models";
+// @ts-ignore
 import { ListBusinessDepositsResponse } from "../models";
 // @ts-ignore
 import { NotAuthorized } from "../models";
+// @ts-ignore
+import { NotFound } from "../models";
 /**
  * DepositsApi - axios parameter creator
  * @export
@@ -44,9 +48,72 @@ export const DepositsApiAxiosParamCreator = function (
 ) {
   return {
     /**
+     * Returns a deposit by ID.
+     * @summary Get a deposit by ID
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {'wire'} [type] Filters results to get only deposits made by this specific type.
+     * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getBusinessDepositById: async (
+      id: string,
+      type?: "wire",
+      walletId?: string,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists("getBusinessDepositById", "id", id);
+      const localVarPath = `/v1/businessAccount/deposits/{id}`.replace(
+        `{${"id"}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: "GET",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (type !== undefined) {
+        localVarQueryParameter["type"] = type;
+      }
+
+      if (walletId !== undefined) {
+        localVarQueryParameter["walletId"] = walletId;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions
+      };
+    },
+    /**
      * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
      * @summary List all deposits
      * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
+     * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -57,6 +124,7 @@ export const DepositsApiAxiosParamCreator = function (
      */
     listBusinessDeposits: async (
       type?: "wire",
+      walletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -86,6 +154,10 @@ export const DepositsApiAxiosParamCreator = function (
 
       if (type !== undefined) {
         localVarQueryParameter["type"] = type;
+      }
+
+      if (walletId !== undefined) {
+        localVarQueryParameter["walletId"] = walletId;
       }
 
       if (from !== undefined) {
@@ -135,9 +207,44 @@ export const DepositsApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = DepositsApiAxiosParamCreator(configuration);
   return {
     /**
+     * Returns a deposit by ID.
+     * @summary Get a deposit by ID
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {'wire'} [type] Filters results to get only deposits made by this specific type.
+     * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getBusinessDepositById(
+      id: string,
+      type?: "wire",
+      walletId?: string,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<BusinessDeposit>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getBusinessDepositById(
+          id,
+          type,
+          walletId,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
      * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
      * @summary List all deposits
      * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
+     * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -148,6 +255,7 @@ export const DepositsApiFp = function (configuration?: Configuration) {
      */
     async listBusinessDeposits(
       type?: "wire",
+      walletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -163,6 +271,7 @@ export const DepositsApiFp = function (configuration?: Configuration) {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.listBusinessDeposits(
           type,
+          walletId,
           from,
           to,
           pageBefore,
@@ -192,9 +301,29 @@ export const DepositsApiFactory = function (
   const localVarFp = DepositsApiFp(configuration);
   return {
     /**
+     * Returns a deposit by ID.
+     * @summary Get a deposit by ID
+     * @param {string} id Universally unique identifier (UUID v4) of a resource.
+     * @param {'wire'} [type] Filters results to get only deposits made by this specific type.
+     * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getBusinessDepositById(
+      id: string,
+      type?: "wire",
+      walletId?: string,
+      options?: any
+    ): AxiosPromise<BusinessDeposit> {
+      return localVarFp
+        .getBusinessDepositById(id, type, walletId, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
      * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
      * @summary List all deposits
      * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
+     * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -205,6 +334,7 @@ export const DepositsApiFactory = function (
      */
     listBusinessDeposits(
       type?: "wire",
+      walletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -215,6 +345,7 @@ export const DepositsApiFactory = function (
       return localVarFp
         .listBusinessDeposits(
           type,
+          walletId,
           from,
           to,
           pageBefore,
@@ -235,9 +366,31 @@ export const DepositsApiFactory = function (
  */
 export class DepositsApi extends BaseAPI {
   /**
+   * Returns a deposit by ID.
+   * @summary Get a deposit by ID
+   * @param {string} id Universally unique identifier (UUID v4) of a resource.
+   * @param {'wire'} [type] Filters results to get only deposits made by this specific type.
+   * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DepositsApi
+   */
+  public getBusinessDepositById(
+    id: string,
+    type?: "wire",
+    walletId?: string,
+    options?: AxiosRequestConfig
+  ) {
+    return DepositsApiFp(this.configuration)
+      .getBusinessDepositById(id, type, walletId, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
    * Searches for deposits sent to your business account. If the date parameters are omitted, returns the most recent deposits. This endpoint returns up to 50 deposits in descending chronological order or pageSize, if provided.
    * @summary List all deposits
    * @param {'wire'} [type] Unique identifier for the deposit type. Filters results to fetch deposits made by this specific type.
+   * @param {string} [walletId] The wallet ID to which the deposits were made. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -249,6 +402,7 @@ export class DepositsApi extends BaseAPI {
    */
   public listBusinessDeposits(
     type?: "wire",
+    walletId?: string,
     from?: string,
     to?: string,
     pageBefore?: string,
@@ -259,6 +413,7 @@ export class DepositsApi extends BaseAPI {
     return DepositsApiFp(this.configuration)
       .listBusinessDeposits(
         type,
+        walletId,
         from,
         to,
         pageBefore,

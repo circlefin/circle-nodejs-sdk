@@ -8,6 +8,9 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import { BusinessTransferCreationRequestSource } from "./business-transfer-creation-request-source";
+// May contain unused imports in some cases
+// @ts-ignore
 import { Money } from "./money";
 // May contain unused imports in some cases
 // @ts-ignore
@@ -37,4 +40,10 @@ export interface BusinessTransferCreationRequest {
    * @memberof BusinessTransferCreationRequest
    */
   amount: Money;
+  /**
+   *
+   * @type {BusinessTransferCreationRequestSource}
+   * @memberof BusinessTransferCreationRequest
+   */
+  source?: BusinessTransferCreationRequestSource;
 }

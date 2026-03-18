@@ -8,10 +8,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ExchangeRateRequestFrom } from "./exchange-rate-request-from";
+import { ExchangeRateOptionalAmountMoney } from "./exchange-rate-optional-amount-money";
 // May contain unused imports in some cases
 // @ts-ignore
-import { ExchangeRateRequestTo } from "./exchange-rate-request-to";
+import { ExchangeType } from "./exchange-type";
 
 /**
  *
@@ -20,15 +20,27 @@ import { ExchangeRateRequestTo } from "./exchange-rate-request-to";
  */
 export interface ExchangeRateRequest {
   /**
-   *
-   * @type {ExchangeRateRequestFrom}
+   * Universally unique identifier (UUID v4) idempotency key. This key is utilized to ensure exactly-once execution of mutating requests.
+   * @type {string}
    * @memberof ExchangeRateRequest
    */
-  from: ExchangeRateRequestFrom;
+  idempotencyKey: string;
   /**
    *
-   * @type {ExchangeRateRequestTo}
+   * @type {ExchangeType}
    * @memberof ExchangeRateRequest
    */
-  to: ExchangeRateRequestTo;
+  type: ExchangeType;
+  /**
+   *
+   * @type {ExchangeRateOptionalAmountMoney}
+   * @memberof ExchangeRateRequest
+   */
+  from: ExchangeRateOptionalAmountMoney;
+  /**
+   *
+   * @type {ExchangeRateOptionalAmountMoney}
+   * @memberof ExchangeRateRequest
+   */
+  to: ExchangeRateOptionalAmountMoney;
 }

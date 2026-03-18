@@ -154,6 +154,9 @@ export const TransfersApiAxiosParamCreator = function (
     /**
      * Searches for transfers from your business account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.
      * @summary List all transfers
+     * @param {string} [walletId] Filters results to get only transfers to or from this Circle wallet.
+     * @param {string} [sourceWalletId] Filters results to get only transfers from this Circle wallet.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
+     * @param {string} [destinationWalletId] Filters results to get only transfers to this Circle wallet.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -163,6 +166,9 @@ export const TransfersApiAxiosParamCreator = function (
      * @throws {RequiredError}
      */
     listBusinessTransfers: async (
+      walletId?: string,
+      sourceWalletId?: string,
+      destinationWalletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -189,6 +195,18 @@ export const TransfersApiAxiosParamCreator = function (
       // authentication bearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (walletId !== undefined) {
+        localVarQueryParameter["walletId"] = walletId;
+      }
+
+      if (sourceWalletId !== undefined) {
+        localVarQueryParameter["sourceWalletId"] = sourceWalletId;
+      }
+
+      if (destinationWalletId !== undefined) {
+        localVarQueryParameter["destinationWalletId"] = destinationWalletId;
+      }
 
       if (from !== undefined) {
         localVarQueryParameter["from"] =
@@ -293,6 +311,9 @@ export const TransfersApiFp = function (configuration?: Configuration) {
     /**
      * Searches for transfers from your business account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.
      * @summary List all transfers
+     * @param {string} [walletId] Filters results to get only transfers to or from this Circle wallet.
+     * @param {string} [sourceWalletId] Filters results to get only transfers from this Circle wallet.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
+     * @param {string} [destinationWalletId] Filters results to get only transfers to this Circle wallet.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -302,6 +323,9 @@ export const TransfersApiFp = function (configuration?: Configuration) {
      * @throws {RequiredError}
      */
     async listBusinessTransfers(
+      walletId?: string,
+      sourceWalletId?: string,
+      destinationWalletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -316,6 +340,9 @@ export const TransfersApiFp = function (configuration?: Configuration) {
     > {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.listBusinessTransfers(
+          walletId,
+          sourceWalletId,
+          destinationWalletId,
           from,
           to,
           pageBefore,
@@ -377,6 +404,9 @@ export const TransfersApiFactory = function (
     /**
      * Searches for transfers from your business account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.
      * @summary List all transfers
+     * @param {string} [walletId] Filters results to get only transfers to or from this Circle wallet.
+     * @param {string} [sourceWalletId] Filters results to get only transfers from this Circle wallet.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
+     * @param {string} [destinationWalletId] Filters results to get only transfers to this Circle wallet.
      * @param {string} [from] Queries items created since the specified date-time (inclusive).
      * @param {string} [to] Queries items created before the specified date-time (inclusive).
      * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -386,6 +416,9 @@ export const TransfersApiFactory = function (
      * @throws {RequiredError}
      */
     listBusinessTransfers(
+      walletId?: string,
+      sourceWalletId?: string,
+      destinationWalletId?: string,
       from?: string,
       to?: string,
       pageBefore?: string,
@@ -395,6 +428,9 @@ export const TransfersApiFactory = function (
     ): AxiosPromise<ListBusinessTransfersResponse> {
       return localVarFp
         .listBusinessTransfers(
+          walletId,
+          sourceWalletId,
+          destinationWalletId,
           from,
           to,
           pageBefore,
@@ -448,6 +484,9 @@ export class TransfersApi extends BaseAPI {
   /**
    * Searches for transfers from your business account. If the date parameters are omitted, returns the most recent transfers. This endpoint returns up to 50 transfers in descending chronological order or pageSize, if provided.
    * @summary List all transfers
+   * @param {string} [walletId] Filters results to get only transfers to or from this Circle wallet.
+   * @param {string} [sourceWalletId] Filters results to get only transfers from this Circle wallet.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
+   * @param {string} [destinationWalletId] Filters results to get only transfers to this Circle wallet.
    * @param {string} [from] Queries items created since the specified date-time (inclusive).
    * @param {string} [to] Queries items created before the specified date-time (inclusive).
    * @param {string} [pageBefore] A collection ID value used for pagination.  It marks the exclusive end of a page. When provided, the collection resource will return the next &#x60;n&#x60; items before the id, with &#x60;n&#x60; being specified by &#x60;pageSize&#x60;.  The items will be returned in the natural order of the collection.  The resource will return the first page if neither &#x60;pageAfter&#x60; nor &#x60;pageBefore&#x60; are specified.  SHOULD NOT be used in conjuction with pageAfter.
@@ -458,6 +497,9 @@ export class TransfersApi extends BaseAPI {
    * @memberof TransfersApi
    */
   public listBusinessTransfers(
+    walletId?: string,
+    sourceWalletId?: string,
+    destinationWalletId?: string,
     from?: string,
     to?: string,
     pageBefore?: string,
@@ -466,7 +508,17 @@ export class TransfersApi extends BaseAPI {
     options?: AxiosRequestConfig
   ) {
     return TransfersApiFp(this.configuration)
-      .listBusinessTransfers(from, to, pageBefore, pageAfter, pageSize, options)
+      .listBusinessTransfers(
+        walletId,
+        sourceWalletId,
+        destinationWalletId,
+        from,
+        to,
+        pageBefore,
+        pageAfter,
+        pageSize,
+        options
+      )
       .then((request) => request(this.axios, this.basePath));
   }
 }

@@ -34,35 +34,21 @@ import {
 // @ts-ignore
 import { BadRequest } from "../models";
 // @ts-ignore
-import { CancelCreationRequest } from "../models";
-// @ts-ignore
-import { CancelPaymentResponse } from "../models";
-// @ts-ignore
-import { CaptureCreationRequest } from "../models";
-// @ts-ignore
-import { CreatePaymentResponse } from "../models";
+import { CreatePixPaymentResponse } from "../models";
 // @ts-ignore
 import { CreateWirePaymentResponse } from "../models";
-// @ts-ignore
-import { ExchangeRateRequest } from "../models";
-// @ts-ignore
-import { FetchExchangeRateResponse } from "../models";
 // @ts-ignore
 import { GetPaymentResponse } from "../models";
 // @ts-ignore
 import { ListPaymentsResponse } from "../models";
+// @ts-ignore
+import { MockPixPaymentRequest } from "../models";
 // @ts-ignore
 import { MockWirePaymentRequest } from "../models";
 // @ts-ignore
 import { NotAuthorized } from "../models";
 // @ts-ignore
 import { NotFound } from "../models";
-// @ts-ignore
-import { PaymentCreationRequest } from "../models";
-// @ts-ignore
-import { RefundCreationRequest } from "../models";
-// @ts-ignore
-import { RefundPaymentResponse } from "../models";
 /**
  * PaymentsApi - axios parameter creator
  * @export
@@ -72,24 +58,17 @@ export const PaymentsApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     * The payment will be voided if possible meaning the payment source will not be charged & the payment will never settle. Otherwise, the payment will be refunded meaning the payment source will be charged & the payment will be refunded from deductions of future settlements. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been cancelled; it only means the cancellation request is successfully submitted.
-     * @summary Cancel a payment
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CancelCreationRequest} [cancelCreationRequest]
+     * Initiates a mock PIX payment in the sandbox environment that mimics the behavior of funds sent through the bank account linked to the main wallet.
+     * @summary Create a mock PIX payment
+     * @param {MockPixPaymentRequest} [mockPixPaymentRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cancelPayment: async (
-      id: string,
-      cancelCreationRequest?: CancelCreationRequest,
+    createMockPixPayment: async (
+      mockPixPaymentRequest?: MockPixPaymentRequest,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
-      // verify required parameter 'id' is not null or undefined
-      assertParamExists("cancelPayment", "id", id);
-      const localVarPath = `/v1/payments/{id}/cancel`.replace(
-        `{${"id"}}`,
-        encodeURIComponent(String(id))
-      );
+      const localVarPath = `/v1/mocks/payments/pix`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -120,66 +99,7 @@ export const PaymentsApiAxiosParamCreator = function (
         ...options.headers
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        cancelCreationRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     * Warning: Please contact Circle support if you are planning on using this feature.  The given amount will be captured for the authorized payment if possible. If no amount is specified, the full amount will be captured. You can only capture once per authorization.  A successful response does *not* mean the payment has been captured. It only means the capture request was successfully submitted.
-     * @summary Capture a payment (BETA)
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CaptureCreationRequest} [captureCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    capturePayment: async (
-      id: string,
-      captureCreationRequest?: CaptureCreationRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      // verify required parameter 'id' is not null or undefined
-      assertParamExists("capturePayment", "id", id);
-      const localVarPath = `/v1/payments/{id}/capture`.replace(
-        `{${"id"}}`,
-        encodeURIComponent(String(id))
-      );
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        captureCreationRequest,
+        mockPixPaymentRequest,
         localVarRequestOptions,
         configuration
       );
@@ -232,110 +152,6 @@ export const PaymentsApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         mockWirePaymentRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     *
-     * @summary Create a payment
-     * @param {PaymentCreationRequest} [paymentCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createPayment: async (
-      paymentCreationRequest?: PaymentCreationRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/payments`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        paymentCreationRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
-     * @summary Fetch exchange rate
-     * @param {ExchangeRateRequest} [exchangeRateRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    exchangeRate: async (
-      exchangeRateRequest?: ExchangeRateRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/exchange/quotes`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        exchangeRateRequest,
         localVarRequestOptions,
         configuration
       );
@@ -499,65 +315,6 @@ export const PaymentsApiAxiosParamCreator = function (
         url: toPathString(localVarUrlObj),
         options: localVarRequestOptions
       };
-    },
-    /**
-     * The payment source will be refunded if possible. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been refunded; it only means the refund request is successfully submitted.
-     * @summary Refund a payment
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {RefundCreationRequest} [refundCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    refundPayment: async (
-      id: string,
-      refundCreationRequest?: RefundCreationRequest,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      // verify required parameter 'id' is not null or undefined
-      assertParamExists("refundPayment", "id", id);
-      const localVarPath = `/v1/payments/{id}/refund`.replace(
-        `{${"id"}}`,
-        encodeURIComponent(String(id))
-      );
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        refundCreationRequest,
-        localVarRequestOptions,
-        configuration
-      );
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
     }
   };
 };
@@ -570,55 +327,26 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = PaymentsApiAxiosParamCreator(configuration);
   return {
     /**
-     * The payment will be voided if possible meaning the payment source will not be charged & the payment will never settle. Otherwise, the payment will be refunded meaning the payment source will be charged & the payment will be refunded from deductions of future settlements. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been cancelled; it only means the cancellation request is successfully submitted.
-     * @summary Cancel a payment
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CancelCreationRequest} [cancelCreationRequest]
+     * Initiates a mock PIX payment in the sandbox environment that mimics the behavior of funds sent through the bank account linked to the main wallet.
+     * @summary Create a mock PIX payment
+     * @param {MockPixPaymentRequest} [mockPixPaymentRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async cancelPayment(
-      id: string,
-      cancelCreationRequest?: CancelCreationRequest,
+    async createMockPixPayment(
+      mockPixPaymentRequest?: MockPixPaymentRequest,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => AxiosPromise<CancelPaymentResponse>
+      ) => AxiosPromise<CreatePixPaymentResponse>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.cancelPayment(
-        id,
-        cancelCreationRequest,
-        options
-      );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
-     * Warning: Please contact Circle support if you are planning on using this feature.  The given amount will be captured for the authorized payment if possible. If no amount is specified, the full amount will be captured. You can only capture once per authorization.  A successful response does *not* mean the payment has been captured. It only means the capture request was successfully submitted.
-     * @summary Capture a payment (BETA)
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CaptureCreationRequest} [captureCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async capturePayment(
-      id: string,
-      captureCreationRequest?: CaptureCreationRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.capturePayment(
-        id,
-        captureCreationRequest,
-        options
-      );
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.createMockPixPayment(
+          mockPixPaymentRequest,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -647,60 +375,6 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
           mockWirePaymentRequest,
           options
         );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
-     *
-     * @summary Create a payment
-     * @param {PaymentCreationRequest} [paymentCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createPayment(
-      paymentCreationRequest?: PaymentCreationRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<CreatePaymentResponse>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createPayment(
-        paymentCreationRequest,
-        options
-      );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
-     * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
-     * @summary Fetch exchange rate
-     * @param {ExchangeRateRequest} [exchangeRateRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async exchangeRate(
-      exchangeRateRequest?: ExchangeRateRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<FetchExchangeRateResponse>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.exchangeRate(
-        exchangeRateRequest,
-        options
-      );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -788,36 +462,6 @@ export const PaymentsApiFp = function (configuration?: Configuration) {
         BASE_PATH,
         configuration
       );
-    },
-    /**
-     * The payment source will be refunded if possible. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been refunded; it only means the refund request is successfully submitted.
-     * @summary Refund a payment
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {RefundCreationRequest} [refundCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async refundPayment(
-      id: string,
-      refundCreationRequest?: RefundCreationRequest,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<RefundPaymentResponse>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.refundPayment(
-        id,
-        refundCreationRequest,
-        options
-      );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
     }
   };
 };
@@ -834,37 +478,18 @@ export const PaymentsApiFactory = function (
   const localVarFp = PaymentsApiFp(configuration);
   return {
     /**
-     * The payment will be voided if possible meaning the payment source will not be charged & the payment will never settle. Otherwise, the payment will be refunded meaning the payment source will be charged & the payment will be refunded from deductions of future settlements. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been cancelled; it only means the cancellation request is successfully submitted.
-     * @summary Cancel a payment
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CancelCreationRequest} [cancelCreationRequest]
+     * Initiates a mock PIX payment in the sandbox environment that mimics the behavior of funds sent through the bank account linked to the main wallet.
+     * @summary Create a mock PIX payment
+     * @param {MockPixPaymentRequest} [mockPixPaymentRequest]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    cancelPayment(
-      id: string,
-      cancelCreationRequest?: CancelCreationRequest,
+    createMockPixPayment(
+      mockPixPaymentRequest?: MockPixPaymentRequest,
       options?: any
-    ): AxiosPromise<CancelPaymentResponse> {
+    ): AxiosPromise<CreatePixPaymentResponse> {
       return localVarFp
-        .cancelPayment(id, cancelCreationRequest, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
-     * Warning: Please contact Circle support if you are planning on using this feature.  The given amount will be captured for the authorized payment if possible. If no amount is specified, the full amount will be captured. You can only capture once per authorization.  A successful response does *not* mean the payment has been captured. It only means the capture request was successfully submitted.
-     * @summary Capture a payment (BETA)
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {CaptureCreationRequest} [captureCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    capturePayment(
-      id: string,
-      captureCreationRequest?: CaptureCreationRequest,
-      options?: any
-    ): AxiosPromise<void> {
-      return localVarFp
-        .capturePayment(id, captureCreationRequest, options)
+        .createMockPixPayment(mockPixPaymentRequest, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -880,36 +505,6 @@ export const PaymentsApiFactory = function (
     ): AxiosPromise<CreateWirePaymentResponse> {
       return localVarFp
         .createMockWirePayment(mockWirePaymentRequest, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
-     *
-     * @summary Create a payment
-     * @param {PaymentCreationRequest} [paymentCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createPayment(
-      paymentCreationRequest?: PaymentCreationRequest,
-      options?: any
-    ): AxiosPromise<CreatePaymentResponse> {
-      return localVarFp
-        .createPayment(paymentCreationRequest, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
-     * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
-     * @summary Fetch exchange rate
-     * @param {ExchangeRateRequest} [exchangeRateRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    exchangeRate(
-      exchangeRateRequest?: ExchangeRateRequest,
-      options?: any
-    ): AxiosPromise<FetchExchangeRateResponse> {
-      return localVarFp
-        .exchangeRate(exchangeRateRequest, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -968,23 +563,6 @@ export const PaymentsApiFactory = function (
           options
         )
         .then((request) => request(axios, basePath));
-    },
-    /**
-     * The payment source will be refunded if possible. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been refunded; it only means the refund request is successfully submitted.
-     * @summary Refund a payment
-     * @param {string} id Universally unique identifier (UUID v4) of a resource.
-     * @param {RefundCreationRequest} [refundCreationRequest]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    refundPayment(
-      id: string,
-      refundCreationRequest?: RefundCreationRequest,
-      options?: any
-    ): AxiosPromise<RefundPaymentResponse> {
-      return localVarFp
-        .refundPayment(id, refundCreationRequest, options)
-        .then((request) => request(axios, basePath));
     }
   };
 };
@@ -997,40 +575,19 @@ export const PaymentsApiFactory = function (
  */
 export class PaymentsApi extends BaseAPI {
   /**
-   * The payment will be voided if possible meaning the payment source will not be charged & the payment will never settle. Otherwise, the payment will be refunded meaning the payment source will be charged & the payment will be refunded from deductions of future settlements. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been cancelled; it only means the cancellation request is successfully submitted.
-   * @summary Cancel a payment
-   * @param {string} id Universally unique identifier (UUID v4) of a resource.
-   * @param {CancelCreationRequest} [cancelCreationRequest]
+   * Initiates a mock PIX payment in the sandbox environment that mimics the behavior of funds sent through the bank account linked to the main wallet.
+   * @summary Create a mock PIX payment
+   * @param {MockPixPaymentRequest} [mockPixPaymentRequest]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof PaymentsApi
    */
-  public cancelPayment(
-    id: string,
-    cancelCreationRequest?: CancelCreationRequest,
+  public createMockPixPayment(
+    mockPixPaymentRequest?: MockPixPaymentRequest,
     options?: AxiosRequestConfig
   ) {
     return PaymentsApiFp(this.configuration)
-      .cancelPayment(id, cancelCreationRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   * Warning: Please contact Circle support if you are planning on using this feature.  The given amount will be captured for the authorized payment if possible. If no amount is specified, the full amount will be captured. You can only capture once per authorization.  A successful response does *not* mean the payment has been captured. It only means the capture request was successfully submitted.
-   * @summary Capture a payment (BETA)
-   * @param {string} id Universally unique identifier (UUID v4) of a resource.
-   * @param {CaptureCreationRequest} [captureCreationRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof PaymentsApi
-   */
-  public capturePayment(
-    id: string,
-    captureCreationRequest?: CaptureCreationRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return PaymentsApiFp(this.configuration)
-      .capturePayment(id, captureCreationRequest, options)
+      .createMockPixPayment(mockPixPaymentRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -1048,40 +605,6 @@ export class PaymentsApi extends BaseAPI {
   ) {
     return PaymentsApiFp(this.configuration)
       .createMockWirePayment(mockWirePaymentRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   *
-   * @summary Create a payment
-   * @param {PaymentCreationRequest} [paymentCreationRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof PaymentsApi
-   */
-  public createPayment(
-    paymentCreationRequest?: PaymentCreationRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return PaymentsApiFp(this.configuration)
-      .createPayment(paymentCreationRequest, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   * Fetches an indicative exchange rate between two currencies. Either the from currency or to currency must be USD.  Note: The current market exchange rate will be applied when Circle receives the deposit.
-   * @summary Fetch exchange rate
-   * @param {ExchangeRateRequest} [exchangeRateRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof PaymentsApi
-   */
-  public exchangeRate(
-    exchangeRateRequest?: ExchangeRateRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return PaymentsApiFp(this.configuration)
-      .exchangeRate(exchangeRateRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -1143,25 +666,6 @@ export class PaymentsApi extends BaseAPI {
         pageSize,
         options
       )
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   * The payment source will be refunded if possible. Not all payments are eligible to be cancelled.  A successful response does *not* mean the payment has been refunded; it only means the refund request is successfully submitted.
-   * @summary Refund a payment
-   * @param {string} id Universally unique identifier (UUID v4) of a resource.
-   * @param {RefundCreationRequest} [refundCreationRequest]
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof PaymentsApi
-   */
-  public refundPayment(
-    id: string,
-    refundCreationRequest?: RefundCreationRequest,
-    options?: AxiosRequestConfig
-  ) {
-    return PaymentsApiFp(this.configuration)
-      .refundPayment(id, refundCreationRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

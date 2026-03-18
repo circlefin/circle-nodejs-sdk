@@ -6,10 +6,6 @@
  * Do not edit the class manually.
  */
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { Chain } from "./chain";
-
 /**
  *
  * @export
@@ -23,11 +19,11 @@ export interface PaymentMethodBlockchain {
    */
   type: PaymentMethodBlockchainTypeEnum;
   /**
-   *
-   * @type {Chain}
+   * The blockchain network for the payment.
+   * @type {string}
    * @memberof PaymentMethodBlockchain
    */
-  chain: Chain;
+  chain: PaymentMethodBlockchainChainEnum;
   /**
    *
    * @type {string}
@@ -42,3 +38,21 @@ export const PaymentMethodBlockchainTypeEnum = {
 
 export type PaymentMethodBlockchainTypeEnum =
   typeof PaymentMethodBlockchainTypeEnum[keyof typeof PaymentMethodBlockchainTypeEnum];
+export const PaymentMethodBlockchainChainEnum = {
+  Algo: "ALGO",
+  Arb: "ARB",
+  Avax: "AVAX",
+  Base: "BASE",
+  Btc: "BTC",
+  Eth: "ETH",
+  Hbar: "HBAR",
+  Noble: "NOBLE",
+  Op: "OP",
+  Poly: "POLY",
+  Sol: "SOL",
+  Sui: "SUI",
+  Xlm: "XLM"
+} as const;
+
+export type PaymentMethodBlockchainChainEnum =
+  typeof PaymentMethodBlockchainChainEnum[keyof typeof PaymentMethodBlockchainChainEnum];

@@ -18,6 +18,9 @@ import { RiskEvaluation } from "./risk-evaluation";
 // May contain unused imports in some cases
 // @ts-ignore
 import { WalletLocation } from "./wallet-location";
+// May contain unused imports in some cases
+// @ts-ignore
+import { WireDestinationResponse } from "./wire-destination-response";
 
 /**
  * A deposit
@@ -68,6 +71,12 @@ export interface BusinessDeposit {
    */
   riskEvaluation?: RiskEvaluation | null;
   /**
+   * A reference to the external customer which is in the memo field of the fiat transfer.
+   * @type {string}
+   * @memberof BusinessDeposit
+   */
+  customerExternalRef?: string;
+  /**
    * ISO-8601 UTC date/time format.
    * @type {string}
    * @memberof BusinessDeposit
@@ -79,6 +88,36 @@ export interface BusinessDeposit {
    * @memberof BusinessDeposit
    */
   updateDate?: string;
+  /**
+   *
+   * @type {WireDestinationResponse}
+   * @memberof BusinessDeposit
+   */
+  source?: WireDestinationResponse;
+  /**
+   *
+   * @type {FiatMoneyUsd}
+   * @memberof BusinessDeposit
+   */
+  fromAmount?: FiatMoneyUsd;
+  /**
+   *
+   * @type {FiatMoneyUsd}
+   * @memberof BusinessDeposit
+   */
+  fees?: FiatMoneyUsd;
+  /**
+   * Unique system generated identifier for the entity.
+   * @type {string}
+   * @memberof BusinessDeposit
+   */
+  externalRef?: string;
+  /**
+   * Tracking reference used for making the deposit.
+   * @type {string}
+   * @memberof BusinessDeposit
+   */
+  trackingRef?: string;
 }
 
 export const BusinessDepositStatusEnum = {

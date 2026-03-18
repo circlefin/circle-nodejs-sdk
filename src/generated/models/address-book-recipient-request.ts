@@ -9,9 +9,6 @@
 // May contain unused imports in some cases
 // @ts-ignore
 import { AddressBookRecipientMetadata } from "./address-book-recipient-metadata";
-// May contain unused imports in some cases
-// @ts-ignore
-import { Chain } from "./chain";
 
 /**
  *
@@ -26,13 +23,13 @@ export interface AddressBookRecipientRequest {
    */
   idempotencyKey: string;
   /**
-   *
-   * @type {Chain}
+   * The blockchain network to use for the address.
+   * @type {string}
    * @memberof AddressBookRecipientRequest
    */
-  chain: Chain;
+  chain: AddressBookRecipientRequestChainEnum;
   /**
-   * An alphanumeric string representing a blockchain address. Will be in different formats for different chains. It is important to preserve the exact formatting and capitalization of the address.
+   * An alphanumeric string representing a blockchain address. Formatting varies by blockchain. Be sure to preserve the exact formatting and capitalization of the address.   **Important:** For Ripple (XRP) addresses, only the classic address format is supported (for example, `rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY`).   The `x-address` format is NOT supported currently (for example, `XV5sbjUmgPpvXv4ixFWZ5ptAYZ6PD2q1qM6owqNbug8W6KV`).
    * @type {string}
    * @memberof AddressBookRecipientRequest
    */
@@ -50,3 +47,28 @@ export interface AddressBookRecipientRequest {
    */
   metadata: AddressBookRecipientMetadata;
 }
+
+export const AddressBookRecipientRequestChainEnum = {
+  Algo: "ALGO",
+  Aptos: "APTOS",
+  Arb: "ARB",
+  Avax: "AVAX",
+  Base: "BASE",
+  Celo: "CELO",
+  Eth: "ETH",
+  Hbar: "HBAR",
+  Near: "NEAR",
+  Noble: "NOBLE",
+  Op: "OP",
+  Pah: "PAH",
+  Poly: "POLY",
+  Sol: "SOL",
+  Sui: "SUI",
+  Uni: "UNI",
+  Xlm: "XLM",
+  Xrp: "XRP",
+  Zks: "ZKS"
+} as const;
+
+export type AddressBookRecipientRequestChainEnum =
+  typeof AddressBookRecipientRequestChainEnum[keyof typeof AddressBookRecipientRequestChainEnum];

@@ -11,10 +11,7 @@
 import { CryptoPayoutDestination } from "./crypto-payout-destination";
 // May contain unused imports in some cases
 // @ts-ignore
-import { Money } from "./money";
-// May contain unused imports in some cases
-// @ts-ignore
-import { ToAmount } from "./to-amount";
+import { CryptoPayoutMoney } from "./crypto-payout-money";
 // May contain unused imports in some cases
 // @ts-ignore
 import { TransferSourceWalletLocation } from "./transfer-source-wallet-location";
@@ -45,14 +42,14 @@ export interface CryptoPayoutCreationRequest {
   destination: CryptoPayoutDestination;
   /**
    *
-   * @type {Money}
+   * @type {CryptoPayoutMoney}
    * @memberof CryptoPayoutCreationRequest
    */
-  amount: Money;
+  amount: CryptoPayoutMoney;
   /**
    *
-   * @type {ToAmount}
+   * @type {CryptoPayoutMoney}
    * @memberof CryptoPayoutCreationRequest
    */
-  toAmount?: ToAmount;
+  toAmount?: CryptoPayoutMoney;
 }

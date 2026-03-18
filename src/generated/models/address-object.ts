@@ -20,7 +20,7 @@ import { Currency } from "./currency";
  */
 export interface AddressObject {
   /**
-   * An alphanumeric string representing a blockchain address. Will be in different formats for different chains. It is important to preserve the exact formatting and capitalization of the address.
+   * An alphanumeric string representing a blockchain address. Formatting varies by blockchain. Be sure to preserve the exact formatting and capitalization of the address.   **Important:** For Ripple (XRP) addresses, only the classic address format is supported (for example, `rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY`).   The `x-address` format is NOT supported currently (for example, `XV5sbjUmgPpvXv4ixFWZ5ptAYZ6PD2q1qM6owqNbug8W6KV`).
    * @type {string}
    * @memberof AddressObject
    */
@@ -43,4 +43,16 @@ export interface AddressObject {
    * @memberof AddressObject
    */
   chain?: Chain;
+  /**
+   * Unique system generated identifier for the entity.
+   * @type {string}
+   * @memberof AddressObject
+   */
+  id?: string;
+  /**
+   * Unique identifier of the wallet to which the deposit address is associated.
+   * @type {string}
+   * @memberof AddressObject
+   */
+  walletId?: string;
 }

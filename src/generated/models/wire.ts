@@ -32,6 +32,12 @@ export interface Wire {
    */
   id: string;
   /**
+   * The type of the bank account.
+   * @type {string}
+   * @memberof Wire
+   */
+  type?: string;
+  /**
    *
    * @type {ExternalFiatAccountStatus}
    * @memberof Wire
@@ -54,7 +60,7 @@ export interface Wire {
    * @type {{ [key: string]: TransferTypeInfo; }}
    * @memberof Wire
    */
-  transferTypesInfo: { [key: string]: TransferTypeInfo };
+  transferTypesInfo?: { [key: string]: TransferTypeInfo };
   /**
    * A UUID that uniquely identifies the account number. If the same account is used more than once, each card object will have a different id, but the fingerprint will stay the same.
    * @type {string}
@@ -85,4 +91,10 @@ export interface Wire {
    * @memberof Wire
    */
   updateDate: string;
+  /**
+   * Whether virtual account applies to the bank account.
+   * @type {boolean}
+   * @memberof Wire
+   */
+  virtualAccountEnabled?: boolean;
 }

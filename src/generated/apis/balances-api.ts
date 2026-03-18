@@ -32,8 +32,6 @@ import {
   RequiredError
 } from "../base";
 // @ts-ignore
-import { ListBalancesResponse } from "../models";
-// @ts-ignore
 import { ListBusinessBalancesResponse } from "../models";
 // @ts-ignore
 import { NotAuthorized } from "../models";
@@ -46,55 +44,14 @@ export const BalancesApiAxiosParamCreator = function (
 ) {
   return {
     /**
-     * Retrieves the balance of merchant funds that have settled and also of funds that have been sent for processing but have not yet settled.
-     * @summary List all balances
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    listBalances: async (
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      const localVarPath = `/v1/balances`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = {
-        method: "GET",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions
-      };
-    },
-    /**
      * Retrieves the balance of funds that are available for use.
      * @summary List all balances
+     * @param {string} [walletId] The wallet ID of the wallet for which to retrieve the balances. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     listBusinessBalances: async (
+      walletId?: string,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       const localVarPath = `/v1/businessAccount/balances`;
@@ -116,6 +73,10 @@ export const BalancesApiAxiosParamCreator = function (
       // authentication bearerAuth required
       // http bearer authentication required
       await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (walletId !== undefined) {
+        localVarQueryParameter["walletId"] = walletId;
+      }
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions =
@@ -142,36 +103,14 @@ export const BalancesApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = BalancesApiAxiosParamCreator(configuration);
   return {
     /**
-     * Retrieves the balance of merchant funds that have settled and also of funds that have been sent for processing but have not yet settled.
-     * @summary List all balances
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async listBalances(
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => AxiosPromise<ListBalancesResponse>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.listBalances(
-        options
-      );
-      return createRequestFunction(
-        localVarAxiosArgs,
-        globalAxios,
-        BASE_PATH,
-        configuration
-      );
-    },
-    /**
      * Retrieves the balance of funds that are available for use.
      * @summary List all balances
+     * @param {string} [walletId] The wallet ID of the wallet for which to retrieve the balances. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async listBusinessBalances(
+      walletId?: string,
       options?: AxiosRequestConfig
     ): Promise<
       (
@@ -180,7 +119,7 @@ export const BalancesApiFp = function (configuration?: Configuration) {
       ) => AxiosPromise<ListBusinessBalancesResponse>
     > {
       const localVarAxiosArgs =
-        await localVarAxiosParamCreator.listBusinessBalances(options);
+        await localVarAxiosParamCreator.listBusinessBalances(walletId, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -203,27 +142,18 @@ export const BalancesApiFactory = function (
   const localVarFp = BalancesApiFp(configuration);
   return {
     /**
-     * Retrieves the balance of merchant funds that have settled and also of funds that have been sent for processing but have not yet settled.
-     * @summary List all balances
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    listBalances(options?: any): AxiosPromise<ListBalancesResponse> {
-      return localVarFp
-        .listBalances(options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
      * Retrieves the balance of funds that are available for use.
      * @summary List all balances
+     * @param {string} [walletId] The wallet ID of the wallet for which to retrieve the balances. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     listBusinessBalances(
+      walletId?: string,
       options?: any
     ): AxiosPromise<ListBusinessBalancesResponse> {
       return localVarFp
-        .listBusinessBalances(options)
+        .listBusinessBalances(walletId, options)
         .then((request) => request(axios, basePath));
     }
   };
@@ -237,28 +167,16 @@ export const BalancesApiFactory = function (
  */
 export class BalancesApi extends BaseAPI {
   /**
-   * Retrieves the balance of merchant funds that have settled and also of funds that have been sent for processing but have not yet settled.
-   * @summary List all balances
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof BalancesApi
-   */
-  public listBalances(options?: AxiosRequestConfig) {
-    return BalancesApiFp(this.configuration)
-      .listBalances(options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
    * Retrieves the balance of funds that are available for use.
    * @summary List all balances
+   * @param {string} [walletId] The wallet ID of the wallet for which to retrieve the balances. If not provided, the default is the main wallet of the account.  You can get wallet IDs associated with your account using the [Core API for Institutions](/api-reference/circle-mint/institutional/get-all-external-entities).
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof BalancesApi
    */
-  public listBusinessBalances(options?: AxiosRequestConfig) {
+  public listBusinessBalances(walletId?: string, options?: AxiosRequestConfig) {
     return BalancesApiFp(this.configuration)
-      .listBusinessBalances(options)
+      .listBusinessBalances(walletId, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

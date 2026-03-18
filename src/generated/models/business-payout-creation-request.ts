@@ -11,6 +11,9 @@
 import { BusinessDestinationRequest } from "./business-destination-request";
 // May contain unused imports in some cases
 // @ts-ignore
+import { BusinessPayoutCreationRequestSource } from "./business-payout-creation-request-source";
+// May contain unused imports in some cases
+// @ts-ignore
 import { FiatMoney } from "./fiat-money";
 // May contain unused imports in some cases
 // @ts-ignore
@@ -46,4 +49,10 @@ export interface BusinessPayoutCreationRequest {
    * @memberof BusinessPayoutCreationRequest
    */
   toAmount?: FiatPayoutToMoney;
+  /**
+   *
+   * @type {BusinessPayoutCreationRequestSource}
+   * @memberof BusinessPayoutCreationRequest
+   */
+  source?: BusinessPayoutCreationRequestSource;
 }
