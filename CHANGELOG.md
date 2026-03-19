@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.1](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.10.0...v2.10.1) (2026-03-19)
+
+
+### Continuous Integration
+
+* fix release-please wiring ([#140](https://github.com/circlefin/circle-nodejs-sdk/issues/140)) ([27f4efe](https://github.com/circlefin/circle-nodejs-sdk/commit/27f4efec1769dcc5507cb4b80798cf4e3b5af9cc))
+
 ## [2.10.0](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.9.0...v2.10.0) (2026-03-18)
 
 
