@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.2](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.10.1...v2.10.2) (2026-03-20)
+
+
+### Continuous Integration
+
+* fix ID token perms ([#142](https://github.com/circlefin/circle-nodejs-sdk/issues/142)) ([742b181](https://github.com/circlefin/circle-nodejs-sdk/commit/742b18140a2c38bf8c0dafd7fe0ad63bc13081ae))
+
 ## [2.10.1](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.10.0...v2.10.1) (2026-03-19)
 
 
