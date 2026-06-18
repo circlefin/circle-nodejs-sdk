@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.3](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.10.2...v2.10.3) (2026-06-18)
+
+
+### Miscellaneous Chores
+
+* **ci:** bump GitHub Actions to Node 24 ([#152](https://github.com/circlefin/circle-nodejs-sdk/issues/152)) ([901df78](https://github.com/circlefin/circle-nodejs-sdk/commit/901df789b6b9ec749931cfe3633b229eee834fca))
+
 ## [2.10.2](https://github.com/circlefin/circle-nodejs-sdk/compare/v2.10.1...v2.10.2) (2026-03-20)
 
 
