@@ -57,6 +57,8 @@ yarn install
     yarn gen-sdk
     ```
 
+    Generation stops with a nonzero exit status if generation, transformation, linting, or formatting fails. Existing generated TypeScript files are removed before generation starts; a failed run does not restore them.
+
 2. Run all tests:
 
     ```bash
